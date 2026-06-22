@@ -28,10 +28,12 @@ class Product extends Model
     protected $fillable = [
         'name',
         'slug',
+        'sku',
         'description',
         'price',
         'stock',
         'category',
+        'is_active',
         'image_url',
     ];
 
@@ -45,6 +47,8 @@ class Product extends Model
         return [
         'id' => 'integer',
         'price' => 'decimal:2',
+        'stock' => 'integer',
+        'is_active' => 'boolean',
     ];
     }
 

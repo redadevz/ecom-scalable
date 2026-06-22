@@ -28,7 +28,9 @@ class Payment extends Model
         'order_id',
         'provider',
         'provider_reference',
+        'meta',
         'status',
+        'paid_at',
         'amount',
         'currency',
     ];
@@ -44,6 +46,8 @@ class Payment extends Model
         'id' => 'integer',
         'order_id' => 'integer',
         'amount' => 'decimal:2',
+        'meta' => 'array',
+        'paid_at' => 'datetime',
     ];
     }
 

@@ -26,9 +26,19 @@ class Order extends Model
      * @var array
      */
     protected $fillable = [
+        'order_number',
         'user_id',
+        'email',
         'status',
+        'subtotal',
+        'tax',
+        'shipping',
+        'discount',
         'total',
+        'currency',
+        'shipping_address',
+        'placed_at',
+        'paid_at',
     ];
 
     /**
@@ -41,7 +51,14 @@ class Order extends Model
         return [
         'id' => 'integer',
         'user_id' => 'integer',
+        'subtotal' => 'decimal:2',
+        'tax' => 'decimal:2',
+        'shipping' => 'decimal:2',
+        'discount' => 'decimal:2',
         'total' => 'decimal:2',
+        'shipping_address' => 'array',
+        'placed_at' => 'datetime',
+        'paid_at' => 'datetime',
     ];
     }
 

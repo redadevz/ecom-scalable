@@ -28,9 +28,7 @@ use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index(IndexProductRequest $request): Response | JsonResponse | RedirectResponse
     {
         $defaultSort = "id";

@@ -7,16 +7,25 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Order line items snapshot product_name + unit_price, so they must survive
-     * a product being deleted. Switch the FK from cascade to nullOnDelete and
+     * Orders and order line items are financial/sales records that must outlive
+     * the customer account and the catalogue product. Switch both FKs from
+     * cascade to nullOnDelete, snapshot the customer email on the order, and
      * soft-delete products so historical references stay resolvable.
      */
     public function up(): void
     {
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+        });
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('user_id')->nullable()->change();
+            $table->foreign('user_id')->references('id')->on('users')->nullOnDelete();
+            $table->string('email')->nullable()->after('user_id');
+        });
+
         Schema::table('order_items', function (Blueprint $table) {
             $table->dropForeign(['product_id']);
         });
-
         Schema::table('order_items', function (Blueprint $table) {
             $table->foreignId('product_id')->nullable()->change();
             $table->foreign('product_id')->references('id')->on('products')->nullOnDelete();
@@ -36,10 +45,18 @@ return new class extends Migration
         Schema::table('order_items', function (Blueprint $table) {
             $table->dropForeign(['product_id']);
         });
-
         Schema::table('order_items', function (Blueprint $table) {
             $table->foreignId('product_id')->nullable(false)->change();
             $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
+        });
+
+        Schema::table('orders', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('email');
+        });
+        Schema::table('orders', function (Blueprint $table) {
+            $table->foreignId('user_id')->nullable(false)->change();
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
         });
     }
 };
