@@ -54,8 +54,7 @@ class ProductController extends Controller
 
         $products = $productsQuery
             ->with(['craftableProUser'])
-            ->select('id', 'name', 'slug', 'description', 'price', 'stock', 'category', 'image_url', 'created_at')
-            ->paginate($request->get('per_page'))->withQueryString();
+            ->select('id', 'name', 'slug', 'description', 'price', 'stock', 'category', 'image_url', 'created_at');
 
         Session::put('products_url', $request->fullUrl());
 
