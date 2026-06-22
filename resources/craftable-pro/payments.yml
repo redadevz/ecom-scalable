@@ -1,0 +1,43 @@
+craftable-pro:
+    models:
+        Payment:
+            table: payments
+            skip_model: false
+            columns:
+                id: id
+                order_id: 'id foreign'
+                provider: string
+                provider_reference: 'string nullable'
+                status: string
+                amount: decimal
+                currency: string
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                provider: 'sortable searchable'
+                provider_reference: 'sortable searchable'
+                status: 'sortable searchable'
+                amount: 'sortable searchable'
+                currency: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - order_id
+                                    - provider
+                                    - provider_reference
+                                    - status
+                                    - amount
+                                    - currency
+            translatable: {}
+            publishable: null
+            media_collections: {}
+            relationships: {}
+            api: {}
+            features:
+                - export

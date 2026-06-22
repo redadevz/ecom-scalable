@@ -1,0 +1,10 @@
+created:
+    - database/migrations/2026_06_22_141619_add_permissions_for_cart_items.php
+    - resources/js/craftable-pro/Pages/CartItem/Index.vue
+    - resources/js/craftable-pro/Pages/CartItem/Create.vue
+    - resources/js/craftable-pro/Pages/CartItem/Edit.vue
+    - resources/js/craftable-pro/Pages/CartItem/Form.vue
+    - resources/js/craftable-pro/Pages/CartItem/types.d.ts
+updated:
+    - routes/web.php
+    - resources/js/craftable-pro/Components/Sidebar.vue

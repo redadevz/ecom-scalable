@@ -1,0 +1,37 @@
+craftable-pro:
+    models:
+        CartItem:
+            table: cart_items
+            skip_model: false
+            columns:
+                id: id
+                cart_id: 'id foreign'
+                product_id: 'id foreign'
+                quantity: integer
+                unit_price: decimal
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                cart_id: 'sortable searchable'
+                product_id: 'sortable searchable'
+                quantity: 'sortable searchable'
+                unit_price: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - cart_id
+                                    - product_id
+                                    - quantity
+                                    - unit_price
+            translatable: {}
+            publishable: null
+            media_collections: {}
+            relationships: {}
+            api: {}
+            features:
+                - export

@@ -1,0 +1,52 @@
+craftable-pro:
+    models:
+        Product:
+            table: products
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                slug: string
+                description: text
+                price: decimal
+                stock: integer
+                category: 'string nullable'
+                image_url: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                slug: 'sortable searchable'
+                description: 'sortable searchable'
+                price: 'sortable searchable'
+                stock: 'sortable searchable'
+                category: 'sortable searchable'
+                image_url: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - slug
+                                    - description
+                                    - price
+                                    - stock
+                                    - category
+                                    - image_url
+            translatable: {}
+            publishable: null
+            media_collections: {}
+            relationships:
+                - type: belongsTo
+                  model: \Brackets\CraftablePro\Models\CraftableProUser
+                  foreign_key: id
+                  owner_key: id
+                  accessor: email
+                  pivot_table: null
+            api: {}
+            features:
+                - export

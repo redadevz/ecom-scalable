@@ -1,0 +1,28 @@
+craftable-pro:
+    models:
+        Cart:
+            table: carts
+            skip_model: false
+            columns:
+                id: id
+                user_id: 'id foreign'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                user_id: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - user_id
+            translatable: {}
+            publishable: null
+            media_collections: {}
+            relationships: {}
+            api: {}
+            features:
+                - export

@@ -1,0 +1,40 @@
+craftable-pro:
+    models:
+        OrderItem:
+            table: order_items
+            skip_model: false
+            columns:
+                id: id
+                order_id: 'id foreign'
+                product_id: 'id foreign'
+                product_name: string
+                quantity: integer
+                unit_price: decimal
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                product_id: 'sortable searchable'
+                product_name: 'sortable searchable'
+                quantity: 'sortable searchable'
+                unit_price: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - order_id
+                                    - product_id
+                                    - product_name
+                                    - quantity
+                                    - unit_price
+            translatable: {}
+            publishable: null
+            media_collections: {}
+            relationships: {}
+            api: {}
+            features:
+                - export
