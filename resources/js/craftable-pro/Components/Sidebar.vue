@@ -10,48 +10,6 @@
           {{ $t("craftable-pro", "Media") }}
         </SidebarItem>
         <SidebarItem
-            :href="route('craftable-pro.products.index')"
-            :icon="CubeTransparentIcon"
-            v-can="'craftable-pro.products.index'"
-        >
-            {{ $t("craftable-pro", "Products") }}
-        </SidebarItem>
-        <SidebarItem
-            :href="route('craftable-pro.orders.index')"
-            :icon="CubeTransparentIcon"
-            v-can="'craftable-pro.orders.index'"
-        >
-            {{ $t("craftable-pro", "Orders") }}
-        </SidebarItem>
-        <SidebarItem
-            :href="route('craftable-pro.order-items.index')"
-            :icon="CubeTransparentIcon"
-            v-can="'craftable-pro.order-items.index'"
-        >
-            {{ $t("craftable-pro", "Order Items") }}
-        </SidebarItem>
-        <SidebarItem
-            :href="route('craftable-pro.payments.index')"
-            :icon="CubeTransparentIcon"
-            v-can="'craftable-pro.payments.index'"
-        >
-            {{ $t("craftable-pro", "Payments") }}
-        </SidebarItem>
-        <SidebarItem
-            :href="route('craftable-pro.carts.index')"
-            :icon="CubeTransparentIcon"
-            v-can="'craftable-pro.carts.index'"
-        >
-            {{ $t("craftable-pro", "Carts") }}
-        </SidebarItem>
-        <SidebarItem
-            :href="route('craftable-pro.cart-items.index')"
-            :icon="CubeTransparentIcon"
-            v-can="'craftable-pro.cart-items.index'"
-        >
-            {{ $t("craftable-pro", "Cart Items") }}
-        </SidebarItem>
-        <SidebarItem
             :href="route('craftable-pro.item-categories.index')"
             :icon="CubeTransparentIcon"
             v-can="'craftable-pro.item-categories.index'"
