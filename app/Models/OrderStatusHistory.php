@@ -45,4 +45,14 @@ class OrderStatusHistory extends Model
         'end_time' => 'datetime',
     ];
     }
+
+    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderHeader::class, 'order_id');
+    }
+
+    public function orderStatus(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderStatus::class);
+    }
 }

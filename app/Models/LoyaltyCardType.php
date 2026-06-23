@@ -41,4 +41,14 @@ class LoyaltyCardType extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function loyaltyCards(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LoyaltyCard::class);
+    }
+
+    public function discountTypes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DiscountType::class);
+    }
 }

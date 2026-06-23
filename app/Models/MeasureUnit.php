@@ -40,4 +40,9 @@ class MeasureUnit extends Model
         'id' => 'integer',
     ];
     }
+
+    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
 }

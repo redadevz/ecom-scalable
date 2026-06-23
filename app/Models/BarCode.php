@@ -43,4 +43,9 @@ class BarCode extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

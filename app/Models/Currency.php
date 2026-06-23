@@ -41,4 +41,9 @@ class Currency extends Model
         'id' => 'integer',
     ];
     }
+
+    public function stores(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Store::class);
+    }
 }

@@ -40,4 +40,14 @@ class Region extends Model
         'country_id' => 'integer',
     ];
     }
+
+    public function country(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function cities(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(City::class);
+    }
 }

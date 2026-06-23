@@ -53,4 +53,9 @@ class TaxType extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

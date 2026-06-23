@@ -41,4 +41,9 @@ class OrderStatus extends Model
         'is_default' => 'boolean',
     ];
     }
+
+    public function orderStatusHistories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderStatusHistory::class);
+    }
 }

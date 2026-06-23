@@ -64,4 +64,19 @@ class Price extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function createdBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\Brackets\CraftablePro\Models\CraftableProUser::class, 'created_by');
+    }
 }

@@ -45,4 +45,14 @@ class PaymentMethod extends Model
         'is_customer_required' => 'boolean',
     ];
     }
+
+    public function paymentTerms(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PaymentTerm::class);
+    }
+
+    public function orderHeaders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderHeader::class);
+    }
 }

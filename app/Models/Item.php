@@ -64,4 +64,49 @@ class Item extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function itemCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ItemCategory::class);
+    }
+
+    public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function measureUnit(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(MeasureUnit::class);
+    }
+
+    public function barCodes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(BarCode::class);
+    }
+
+    public function prices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Price::class);
+    }
+
+    public function orderLines(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderLine::class);
+    }
+
+    public function supplierItemTaxTypes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SupplierItemTaxType::class);
+    }
+
+    public function discounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Discount::class);
+    }
 }

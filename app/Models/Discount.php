@@ -45,4 +45,19 @@ class Discount extends Model
         'item_id' => 'integer',
     ];
     }
+
+    public function discountType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DiscountType::class);
+    }
+
+    public function itemCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ItemCategory::class);
+    }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

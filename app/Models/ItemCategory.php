@@ -43,4 +43,24 @@ class ItemCategory extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function parent(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(ItemCategory::class, 'parent_category_id');
+    }
+
+    public function children(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ItemCategory::class, 'parent_category_id');
+    }
+
+    public function items(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    public function discounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Discount::class);
+    }
 }

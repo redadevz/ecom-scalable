@@ -50,4 +50,24 @@ class PaymentTerm extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function saleChannel(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(SaleChannel::class);
+    }
+
+    public function deliveryType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DeliveryType::class);
+    }
+
+    public function paymentMethod(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
+    }
+
+    public function paymentTime(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PaymentTime::class);
+    }
 }

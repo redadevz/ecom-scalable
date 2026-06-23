@@ -64,4 +64,19 @@ class DiscountType extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function loyaltyCardType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(LoyaltyCardType::class);
+    }
+
+    public function discounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Discount::class);
+    }
 }

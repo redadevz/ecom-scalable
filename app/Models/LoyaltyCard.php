@@ -44,4 +44,19 @@ class LoyaltyCard extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function loyaltyCardType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(LoyaltyCardType::class);
+    }
+
+    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function orderHeaders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderHeader::class);
+    }
 }

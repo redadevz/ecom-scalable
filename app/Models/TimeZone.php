@@ -39,4 +39,9 @@ class TimeZone extends Model
         'id' => 'integer',
     ];
     }
+
+    public function cities(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(City::class);
+    }
 }

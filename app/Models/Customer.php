@@ -76,4 +76,29 @@ class Customer extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function city(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(City::class);
+    }
+
+    public function createdAtStore(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class, 'created_at_store_id');
+    }
+
+    public function createdBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\Brackets\CraftablePro\Models\CraftableProUser::class, 'created_by');
+    }
+
+    public function loyaltyCards(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LoyaltyCard::class);
+    }
+
+    public function orderHeaders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderHeader::class);
+    }
 }

@@ -38,4 +38,9 @@ class Country extends Model
         'id' => 'integer',
     ];
     }
+
+    public function regions(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Region::class);
+    }
 }

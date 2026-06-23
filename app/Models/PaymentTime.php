@@ -41,4 +41,14 @@ class PaymentTime extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function paymentTerms(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PaymentTerm::class);
+    }
+
+    public function orderHeaders(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderHeader::class);
+    }
 }

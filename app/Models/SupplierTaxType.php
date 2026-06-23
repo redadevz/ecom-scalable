@@ -53,4 +53,14 @@ class SupplierTaxType extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function supplier(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Supplier::class);
+    }
+
+    public function supplierItemTaxTypes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SupplierItemTaxType::class);
+    }
 }
