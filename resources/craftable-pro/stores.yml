@@ -1,0 +1,158 @@
+craftable-pro:
+    models:
+        Store:
+            table: stores
+            skip_model: false
+            columns:
+                id: id
+                city_id: 'id foreign'
+                language_id: 'id foreign'
+                currency_id: 'id foreign'
+                code: 'string nullable'
+                name: string
+                is_active: boolean
+                legal_entity_name: string
+                tax_code: string
+                address: string
+                registration_number: string
+                phone: 'string nullable'
+                fax: 'string nullable'
+                email: 'string nullable'
+                logo: 'string nullable'
+                bank_branch: 'string nullable'
+                bank_code: 'string nullable'
+                bank_account: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                city_id: 'sortable searchable'
+                language_id: 'sortable searchable'
+                currency_id: 'sortable searchable'
+                code: 'sortable searchable'
+                name: 'sortable searchable'
+                is_active: 'sortable searchable'
+                legal_entity_name: 'sortable searchable'
+                tax_code: 'sortable searchable'
+                address: 'sortable searchable'
+                registration_number: 'sortable searchable'
+                phone: 'sortable searchable'
+                fax: 'sortable searchable'
+                email: 'sortable searchable'
+                logo: 'sortable searchable'
+                bank_branch: 'sortable searchable'
+                bank_code: 'sortable searchable'
+                bank_account: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - city_id
+                                    - language_id
+                                    - currency_id
+                                    - code
+                                    - name
+                                    - is_active
+                                    - legal_entity_name
+                                    - tax_code
+                                    - address
+                                    - registration_number
+                                    - phone
+                                    - fax
+                                    - email
+                                    - logo
+                                    - bank_branch
+                                    - bank_code
+                                    - bank_account
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - city_id
+                        - language_id
+                        - currency_id
+                        - code
+                        - name
+                        - is_active
+                        - legal_entity_name
+                        - tax_code
+                        - address
+                        - registration_number
+                        - phone
+                        - fax
+                        - email
+                        - logo
+                        - bank_branch
+                        - bank_code
+                        - bank_account
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - city_id
+                        - language_id
+                        - currency_id
+                        - code
+                        - name
+                        - is_active
+                        - legal_entity_name
+                        - tax_code
+                        - address
+                        - registration_number
+                        - phone
+                        - fax
+                        - email
+                        - logo
+                        - bank_branch
+                        - bank_code
+                        - bank_account
+                update:
+                    columns:
+                        - city_id
+                        - language_id
+                        - currency_id
+                        - code
+                        - name
+                        - is_active
+                        - legal_entity_name
+                        - tax_code
+                        - address
+                        - registration_number
+                        - phone
+                        - fax
+                        - email
+                        - logo
+                        - bank_branch
+                        - bank_code
+                        - bank_account
+                show:
+                    columns:
+                        - id
+                        - city_id
+                        - language_id
+                        - currency_id
+                        - code
+                        - name
+                        - is_active
+                        - legal_entity_name
+                        - tax_code
+                        - address
+                        - registration_number
+                        - phone
+                        - fax
+                        - email
+                        - logo
+                        - bank_branch
+                        - bank_code
+                        - bank_account
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

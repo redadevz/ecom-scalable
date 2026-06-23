@@ -1,0 +1,67 @@
+craftable-pro:
+    models:
+        ItemCategory:
+            table: item_categories
+            skip_model: false
+            columns:
+                id: id
+                parent_category_id: 'id foreign nullable'
+                name: string
+                description: 'text nullable'
+                is_active: boolean
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                parent_category_id: 'sortable searchable'
+                name: 'sortable searchable'
+                description: 'sortable searchable'
+                is_active: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - parent_category_id
+                                    - name
+                                    - description
+                                    - is_active
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - parent_category_id
+                        - name
+                        - description
+                        - is_active
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - parent_category_id
+                        - name
+                        - description
+                        - is_active
+                update:
+                    columns:
+                        - parent_category_id
+                        - name
+                        - description
+                        - is_active
+                show:
+                    columns:
+                        - id
+                        - parent_category_id
+                        - name
+                        - description
+                        - is_active
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

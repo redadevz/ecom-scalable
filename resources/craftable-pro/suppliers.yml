@@ -1,0 +1,151 @@
+craftable-pro:
+    models:
+        Supplier:
+            table: suppliers
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                city_id: 'id foreign'
+                created_by: 'id foreign nullable'
+                code: string
+                phone: string
+                first_name: string
+                last_name: string
+                is_company: boolean
+                company_name: 'string nullable'
+                tax_number: 'string nullable'
+                is_tax_exempted: boolean
+                billing_address: string
+                postal_code: 'string nullable'
+                email: string
+                is_active: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                city_id: 'sortable searchable'
+                created_by: 'sortable searchable'
+                code: 'sortable searchable'
+                phone: 'sortable searchable'
+                first_name: 'sortable searchable'
+                last_name: 'sortable searchable'
+                is_company: 'sortable searchable'
+                company_name: 'sortable searchable'
+                tax_number: 'sortable searchable'
+                is_tax_exempted: 'sortable searchable'
+                billing_address: 'sortable searchable'
+                postal_code: 'sortable searchable'
+                email: 'sortable searchable'
+                is_active: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - city_id
+                                    - created_by
+                                    - code
+                                    - phone
+                                    - first_name
+                                    - last_name
+                                    - is_company
+                                    - company_name
+                                    - tax_number
+                                    - is_tax_exempted
+                                    - billing_address
+                                    - postal_code
+                                    - email
+                                    - is_active
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - city_id
+                        - created_by
+                        - code
+                        - phone
+                        - first_name
+                        - last_name
+                        - is_company
+                        - company_name
+                        - tax_number
+                        - is_tax_exempted
+                        - billing_address
+                        - postal_code
+                        - email
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - city_id
+                        - created_by
+                        - code
+                        - phone
+                        - first_name
+                        - last_name
+                        - is_company
+                        - company_name
+                        - tax_number
+                        - is_tax_exempted
+                        - billing_address
+                        - postal_code
+                        - email
+                        - is_active
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - city_id
+                        - created_by
+                        - code
+                        - phone
+                        - first_name
+                        - last_name
+                        - is_company
+                        - company_name
+                        - tax_number
+                        - is_tax_exempted
+                        - billing_address
+                        - postal_code
+                        - email
+                        - is_active
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - city_id
+                        - created_by
+                        - code
+                        - phone
+                        - first_name
+                        - last_name
+                        - is_company
+                        - company_name
+                        - tax_number
+                        - is_tax_exempted
+                        - billing_address
+                        - postal_code
+                        - email
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

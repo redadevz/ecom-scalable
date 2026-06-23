@@ -1,0 +1,151 @@
+craftable-pro:
+    models:
+        DiscountType:
+            table: discount_types
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                loyalty_card_type_id: 'id foreign nullable'
+                name: string
+                description: 'string nullable'
+                is_percentage: boolean
+                value: decimal
+                coupon_code: 'string nullable'
+                min_order_value: decimal
+                min_item_quantity: integer
+                apply_to_all: boolean
+                apply_to_next: boolean
+                max_discount_value: decimal
+                start_time: datetime
+                end_time: 'datetime nullable'
+                is_active: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                loyalty_card_type_id: 'sortable searchable'
+                name: 'sortable searchable'
+                description: 'sortable searchable'
+                is_percentage: 'sortable searchable'
+                value: 'sortable searchable'
+                coupon_code: 'sortable searchable'
+                min_order_value: 'sortable searchable'
+                min_item_quantity: 'sortable searchable'
+                apply_to_all: 'sortable searchable'
+                apply_to_next: 'sortable searchable'
+                max_discount_value: 'sortable searchable'
+                start_time: sortable
+                end_time: sortable
+                is_active: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - loyalty_card_type_id
+                                    - name
+                                    - description
+                                    - is_percentage
+                                    - value
+                                    - coupon_code
+                                    - min_order_value
+                                    - min_item_quantity
+                                    - apply_to_all
+                                    - apply_to_next
+                                    - max_discount_value
+                                    - start_time
+                                    - end_time
+                                    - is_active
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - loyalty_card_type_id
+                        - name
+                        - description
+                        - is_percentage
+                        - value
+                        - coupon_code
+                        - min_order_value
+                        - min_item_quantity
+                        - apply_to_all
+                        - apply_to_next
+                        - max_discount_value
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - loyalty_card_type_id
+                        - name
+                        - description
+                        - is_percentage
+                        - value
+                        - coupon_code
+                        - min_order_value
+                        - min_item_quantity
+                        - apply_to_all
+                        - apply_to_next
+                        - max_discount_value
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - loyalty_card_type_id
+                        - name
+                        - description
+                        - is_percentage
+                        - value
+                        - coupon_code
+                        - min_order_value
+                        - min_item_quantity
+                        - apply_to_all
+                        - apply_to_next
+                        - max_discount_value
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - loyalty_card_type_id
+                        - name
+                        - description
+                        - is_percentage
+                        - value
+                        - coupon_code
+                        - min_order_value
+                        - min_item_quantity
+                        - apply_to_all
+                        - apply_to_next
+                        - max_discount_value
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

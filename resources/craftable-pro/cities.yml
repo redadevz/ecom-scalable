@@ -1,0 +1,67 @@
+craftable-pro:
+    models:
+        City:
+            table: cities
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                region_id: 'id foreign'
+                timezone_id: 'id foreign'
+                zipcode: 'integer nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                region_id: 'sortable searchable'
+                timezone_id: 'sortable searchable'
+                zipcode: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - region_id
+                                    - timezone_id
+                                    - zipcode
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - region_id
+                        - timezone_id
+                        - zipcode
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - region_id
+                        - timezone_id
+                        - zipcode
+                update:
+                    columns:
+                        - name
+                        - region_id
+                        - timezone_id
+                        - zipcode
+                show:
+                    columns:
+                        - id
+                        - name
+                        - region_id
+                        - timezone_id
+                        - zipcode
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

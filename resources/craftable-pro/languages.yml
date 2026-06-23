@@ -1,0 +1,60 @@
+craftable-pro:
+    models:
+        Language:
+            table: languages
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                short_name: string
+                description: 'text nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                short_name: 'sortable searchable'
+                description: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - short_name
+                                    - description
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - short_name
+                        - description
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - short_name
+                        - description
+                update:
+                    columns:
+                        - name
+                        - short_name
+                        - description
+                show:
+                    columns:
+                        - id
+                        - name
+                        - short_name
+                        - description
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

@@ -1,0 +1,354 @@
+craftable-pro:
+    models:
+        OrderHeader:
+            table: order_headers
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                sale_channel_id: 'id foreign'
+                delivery_type_id: 'id foreign'
+                payment_method_id: 'id foreign'
+                payment_time_id: 'id foreign'
+                customer_id: 'id foreign nullable'
+                loyalty_card_id: 'id foreign nullable'
+                created_by: 'id foreign nullable'
+                approved_by: 'id foreign nullable'
+                managed_by: 'id foreign nullable'
+                order_no: string
+                customer_notes: 'string nullable'
+                price_before_tax: decimal
+                total_tax_value: decimal
+                price_after_tax: decimal
+                price_before_discount: decimal
+                order_items_discount: decimal
+                order_discount: decimal
+                total_discount_value: decimal
+                price_after_discount: decimal
+                price_adjustment: 'decimal nullable'
+                price_adjustment_reason: 'string nullable'
+                price: decimal
+                latest_status: string
+                latest_status_update: datetime
+                is_submitted: boolean
+                submitted_time: 'datetime nullable'
+                is_approved: boolean
+                approved_time: 'datetime nullable'
+                is_canceled: boolean
+                canceled_time: 'datetime nullable'
+                cancel_reason: 'string nullable'
+                is_scheduled: boolean
+                scheduled_time: 'datetime nullable'
+                is_ready: boolean
+                ready_time: 'datetime nullable'
+                is_delivered: boolean
+                delivered_time: 'datetime nullable'
+                is_paid: boolean
+                payment_time: 'datetime nullable'
+                is_completed: boolean
+                completed_time: 'datetime nullable'
+                return_required: boolean
+                return_time: 'datetime nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                sale_channel_id: 'sortable searchable'
+                delivery_type_id: 'sortable searchable'
+                payment_method_id: 'sortable searchable'
+                payment_time_id: 'sortable searchable'
+                customer_id: 'sortable searchable'
+                loyalty_card_id: 'sortable searchable'
+                created_by: 'sortable searchable'
+                approved_by: 'sortable searchable'
+                managed_by: 'sortable searchable'
+                order_no: 'sortable searchable'
+                customer_notes: 'sortable searchable'
+                price_before_tax: 'sortable searchable'
+                total_tax_value: 'sortable searchable'
+                price_after_tax: 'sortable searchable'
+                price_before_discount: 'sortable searchable'
+                order_items_discount: 'sortable searchable'
+                order_discount: 'sortable searchable'
+                total_discount_value: 'sortable searchable'
+                price_after_discount: 'sortable searchable'
+                price_adjustment: 'sortable searchable'
+                price_adjustment_reason: 'sortable searchable'
+                price: 'sortable searchable'
+                latest_status: 'sortable searchable'
+                latest_status_update: sortable
+                is_submitted: 'sortable searchable'
+                submitted_time: sortable
+                is_approved: 'sortable searchable'
+                approved_time: sortable
+                is_canceled: 'sortable searchable'
+                canceled_time: sortable
+                cancel_reason: 'sortable searchable'
+                is_scheduled: 'sortable searchable'
+                scheduled_time: sortable
+                is_ready: 'sortable searchable'
+                ready_time: sortable
+                is_delivered: 'sortable searchable'
+                delivered_time: sortable
+                is_paid: 'sortable searchable'
+                payment_time: sortable
+                is_completed: 'sortable searchable'
+                completed_time: sortable
+                return_required: 'sortable searchable'
+                return_time: sortable
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - sale_channel_id
+                                    - delivery_type_id
+                                    - payment_method_id
+                                    - payment_time_id
+                                    - customer_id
+                                    - loyalty_card_id
+                                    - created_by
+                                    - approved_by
+                                    - managed_by
+                                    - order_no
+                                    - customer_notes
+                                    - price_before_tax
+                                    - total_tax_value
+                                    - price_after_tax
+                                    - price_before_discount
+                                    - order_items_discount
+                                    - order_discount
+                                    - total_discount_value
+                                    - price_after_discount
+                                    - price_adjustment
+                                    - price_adjustment_reason
+                                    - price
+                                    - latest_status
+                                    - latest_status_update
+                                    - is_submitted
+                                    - submitted_time
+                                    - is_approved
+                                    - approved_time
+                                    - is_canceled
+                                    - canceled_time
+                                    - cancel_reason
+                                    - is_scheduled
+                                    - scheduled_time
+                                    - is_ready
+                                    - ready_time
+                                    - is_delivered
+                                    - delivered_time
+                                    - is_paid
+                                    - payment_time
+                                    - is_completed
+                                    - completed_time
+                                    - return_required
+                                    - return_time
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - customer_id
+                        - loyalty_card_id
+                        - created_by
+                        - approved_by
+                        - managed_by
+                        - order_no
+                        - customer_notes
+                        - price_before_tax
+                        - total_tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - order_items_discount
+                        - order_discount
+                        - total_discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - latest_status
+                        - latest_status_update
+                        - is_submitted
+                        - submitted_time
+                        - is_approved
+                        - approved_time
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - is_scheduled
+                        - scheduled_time
+                        - is_ready
+                        - ready_time
+                        - is_delivered
+                        - delivered_time
+                        - is_paid
+                        - payment_time
+                        - is_completed
+                        - completed_time
+                        - return_required
+                        - return_time
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - customer_id
+                        - loyalty_card_id
+                        - created_by
+                        - approved_by
+                        - managed_by
+                        - order_no
+                        - customer_notes
+                        - price_before_tax
+                        - total_tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - order_items_discount
+                        - order_discount
+                        - total_discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - latest_status
+                        - latest_status_update
+                        - is_submitted
+                        - submitted_time
+                        - is_approved
+                        - approved_time
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - is_scheduled
+                        - scheduled_time
+                        - is_ready
+                        - ready_time
+                        - is_delivered
+                        - delivered_time
+                        - is_paid
+                        - payment_time
+                        - is_completed
+                        - completed_time
+                        - return_required
+                        - return_time
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - customer_id
+                        - loyalty_card_id
+                        - created_by
+                        - approved_by
+                        - managed_by
+                        - order_no
+                        - customer_notes
+                        - price_before_tax
+                        - total_tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - order_items_discount
+                        - order_discount
+                        - total_discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - latest_status
+                        - latest_status_update
+                        - is_submitted
+                        - submitted_time
+                        - is_approved
+                        - approved_time
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - is_scheduled
+                        - scheduled_time
+                        - is_ready
+                        - ready_time
+                        - is_delivered
+                        - delivered_time
+                        - is_paid
+                        - payment_time
+                        - is_completed
+                        - completed_time
+                        - return_required
+                        - return_time
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - customer_id
+                        - loyalty_card_id
+                        - created_by
+                        - approved_by
+                        - managed_by
+                        - order_no
+                        - customer_notes
+                        - price_before_tax
+                        - total_tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - order_items_discount
+                        - order_discount
+                        - total_discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - latest_status
+                        - latest_status_update
+                        - is_submitted
+                        - submitted_time
+                        - is_approved
+                        - approved_time
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - is_scheduled
+                        - scheduled_time
+                        - is_ready
+                        - ready_time
+                        - is_delivered
+                        - delivered_time
+                        - is_paid
+                        - payment_time
+                        - is_completed
+                        - completed_time
+                        - return_required
+                        - return_time
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

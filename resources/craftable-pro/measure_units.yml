@@ -1,0 +1,60 @@
+craftable-pro:
+    models:
+        MeasureUnit:
+            table: measure_units
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                symbol: string
+                description: 'text nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                symbol: 'sortable searchable'
+                description: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - symbol
+                                    - description
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - symbol
+                        - description
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - symbol
+                        - description
+                update:
+                    columns:
+                        - name
+                        - symbol
+                        - description
+                show:
+                    columns:
+                        - id
+                        - name
+                        - symbol
+                        - description
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

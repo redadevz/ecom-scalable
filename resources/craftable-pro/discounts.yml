@@ -1,0 +1,74 @@
+craftable-pro:
+    models:
+        Discount:
+            table: discounts
+            skip_model: false
+            columns:
+                id: id
+                discount_type_id: 'id foreign'
+                item_category_id: 'id foreign nullable'
+                item_id: 'id foreign nullable'
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                discount_type_id: 'sortable searchable'
+                item_category_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - discount_type_id
+                                    - item_category_id
+                                    - item_id
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - discount_type_id
+                        - item_category_id
+                        - item_id
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - discount_type_id
+                        - item_category_id
+                        - item_id
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - discount_type_id
+                        - item_category_id
+                        - item_id
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - discount_type_id
+                        - item_category_id
+                        - item_id
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

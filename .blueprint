@@ -1,10 +1,11 @@
-created:
-    - database/migrations/2026_06_22_141619_add_permissions_for_cart_items.php
-    - resources/js/craftable-pro/Pages/CartItem/Index.vue
-    - resources/js/craftable-pro/Pages/CartItem/Create.vue
-    - resources/js/craftable-pro/Pages/CartItem/Edit.vue
-    - resources/js/craftable-pro/Pages/CartItem/Form.vue
-    - resources/js/craftable-pro/Pages/CartItem/types.d.ts
 updated:
+    - routes/api.php
     - routes/web.php
     - resources/js/craftable-pro/Components/Sidebar.vue
+created:
+    - database/migrations/2026_06_23_131557_add_permissions_for_order_status_histories.php
+    - resources/js/craftable-pro/Pages/OrderStatusHistory/Index.vue
+    - resources/js/craftable-pro/Pages/OrderStatusHistory/Create.vue
+    - resources/js/craftable-pro/Pages/OrderStatusHistory/Edit.vue
+    - resources/js/craftable-pro/Pages/OrderStatusHistory/Form.vue
+    - resources/js/craftable-pro/Pages/OrderStatusHistory/types.d.ts

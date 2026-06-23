@@ -1,0 +1,46 @@
+craftable-pro:
+    models:
+        Country:
+            table: countries
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                update:
+                    columns:
+                        - name
+                show:
+                    columns:
+                        - id
+                        - name
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

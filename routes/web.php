@@ -104,3 +104,453 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::get('cart-items/export', [App\Http\Controllers\CraftablePro\CartItemController::class, 'export'])->name('cart-items.export');
 
 });
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('item-categories', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'index'])->name('item-categories.index');
+    Route::get('item-categories/create', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'create'])->name('item-categories.create');
+    Route::post('item-categories', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'store'])->name('item-categories.store');
+    Route::get('item-categories/edit/{itemCategory}', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'edit'])->name('item-categories.edit');
+    Route::match(['put', 'patch'], 'item-categories/{itemCategory}', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'update'])->name('item-categories.update');
+    Route::delete('item-categories/{itemCategory}', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'destroy'])->name('item-categories.destroy');
+    Route::post('item-categories/bulk-destroy', [App\Http\Controllers\CraftablePro\ItemCategoryController::class, 'bulkDestroy'])->name('item-categories.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('countries', [App\Http\Controllers\CraftablePro\CountryController::class, 'index'])->name('countries.index');
+    Route::get('countries/create', [App\Http\Controllers\CraftablePro\CountryController::class, 'create'])->name('countries.create');
+    Route::post('countries', [App\Http\Controllers\CraftablePro\CountryController::class, 'store'])->name('countries.store');
+    Route::get('countries/edit/{country}', [App\Http\Controllers\CraftablePro\CountryController::class, 'edit'])->name('countries.edit');
+    Route::match(['put', 'patch'], 'countries/{country}', [App\Http\Controllers\CraftablePro\CountryController::class, 'update'])->name('countries.update');
+    Route::delete('countries/{country}', [App\Http\Controllers\CraftablePro\CountryController::class, 'destroy'])->name('countries.destroy');
+    Route::post('countries/bulk-destroy', [App\Http\Controllers\CraftablePro\CountryController::class, 'bulkDestroy'])->name('countries.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('time-zones', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'index'])->name('time-zones.index');
+    Route::get('time-zones/create', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'create'])->name('time-zones.create');
+    Route::post('time-zones', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'store'])->name('time-zones.store');
+    Route::get('time-zones/edit/{timeZone}', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'edit'])->name('time-zones.edit');
+    Route::match(['put', 'patch'], 'time-zones/{timeZone}', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'update'])->name('time-zones.update');
+    Route::delete('time-zones/{timeZone}', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'destroy'])->name('time-zones.destroy');
+    Route::post('time-zones/bulk-destroy', [App\Http\Controllers\CraftablePro\TimeZoneController::class, 'bulkDestroy'])->name('time-zones.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('currencies', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'index'])->name('currencies.index');
+    Route::get('currencies/create', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'create'])->name('currencies.create');
+    Route::post('currencies', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'store'])->name('currencies.store');
+    Route::get('currencies/edit/{currency}', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'edit'])->name('currencies.edit');
+    Route::match(['put', 'patch'], 'currencies/{currency}', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'update'])->name('currencies.update');
+    Route::delete('currencies/{currency}', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'destroy'])->name('currencies.destroy');
+    Route::post('currencies/bulk-destroy', [App\Http\Controllers\CraftablePro\CurrencyController::class, 'bulkDestroy'])->name('currencies.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('languages', [App\Http\Controllers\CraftablePro\LanguageController::class, 'index'])->name('languages.index');
+    Route::get('languages/create', [App\Http\Controllers\CraftablePro\LanguageController::class, 'create'])->name('languages.create');
+    Route::post('languages', [App\Http\Controllers\CraftablePro\LanguageController::class, 'store'])->name('languages.store');
+    Route::get('languages/edit/{language}', [App\Http\Controllers\CraftablePro\LanguageController::class, 'edit'])->name('languages.edit');
+    Route::match(['put', 'patch'], 'languages/{language}', [App\Http\Controllers\CraftablePro\LanguageController::class, 'update'])->name('languages.update');
+    Route::delete('languages/{language}', [App\Http\Controllers\CraftablePro\LanguageController::class, 'destroy'])->name('languages.destroy');
+    Route::post('languages/bulk-destroy', [App\Http\Controllers\CraftablePro\LanguageController::class, 'bulkDestroy'])->name('languages.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('measure-units', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'index'])->name('measure-units.index');
+    Route::get('measure-units/create', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'create'])->name('measure-units.create');
+    Route::post('measure-units', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'store'])->name('measure-units.store');
+    Route::get('measure-units/edit/{measureUnit}', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'edit'])->name('measure-units.edit');
+    Route::match(['put', 'patch'], 'measure-units/{measureUnit}', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'update'])->name('measure-units.update');
+    Route::delete('measure-units/{measureUnit}', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'destroy'])->name('measure-units.destroy');
+    Route::post('measure-units/bulk-destroy', [App\Http\Controllers\CraftablePro\MeasureUnitController::class, 'bulkDestroy'])->name('measure-units.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('sale-channels', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'index'])->name('sale-channels.index');
+    Route::get('sale-channels/create', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'create'])->name('sale-channels.create');
+    Route::post('sale-channels', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'store'])->name('sale-channels.store');
+    Route::get('sale-channels/edit/{saleChannel}', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'edit'])->name('sale-channels.edit');
+    Route::match(['put', 'patch'], 'sale-channels/{saleChannel}', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'update'])->name('sale-channels.update');
+    Route::delete('sale-channels/{saleChannel}', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'destroy'])->name('sale-channels.destroy');
+    Route::post('sale-channels/bulk-destroy', [App\Http\Controllers\CraftablePro\SaleChannelController::class, 'bulkDestroy'])->name('sale-channels.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('delivery-types', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'index'])->name('delivery-types.index');
+    Route::get('delivery-types/create', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'create'])->name('delivery-types.create');
+    Route::post('delivery-types', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'store'])->name('delivery-types.store');
+    Route::get('delivery-types/edit/{deliveryType}', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'edit'])->name('delivery-types.edit');
+    Route::match(['put', 'patch'], 'delivery-types/{deliveryType}', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'update'])->name('delivery-types.update');
+    Route::delete('delivery-types/{deliveryType}', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'destroy'])->name('delivery-types.destroy');
+    Route::post('delivery-types/bulk-destroy', [App\Http\Controllers\CraftablePro\DeliveryTypeController::class, 'bulkDestroy'])->name('delivery-types.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('payment-methods', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'index'])->name('payment-methods.index');
+    Route::get('payment-methods/create', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'create'])->name('payment-methods.create');
+    Route::post('payment-methods', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'store'])->name('payment-methods.store');
+    Route::get('payment-methods/edit/{paymentMethod}', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'edit'])->name('payment-methods.edit');
+    Route::match(['put', 'patch'], 'payment-methods/{paymentMethod}', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'update'])->name('payment-methods.update');
+    Route::delete('payment-methods/{paymentMethod}', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'destroy'])->name('payment-methods.destroy');
+    Route::post('payment-methods/bulk-destroy', [App\Http\Controllers\CraftablePro\PaymentMethodController::class, 'bulkDestroy'])->name('payment-methods.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('payment-times', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'index'])->name('payment-times.index');
+    Route::get('payment-times/create', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'create'])->name('payment-times.create');
+    Route::post('payment-times', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'store'])->name('payment-times.store');
+    Route::get('payment-times/edit/{paymentTime}', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'edit'])->name('payment-times.edit');
+    Route::match(['put', 'patch'], 'payment-times/{paymentTime}', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'update'])->name('payment-times.update');
+    Route::delete('payment-times/{paymentTime}', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'destroy'])->name('payment-times.destroy');
+    Route::post('payment-times/bulk-destroy', [App\Http\Controllers\CraftablePro\PaymentTimeController::class, 'bulkDestroy'])->name('payment-times.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('order-statuses', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'index'])->name('order-statuses.index');
+    Route::get('order-statuses/create', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'create'])->name('order-statuses.create');
+    Route::post('order-statuses', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'store'])->name('order-statuses.store');
+    Route::get('order-statuses/edit/{orderStatus}', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'edit'])->name('order-statuses.edit');
+    Route::match(['put', 'patch'], 'order-statuses/{orderStatus}', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'update'])->name('order-statuses.update');
+    Route::delete('order-statuses/{orderStatus}', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'destroy'])->name('order-statuses.destroy');
+    Route::post('order-statuses/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'bulkDestroy'])->name('order-statuses.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('loyalty-card-types', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'index'])->name('loyalty-card-types.index');
+    Route::get('loyalty-card-types/create', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'create'])->name('loyalty-card-types.create');
+    Route::post('loyalty-card-types', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'store'])->name('loyalty-card-types.store');
+    Route::get('loyalty-card-types/edit/{loyaltyCardType}', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'edit'])->name('loyalty-card-types.edit');
+    Route::match(['put', 'patch'], 'loyalty-card-types/{loyaltyCardType}', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'update'])->name('loyalty-card-types.update');
+    Route::delete('loyalty-card-types/{loyaltyCardType}', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'destroy'])->name('loyalty-card-types.destroy');
+    Route::post('loyalty-card-types/bulk-destroy', [App\Http\Controllers\CraftablePro\LoyaltyCardTypeController::class, 'bulkDestroy'])->name('loyalty-card-types.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('regions', [App\Http\Controllers\CraftablePro\RegionController::class, 'index'])->name('regions.index');
+    Route::get('regions/create', [App\Http\Controllers\CraftablePro\RegionController::class, 'create'])->name('regions.create');
+    Route::post('regions', [App\Http\Controllers\CraftablePro\RegionController::class, 'store'])->name('regions.store');
+    Route::get('regions/edit/{region}', [App\Http\Controllers\CraftablePro\RegionController::class, 'edit'])->name('regions.edit');
+    Route::match(['put', 'patch'], 'regions/{region}', [App\Http\Controllers\CraftablePro\RegionController::class, 'update'])->name('regions.update');
+    Route::delete('regions/{region}', [App\Http\Controllers\CraftablePro\RegionController::class, 'destroy'])->name('regions.destroy');
+    Route::post('regions/bulk-destroy', [App\Http\Controllers\CraftablePro\RegionController::class, 'bulkDestroy'])->name('regions.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('cities', [App\Http\Controllers\CraftablePro\CityController::class, 'index'])->name('cities.index');
+    Route::get('cities/create', [App\Http\Controllers\CraftablePro\CityController::class, 'create'])->name('cities.create');
+    Route::post('cities', [App\Http\Controllers\CraftablePro\CityController::class, 'store'])->name('cities.store');
+    Route::get('cities/edit/{city}', [App\Http\Controllers\CraftablePro\CityController::class, 'edit'])->name('cities.edit');
+    Route::match(['put', 'patch'], 'cities/{city}', [App\Http\Controllers\CraftablePro\CityController::class, 'update'])->name('cities.update');
+    Route::delete('cities/{city}', [App\Http\Controllers\CraftablePro\CityController::class, 'destroy'])->name('cities.destroy');
+    Route::post('cities/bulk-destroy', [App\Http\Controllers\CraftablePro\CityController::class, 'bulkDestroy'])->name('cities.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('stores', [App\Http\Controllers\CraftablePro\StoreController::class, 'index'])->name('stores.index');
+    Route::get('stores/create', [App\Http\Controllers\CraftablePro\StoreController::class, 'create'])->name('stores.create');
+    Route::post('stores', [App\Http\Controllers\CraftablePro\StoreController::class, 'store'])->name('stores.store');
+    Route::get('stores/edit/{store}', [App\Http\Controllers\CraftablePro\StoreController::class, 'edit'])->name('stores.edit');
+    Route::match(['put', 'patch'], 'stores/{store}', [App\Http\Controllers\CraftablePro\StoreController::class, 'update'])->name('stores.update');
+    Route::delete('stores/{store}', [App\Http\Controllers\CraftablePro\StoreController::class, 'destroy'])->name('stores.destroy');
+    Route::post('stores/bulk-destroy', [App\Http\Controllers\CraftablePro\StoreController::class, 'bulkDestroy'])->name('stores.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('tax-types', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'index'])->name('tax-types.index');
+    Route::get('tax-types/create', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'create'])->name('tax-types.create');
+    Route::post('tax-types', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'store'])->name('tax-types.store');
+    Route::get('tax-types/edit/{taxType}', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'edit'])->name('tax-types.edit');
+    Route::match(['put', 'patch'], 'tax-types/{taxType}', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'update'])->name('tax-types.update');
+    Route::delete('tax-types/{taxType}', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'destroy'])->name('tax-types.destroy');
+    Route::post('tax-types/bulk-destroy', [App\Http\Controllers\CraftablePro\TaxTypeController::class, 'bulkDestroy'])->name('tax-types.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('suppliers', [App\Http\Controllers\CraftablePro\SupplierController::class, 'index'])->name('suppliers.index');
+    Route::get('suppliers/create', [App\Http\Controllers\CraftablePro\SupplierController::class, 'create'])->name('suppliers.create');
+    Route::post('suppliers', [App\Http\Controllers\CraftablePro\SupplierController::class, 'store'])->name('suppliers.store');
+    Route::get('suppliers/edit/{supplier}', [App\Http\Controllers\CraftablePro\SupplierController::class, 'edit'])->name('suppliers.edit');
+    Route::match(['put', 'patch'], 'suppliers/{supplier}', [App\Http\Controllers\CraftablePro\SupplierController::class, 'update'])->name('suppliers.update');
+    Route::delete('suppliers/{supplier}', [App\Http\Controllers\CraftablePro\SupplierController::class, 'destroy'])->name('suppliers.destroy');
+    Route::post('suppliers/bulk-destroy', [App\Http\Controllers\CraftablePro\SupplierController::class, 'bulkDestroy'])->name('suppliers.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('customers', [App\Http\Controllers\CraftablePro\CustomerController::class, 'index'])->name('customers.index');
+    Route::get('customers/create', [App\Http\Controllers\CraftablePro\CustomerController::class, 'create'])->name('customers.create');
+    Route::post('customers', [App\Http\Controllers\CraftablePro\CustomerController::class, 'store'])->name('customers.store');
+    Route::get('customers/edit/{customer}', [App\Http\Controllers\CraftablePro\CustomerController::class, 'edit'])->name('customers.edit');
+    Route::match(['put', 'patch'], 'customers/{customer}', [App\Http\Controllers\CraftablePro\CustomerController::class, 'update'])->name('customers.update');
+    Route::delete('customers/{customer}', [App\Http\Controllers\CraftablePro\CustomerController::class, 'destroy'])->name('customers.destroy');
+    Route::post('customers/bulk-destroy', [App\Http\Controllers\CraftablePro\CustomerController::class, 'bulkDestroy'])->name('customers.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('loyalty-cards', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'index'])->name('loyalty-cards.index');
+    Route::get('loyalty-cards/create', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'create'])->name('loyalty-cards.create');
+    Route::post('loyalty-cards', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'store'])->name('loyalty-cards.store');
+    Route::get('loyalty-cards/edit/{loyaltyCard}', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'edit'])->name('loyalty-cards.edit');
+    Route::match(['put', 'patch'], 'loyalty-cards/{loyaltyCard}', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'update'])->name('loyalty-cards.update');
+    Route::delete('loyalty-cards/{loyaltyCard}', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'destroy'])->name('loyalty-cards.destroy');
+    Route::post('loyalty-cards/bulk-destroy', [App\Http\Controllers\CraftablePro\LoyaltyCardController::class, 'bulkDestroy'])->name('loyalty-cards.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('items', [App\Http\Controllers\CraftablePro\ItemController::class, 'index'])->name('items.index');
+    Route::get('items/create', [App\Http\Controllers\CraftablePro\ItemController::class, 'create'])->name('items.create');
+    Route::post('items', [App\Http\Controllers\CraftablePro\ItemController::class, 'store'])->name('items.store');
+    Route::get('items/edit/{item}', [App\Http\Controllers\CraftablePro\ItemController::class, 'edit'])->name('items.edit');
+    Route::match(['put', 'patch'], 'items/{item}', [App\Http\Controllers\CraftablePro\ItemController::class, 'update'])->name('items.update');
+    Route::delete('items/{item}', [App\Http\Controllers\CraftablePro\ItemController::class, 'destroy'])->name('items.destroy');
+    Route::post('items/bulk-destroy', [App\Http\Controllers\CraftablePro\ItemController::class, 'bulkDestroy'])->name('items.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('bar-codes', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'index'])->name('bar-codes.index');
+    Route::get('bar-codes/create', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'create'])->name('bar-codes.create');
+    Route::post('bar-codes', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'store'])->name('bar-codes.store');
+    Route::get('bar-codes/edit/{barCode}', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'edit'])->name('bar-codes.edit');
+    Route::match(['put', 'patch'], 'bar-codes/{barCode}', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'update'])->name('bar-codes.update');
+    Route::delete('bar-codes/{barCode}', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'destroy'])->name('bar-codes.destroy');
+    Route::post('bar-codes/bulk-destroy', [App\Http\Controllers\CraftablePro\BarCodeController::class, 'bulkDestroy'])->name('bar-codes.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('prices', [App\Http\Controllers\CraftablePro\PriceController::class, 'index'])->name('prices.index');
+    Route::get('prices/create', [App\Http\Controllers\CraftablePro\PriceController::class, 'create'])->name('prices.create');
+    Route::post('prices', [App\Http\Controllers\CraftablePro\PriceController::class, 'store'])->name('prices.store');
+    Route::get('prices/edit/{price}', [App\Http\Controllers\CraftablePro\PriceController::class, 'edit'])->name('prices.edit');
+    Route::match(['put', 'patch'], 'prices/{price}', [App\Http\Controllers\CraftablePro\PriceController::class, 'update'])->name('prices.update');
+    Route::delete('prices/{price}', [App\Http\Controllers\CraftablePro\PriceController::class, 'destroy'])->name('prices.destroy');
+    Route::post('prices/bulk-destroy', [App\Http\Controllers\CraftablePro\PriceController::class, 'bulkDestroy'])->name('prices.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('supplier-tax-types', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'index'])->name('supplier-tax-types.index');
+    Route::get('supplier-tax-types/create', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'create'])->name('supplier-tax-types.create');
+    Route::post('supplier-tax-types', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'store'])->name('supplier-tax-types.store');
+    Route::get('supplier-tax-types/edit/{supplierTaxType}', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'edit'])->name('supplier-tax-types.edit');
+    Route::match(['put', 'patch'], 'supplier-tax-types/{supplierTaxType}', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'update'])->name('supplier-tax-types.update');
+    Route::delete('supplier-tax-types/{supplierTaxType}', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'destroy'])->name('supplier-tax-types.destroy');
+    Route::post('supplier-tax-types/bulk-destroy', [App\Http\Controllers\CraftablePro\SupplierTaxTypeController::class, 'bulkDestroy'])->name('supplier-tax-types.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('supplier-item-tax-types', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'index'])->name('supplier-item-tax-types.index');
+    Route::get('supplier-item-tax-types/create', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'create'])->name('supplier-item-tax-types.create');
+    Route::post('supplier-item-tax-types', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'store'])->name('supplier-item-tax-types.store');
+    Route::get('supplier-item-tax-types/edit/{supplierItemTaxType}', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'edit'])->name('supplier-item-tax-types.edit');
+    Route::match(['put', 'patch'], 'supplier-item-tax-types/{supplierItemTaxType}', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'update'])->name('supplier-item-tax-types.update');
+    Route::delete('supplier-item-tax-types/{supplierItemTaxType}', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'destroy'])->name('supplier-item-tax-types.destroy');
+    Route::post('supplier-item-tax-types/bulk-destroy', [App\Http\Controllers\CraftablePro\SupplierItemTaxTypeController::class, 'bulkDestroy'])->name('supplier-item-tax-types.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('discount-types', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'index'])->name('discount-types.index');
+    Route::get('discount-types/create', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'create'])->name('discount-types.create');
+    Route::post('discount-types', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'store'])->name('discount-types.store');
+    Route::get('discount-types/edit/{discountType}', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'edit'])->name('discount-types.edit');
+    Route::match(['put', 'patch'], 'discount-types/{discountType}', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'update'])->name('discount-types.update');
+    Route::delete('discount-types/{discountType}', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'destroy'])->name('discount-types.destroy');
+    Route::post('discount-types/bulk-destroy', [App\Http\Controllers\CraftablePro\DiscountTypeController::class, 'bulkDestroy'])->name('discount-types.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('discounts', [App\Http\Controllers\CraftablePro\DiscountController::class, 'index'])->name('discounts.index');
+    Route::get('discounts/create', [App\Http\Controllers\CraftablePro\DiscountController::class, 'create'])->name('discounts.create');
+    Route::post('discounts', [App\Http\Controllers\CraftablePro\DiscountController::class, 'store'])->name('discounts.store');
+    Route::get('discounts/edit/{discount}', [App\Http\Controllers\CraftablePro\DiscountController::class, 'edit'])->name('discounts.edit');
+    Route::match(['put', 'patch'], 'discounts/{discount}', [App\Http\Controllers\CraftablePro\DiscountController::class, 'update'])->name('discounts.update');
+    Route::delete('discounts/{discount}', [App\Http\Controllers\CraftablePro\DiscountController::class, 'destroy'])->name('discounts.destroy');
+    Route::post('discounts/bulk-destroy', [App\Http\Controllers\CraftablePro\DiscountController::class, 'bulkDestroy'])->name('discounts.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('payment-terms', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'index'])->name('payment-terms.index');
+    Route::get('payment-terms/create', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'create'])->name('payment-terms.create');
+    Route::post('payment-terms', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'store'])->name('payment-terms.store');
+    Route::get('payment-terms/edit/{paymentTerm}', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'edit'])->name('payment-terms.edit');
+    Route::match(['put', 'patch'], 'payment-terms/{paymentTerm}', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'update'])->name('payment-terms.update');
+    Route::delete('payment-terms/{paymentTerm}', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'destroy'])->name('payment-terms.destroy');
+    Route::post('payment-terms/bulk-destroy', [App\Http\Controllers\CraftablePro\PaymentTermController::class, 'bulkDestroy'])->name('payment-terms.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('order-headers', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'index'])->name('order-headers.index');
+    Route::get('order-headers/create', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'create'])->name('order-headers.create');
+    Route::post('order-headers', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'store'])->name('order-headers.store');
+    Route::get('order-headers/edit/{orderHeader}', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'edit'])->name('order-headers.edit');
+    Route::match(['put', 'patch'], 'order-headers/{orderHeader}', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'update'])->name('order-headers.update');
+    Route::delete('order-headers/{orderHeader}', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'destroy'])->name('order-headers.destroy');
+    Route::post('order-headers/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'bulkDestroy'])->name('order-headers.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('order-lines', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'index'])->name('order-lines.index');
+    Route::get('order-lines/create', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'create'])->name('order-lines.create');
+    Route::post('order-lines', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'store'])->name('order-lines.store');
+    Route::get('order-lines/edit/{orderLine}', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'edit'])->name('order-lines.edit');
+    Route::match(['put', 'patch'], 'order-lines/{orderLine}', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'update'])->name('order-lines.update');
+    Route::delete('order-lines/{orderLine}', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'destroy'])->name('order-lines.destroy');
+    Route::post('order-lines/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderLineController::class, 'bulkDestroy'])->name('order-lines.bulk-destroy');
+    
+});
+
+
+
+
+/* Auto-generated admin routes */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('order-status-histories', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'index'])->name('order-status-histories.index');
+    Route::get('order-status-histories/create', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'create'])->name('order-status-histories.create');
+    Route::post('order-status-histories', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'store'])->name('order-status-histories.store');
+    Route::get('order-status-histories/edit/{orderStatusHistory}', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'edit'])->name('order-status-histories.edit');
+    Route::match(['put', 'patch'], 'order-status-histories/{orderStatusHistory}', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'update'])->name('order-status-histories.update');
+    Route::delete('order-status-histories/{orderStatusHistory}', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'destroy'])->name('order-status-histories.destroy');
+    Route::post('order-status-histories/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderStatusHistoryController::class, 'bulkDestroy'])->name('order-status-histories.bulk-destroy');
+    
+});

@@ -1,0 +1,88 @@
+craftable-pro:
+    models:
+        PaymentTerm:
+            table: payment_terms
+            skip_model: false
+            columns:
+                id: id
+                sale_channel_id: 'id foreign'
+                delivery_type_id: 'id foreign'
+                payment_method_id: 'id foreign'
+                payment_time_id: 'id foreign'
+                is_allowed: boolean
+                is_active: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                sale_channel_id: 'sortable searchable'
+                delivery_type_id: 'sortable searchable'
+                payment_method_id: 'sortable searchable'
+                payment_time_id: 'sortable searchable'
+                is_allowed: 'sortable searchable'
+                is_active: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - sale_channel_id
+                                    - delivery_type_id
+                                    - payment_method_id
+                                    - payment_time_id
+                                    - is_allowed
+                                    - is_active
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - is_allowed
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - is_allowed
+                        - is_active
+                        - comments
+                update:
+                    columns:
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - is_allowed
+                        - is_active
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - sale_channel_id
+                        - delivery_type_id
+                        - payment_method_id
+                        - payment_time_id
+                        - is_allowed
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

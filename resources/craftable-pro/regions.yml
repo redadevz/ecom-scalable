@@ -1,0 +1,53 @@
+craftable-pro:
+    models:
+        Region:
+            table: regions
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                country_id: 'id foreign'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                country_id: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - country_id
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - country_id
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - country_id
+                update:
+                    columns:
+                        - name
+                        - country_id
+                show:
+                    columns:
+                        - id
+                        - name
+                        - country_id
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

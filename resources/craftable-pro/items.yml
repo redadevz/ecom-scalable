@@ -1,0 +1,165 @@
+craftable-pro:
+    models:
+        Item:
+            table: items
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                item_category_id: 'id foreign'
+                supplier_id: 'id foreign'
+                measure_unit_id: 'id foreign'
+                sku_code: string
+                name: string
+                description: 'string nullable'
+                is_service: boolean
+                in_stock: boolean
+                using_default_quantity: boolean
+                default_quantity: 'integer nullable'
+                current_stock_quantity: integer
+                preferred_stock_quantity: integer
+                min_stock_quantity: integer
+                low_stock_warning: boolean
+                low_stock_quantity: 'integer nullable'
+                is_active: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                item_category_id: 'sortable searchable'
+                supplier_id: 'sortable searchable'
+                measure_unit_id: 'sortable searchable'
+                sku_code: 'sortable searchable'
+                name: 'sortable searchable'
+                description: 'sortable searchable'
+                is_service: 'sortable searchable'
+                in_stock: 'sortable searchable'
+                using_default_quantity: 'sortable searchable'
+                default_quantity: 'sortable searchable'
+                current_stock_quantity: 'sortable searchable'
+                preferred_stock_quantity: 'sortable searchable'
+                min_stock_quantity: 'sortable searchable'
+                low_stock_warning: 'sortable searchable'
+                low_stock_quantity: 'sortable searchable'
+                is_active: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - item_category_id
+                                    - supplier_id
+                                    - measure_unit_id
+                                    - sku_code
+                                    - name
+                                    - description
+                                    - is_service
+                                    - in_stock
+                                    - using_default_quantity
+                                    - default_quantity
+                                    - current_stock_quantity
+                                    - preferred_stock_quantity
+                                    - min_stock_quantity
+                                    - low_stock_warning
+                                    - low_stock_quantity
+                                    - is_active
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - item_category_id
+                        - supplier_id
+                        - measure_unit_id
+                        - sku_code
+                        - name
+                        - description
+                        - is_service
+                        - in_stock
+                        - using_default_quantity
+                        - default_quantity
+                        - current_stock_quantity
+                        - preferred_stock_quantity
+                        - min_stock_quantity
+                        - low_stock_warning
+                        - low_stock_quantity
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - item_category_id
+                        - supplier_id
+                        - measure_unit_id
+                        - sku_code
+                        - name
+                        - description
+                        - is_service
+                        - in_stock
+                        - using_default_quantity
+                        - default_quantity
+                        - current_stock_quantity
+                        - preferred_stock_quantity
+                        - min_stock_quantity
+                        - low_stock_warning
+                        - low_stock_quantity
+                        - is_active
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - item_category_id
+                        - supplier_id
+                        - measure_unit_id
+                        - sku_code
+                        - name
+                        - description
+                        - is_service
+                        - in_stock
+                        - using_default_quantity
+                        - default_quantity
+                        - current_stock_quantity
+                        - preferred_stock_quantity
+                        - min_stock_quantity
+                        - low_stock_warning
+                        - low_stock_quantity
+                        - is_active
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - item_category_id
+                        - supplier_id
+                        - measure_unit_id
+                        - sku_code
+                        - name
+                        - description
+                        - is_service
+                        - in_stock
+                        - using_default_quantity
+                        - default_quantity
+                        - current_stock_quantity
+                        - preferred_stock_quantity
+                        - min_stock_quantity
+                        - low_stock_warning
+                        - low_stock_quantity
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

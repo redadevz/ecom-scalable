@@ -1,0 +1,228 @@
+craftable-pro:
+    models:
+        OrderLine:
+            table: order_lines
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                order_id: 'id foreign'
+                item_id: 'id foreign'
+                line_no: string
+                description: 'string nullable'
+                customer_notes: 'string nullable'
+                quantity: integer
+                current_item_cost: decimal
+                markup_percentage: integer
+                price_before_tax: decimal
+                tax_value: decimal
+                price_after_tax: decimal
+                price_before_discount: decimal
+                discount_value: decimal
+                price_after_discount: decimal
+                price_adjustment: 'decimal nullable'
+                price_adjustment_reason: 'string nullable'
+                price: decimal
+                is_canceled: boolean
+                canceled_time: 'datetime nullable'
+                cancel_reason: 'string nullable'
+                return_required: boolean
+                return_quantity: 'integer nullable'
+                return_time: 'datetime nullable'
+                customer_review: 'string nullable'
+                customer_like: 'boolean nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                line_no: 'sortable searchable'
+                description: 'sortable searchable'
+                customer_notes: 'sortable searchable'
+                quantity: 'sortable searchable'
+                current_item_cost: 'sortable searchable'
+                markup_percentage: 'sortable searchable'
+                price_before_tax: 'sortable searchable'
+                tax_value: 'sortable searchable'
+                price_after_tax: 'sortable searchable'
+                price_before_discount: 'sortable searchable'
+                discount_value: 'sortable searchable'
+                price_after_discount: 'sortable searchable'
+                price_adjustment: 'sortable searchable'
+                price_adjustment_reason: 'sortable searchable'
+                price: 'sortable searchable'
+                is_canceled: 'sortable searchable'
+                canceled_time: sortable
+                cancel_reason: 'sortable searchable'
+                return_required: 'sortable searchable'
+                return_quantity: 'sortable searchable'
+                return_time: sortable
+                customer_review: 'sortable searchable'
+                customer_like: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - order_id
+                                    - item_id
+                                    - line_no
+                                    - description
+                                    - customer_notes
+                                    - quantity
+                                    - current_item_cost
+                                    - markup_percentage
+                                    - price_before_tax
+                                    - tax_value
+                                    - price_after_tax
+                                    - price_before_discount
+                                    - discount_value
+                                    - price_after_discount
+                                    - price_adjustment
+                                    - price_adjustment_reason
+                                    - price
+                                    - is_canceled
+                                    - canceled_time
+                                    - cancel_reason
+                                    - return_required
+                                    - return_quantity
+                                    - return_time
+                                    - customer_review
+                                    - customer_like
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - order_id
+                        - item_id
+                        - line_no
+                        - description
+                        - customer_notes
+                        - quantity
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - return_required
+                        - return_quantity
+                        - return_time
+                        - customer_review
+                        - customer_like
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - order_id
+                        - item_id
+                        - line_no
+                        - description
+                        - customer_notes
+                        - quantity
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - return_required
+                        - return_quantity
+                        - return_time
+                        - customer_review
+                        - customer_like
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - order_id
+                        - item_id
+                        - line_no
+                        - description
+                        - customer_notes
+                        - quantity
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - return_required
+                        - return_quantity
+                        - return_time
+                        - customer_review
+                        - customer_like
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - order_id
+                        - item_id
+                        - line_no
+                        - description
+                        - customer_notes
+                        - quantity
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - price_before_discount
+                        - discount_value
+                        - price_after_discount
+                        - price_adjustment
+                        - price_adjustment_reason
+                        - price
+                        - is_canceled
+                        - canceled_time
+                        - cancel_reason
+                        - return_required
+                        - return_quantity
+                        - return_time
+                        - customer_review
+                        - customer_like
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

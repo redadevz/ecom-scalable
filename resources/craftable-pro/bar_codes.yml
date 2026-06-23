@@ -1,0 +1,67 @@
+craftable-pro:
+    models:
+        BarCode:
+            table: bar_codes
+            skip_model: false
+            columns:
+                id: id
+                item_id: 'id foreign'
+                bar_code: string
+                is_active: boolean
+                description: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                bar_code: 'sortable searchable'
+                is_active: 'sortable searchable'
+                description: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - item_id
+                                    - bar_code
+                                    - is_active
+                                    - description
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - item_id
+                        - bar_code
+                        - is_active
+                        - description
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - item_id
+                        - bar_code
+                        - is_active
+                        - description
+                update:
+                    columns:
+                        - item_id
+                        - bar_code
+                        - is_active
+                        - description
+                show:
+                    columns:
+                        - id
+                        - item_id
+                        - bar_code
+                        - is_active
+                        - description
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

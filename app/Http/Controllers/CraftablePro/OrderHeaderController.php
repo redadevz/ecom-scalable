@@ -1,0 +1,143 @@
+<?php
+
+namespace App\Http\Controllers\CraftablePro;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests\CraftablePro\OrderHeader\BulkDestroyOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\CreateOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\DestroyOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\EditOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\IndexOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\StoreOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\UpdateOrderHeaderRequest;
+use App\Models\OrderHeader;
+use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Inertia\Inertia;
+use Inertia\Response;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
+
+class OrderHeaderController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index(IndexOrderHeaderRequest $request): Response | JsonResponse | RedirectResponse
+    {
+        $defaultSort = "id";
+
+        if (!$request->has('sort')) {
+            return redirect()->route($request->route()->getName(), ['sort' => $defaultSort]);
+        }
+
+        $orderHeadersQuery = QueryBuilder::for(OrderHeader::class)
+            ->allowedFilters([
+                AllowedFilter::custom('search', new FuzzyFilter(
+                    'id', 'store_id', 'sale_channel_id', 'delivery_type_id', 'payment_method_id', 'payment_time_id', 'customer_id', 'loyalty_card_id', 'created_by', 'approved_by', 'managed_by', 'order_no', 'customer_notes', 'price_before_tax', 'total_tax_value', 'price_after_tax', 'price_before_discount', 'order_items_discount', 'order_discount', 'total_discount_value', 'price_after_discount', 'price_adjustment', 'price_adjustment_reason', 'price', 'latest_status', 'is_submitted', 'is_approved', 'is_canceled', 'cancel_reason', 'is_scheduled', 'is_ready', 'is_delivered', 'is_paid', 'is_completed', 'return_required', 'comments'
+                )),
+            ])
+            ->defaultSort($defaultSort)
+            ->allowedSorts(['id', 'store_id', 'sale_channel_id', 'delivery_type_id', 'payment_method_id', 'payment_time_id', 'customer_id', 'loyalty_card_id', 'created_by', 'approved_by', 'managed_by', 'order_no', 'customer_notes', 'price_before_tax', 'total_tax_value', 'price_after_tax', 'price_before_discount', 'order_items_discount', 'order_discount', 'total_discount_value', 'price_after_discount', 'price_adjustment', 'price_adjustment_reason', 'price', 'latest_status', 'latest_status_update', 'is_submitted', 'submitted_time', 'is_approved', 'approved_time', 'is_canceled', 'canceled_time', 'cancel_reason', 'is_scheduled', 'scheduled_time', 'is_ready', 'ready_time', 'is_delivered', 'delivered_time', 'is_paid', 'payment_time', 'is_completed', 'completed_time', 'return_required', 'return_time', 'comments', 'created_at']);
+
+        if ($request->wantsJson() && $request->get('bulk_select_all')) {
+            return response()->json($orderHeadersQuery->select(['id'])->pluck('id'));
+        }
+
+        $orderHeaders = $orderHeadersQuery
+            ->with([])
+            ->select('id', 'store_id', 'sale_channel_id', 'delivery_type_id', 'payment_method_id', 'payment_time_id', 'customer_id', 'loyalty_card_id', 'created_by', 'approved_by', 'managed_by', 'order_no', 'customer_notes', 'price_before_tax', 'total_tax_value', 'price_after_tax', 'price_before_discount', 'order_items_discount', 'order_discount', 'total_discount_value', 'price_after_discount', 'price_adjustment', 'price_adjustment_reason', 'price', 'latest_status', 'latest_status_update', 'is_submitted', 'submitted_time', 'is_approved', 'approved_time', 'is_canceled', 'canceled_time', 'cancel_reason', 'is_scheduled', 'scheduled_time', 'is_ready', 'ready_time', 'is_delivered', 'delivered_time', 'is_paid', 'payment_time', 'is_completed', 'completed_time', 'return_required', 'return_time', 'comments', 'created_at')
+            ->paginate($request->get('per_page'))->withQueryString();
+
+        Session::put('orderHeaders_url', $request->fullUrl());
+
+        return Inertia::render('OrderHeader/Index', [
+            'orderHeaders' => $orderHeaders,
+        ]);
+    }
+
+     /**
+     * Show the form for creating a new resource.
+     */
+    public function create(CreateOrderHeaderRequest $request): Response
+    {
+        return Inertia::render('OrderHeader/Create', [
+            
+        ]);
+    }
+
+    /**
+    * Store a newly created resource in storage.
+    */
+    public function store(StoreOrderHeaderRequest $request): RedirectResponse
+    {
+        $orderHeader = OrderHeader::create($request->validated());
+        
+        return redirect()->route('craftable-pro.order-headers.index')->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(EditOrderHeaderRequest $request, OrderHeader $orderHeader): Response
+    {
+        
+        return Inertia::render('OrderHeader/Edit', [
+            'orderHeader' => $orderHeader,
+            
+        ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(UpdateOrderHeaderRequest $request, OrderHeader $orderHeader): RedirectResponse
+    {
+        $orderHeader->update($request->validated());
+        
+        if (session('orderHeaders_url')) {
+            return redirect(session('orderHeaders_url'))->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        }
+
+        return redirect()->route('craftable-pro.order-headers.index')->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(DestroyOrderHeaderRequest $request, OrderHeader $orderHeader): RedirectResponse
+    {
+        
+        $orderHeader->delete();
+
+        return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    /**
+     * Bulk destroy resource.
+     */
+    public function bulkDestroy(BulkDestroyOrderHeaderRequest $request): RedirectResponse
+    {
+        // Mass delete of resource
+        DB::transaction(function () use ($request) {
+            collect($request->validated()['ids'])
+                ->chunk(1000)
+                ->each(function ($bulkChunk) {
+                    OrderHeader::whereIn('id', $bulkChunk)->delete();
+                });
+        });
+
+        // Individual delete of resource items
+        //        DB::transaction(function () use ($request) {
+        //            collect($request->validated()['ids'])->each(function ($id) {
+        //                OrderHeader::find($id)->delete();
+        //            });
+        //        });
+
+        return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+}

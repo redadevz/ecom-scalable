@@ -1,0 +1,144 @@
+craftable-pro:
+    models:
+        Price:
+            table: prices
+            skip_model: false
+            columns:
+                id: id
+                item_id: 'id foreign'
+                store_id: 'id foreign'
+                created_by: 'id foreign nullable'
+                description: 'string nullable'
+                current_item_cost: decimal
+                markup_percentage: integer
+                price_before_tax: decimal
+                tax_value: decimal
+                price_after_tax: decimal
+                sale_price: decimal
+                price_change_allowed: boolean
+                start_time: datetime
+                end_time: 'datetime nullable'
+                is_active: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                created_by: 'sortable searchable'
+                description: 'sortable searchable'
+                current_item_cost: 'sortable searchable'
+                markup_percentage: 'sortable searchable'
+                price_before_tax: 'sortable searchable'
+                tax_value: 'sortable searchable'
+                price_after_tax: 'sortable searchable'
+                sale_price: 'sortable searchable'
+                price_change_allowed: 'sortable searchable'
+                start_time: sortable
+                end_time: sortable
+                is_active: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - item_id
+                                    - store_id
+                                    - created_by
+                                    - description
+                                    - current_item_cost
+                                    - markup_percentage
+                                    - price_before_tax
+                                    - tax_value
+                                    - price_after_tax
+                                    - sale_price
+                                    - price_change_allowed
+                                    - start_time
+                                    - end_time
+                                    - is_active
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - item_id
+                        - store_id
+                        - created_by
+                        - description
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - sale_price
+                        - price_change_allowed
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - item_id
+                        - store_id
+                        - created_by
+                        - description
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - sale_price
+                        - price_change_allowed
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                update:
+                    columns:
+                        - item_id
+                        - store_id
+                        - created_by
+                        - description
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - sale_price
+                        - price_change_allowed
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - item_id
+                        - store_id
+                        - created_by
+                        - description
+                        - current_item_cost
+                        - markup_percentage
+                        - price_before_tax
+                        - tax_value
+                        - price_after_tax
+                        - sale_price
+                        - price_change_allowed
+                        - start_time
+                        - end_time
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

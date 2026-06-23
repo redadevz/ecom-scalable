@@ -1,0 +1,60 @@
+craftable-pro:
+    models:
+        OrderStatus:
+            table: order_statuses
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                description: 'text nullable'
+                is_default: boolean
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                description: 'sortable searchable'
+                is_default: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - description
+                                    - is_default
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - description
+                        - is_default
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - description
+                        - is_default
+                update:
+                    columns:
+                        - name
+                        - description
+                        - is_default
+                show:
+                    columns:
+                        - id
+                        - name
+                        - description
+                        - is_default
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

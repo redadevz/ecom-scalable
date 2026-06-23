@@ -1,0 +1,53 @@
+craftable-pro:
+    models:
+        TimeZone:
+            table: time_zones
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                description: 'text nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                description: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - description
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - description
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - description
+                update:
+                    columns:
+                        - name
+                        - description
+                show:
+                    columns:
+                        - id
+                        - name
+                        - description
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

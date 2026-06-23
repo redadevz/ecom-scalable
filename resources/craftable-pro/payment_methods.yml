@@ -1,0 +1,81 @@
+craftable-pro:
+    models:
+        PaymentMethod:
+            table: payment_methods
+            skip_model: false
+            columns:
+                id: id
+                name: string
+                code: string
+                sequence_no: 'integer nullable'
+                is_active: boolean
+                is_customer_required: boolean
+                description: 'text nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                name: 'sortable searchable'
+                code: 'sortable searchable'
+                sequence_no: 'sortable searchable'
+                is_active: 'sortable searchable'
+                is_customer_required: 'sortable searchable'
+                description: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - name
+                                    - code
+                                    - sequence_no
+                                    - is_active
+                                    - is_customer_required
+                                    - description
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - name
+                        - code
+                        - sequence_no
+                        - is_active
+                        - is_customer_required
+                        - description
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - name
+                        - code
+                        - sequence_no
+                        - is_active
+                        - is_customer_required
+                        - description
+                update:
+                    columns:
+                        - name
+                        - code
+                        - sequence_no
+                        - is_active
+                        - is_customer_required
+                        - description
+                show:
+                    columns:
+                        - id
+                        - name
+                        - code
+                        - sequence_no
+                        - is_active
+                        - is_customer_required
+                        - description
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}
