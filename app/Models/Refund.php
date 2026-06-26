@@ -45,10 +45,20 @@ class Refund extends Model
         'id' => 'integer',
         'sale_return_id' => 'integer',
         'payment_method_id' => 'integer',
-        'amount' => 'decimal',
-        'cash_paid' => 'decimal',
-        'cash_change' => 'decimal',
+        'amount' => 'decimal:3',
+        'cash_paid' => 'decimal:3',
+        'cash_change' => 'decimal:3',
         'refund_time' => 'datetime',
     ];
+    }
+
+    public function saleReturn(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(SaleReturn::class);
+    }
+
+    public function paymentMethod(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(PaymentMethod::class);
     }
 }

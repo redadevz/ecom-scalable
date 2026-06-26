@@ -109,4 +109,39 @@ class Item extends Model
     {
         return $this->hasMany(Discount::class);
     }
+
+    public function itemTaxTypes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ItemTaxType::class);
+    }
+
+    public function purchaseItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(PurchaseItem::class);
+    }
+
+    public function inventoryCountItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryCountItem::class);
+    }
+
+    public function lossAndDamageItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LossAndDamageItem::class);
+    }
+
+    public function stockReturnItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockReturnItem::class);
+    }
+
+    public function stockHistories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockHistory::class);
+    }
+
+    public function saleReturnItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SaleReturnItem::class);
+    }
 }

@@ -45,4 +45,14 @@ class InventoryCount extends Model
         'change_stock_time' => 'datetime',
     ];
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function inventoryCountItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryCountItem::class);
+    }
 }

@@ -47,7 +47,7 @@ class SupplierTaxType extends Model
         'id' => 'integer',
         'supplier_id' => 'integer',
         'is_percentage' => 'boolean',
-        'value' => 'decimal',
+        'value' => 'decimal:3',
         'start_time' => 'datetime',
         'end_time' => 'datetime',
         'is_active' => 'boolean',

@@ -60,4 +60,14 @@ class Discount extends Model
     {
         return $this->belongsTo(Item::class);
     }
+
+    public function orderDiscounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderDiscount::class);
+    }
+
+    public function orderLineDiscounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderLineDiscount::class);
+    }
 }

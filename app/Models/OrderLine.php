@@ -65,15 +65,15 @@ class OrderLine extends Model
         'store_id' => 'integer',
         'order_id' => 'integer',
         'item_id' => 'integer',
-        'current_item_cost' => 'decimal',
-        'price_before_tax' => 'decimal',
-        'tax_value' => 'decimal',
-        'price_after_tax' => 'decimal',
-        'price_before_discount' => 'decimal',
-        'discount_value' => 'decimal',
-        'price_after_discount' => 'decimal',
-        'price_adjustment' => 'decimal',
-        'price' => 'decimal',
+        'current_item_cost' => 'decimal:3',
+        'price_before_tax' => 'decimal:3',
+        'tax_value' => 'decimal:3',
+        'price_after_tax' => 'decimal:3',
+        'price_before_discount' => 'decimal:3',
+        'discount_value' => 'decimal:3',
+        'price_after_discount' => 'decimal:3',
+        'price_adjustment' => 'decimal:3',
+        'price' => 'decimal:3',
         'is_canceled' => 'boolean',
         'canceled_time' => 'datetime',
         'return_required' => 'boolean',
@@ -95,5 +95,20 @@ class OrderLine extends Model
     public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Item::class);
+    }
+
+    public function orderLineDiscounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderLineDiscount::class, 'order_line_id');
+    }
+
+    public function invoiceLines(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InvoiceLine::class, 'order_line_id');
+    }
+
+    public function saleReturnItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SaleReturnItem::class, 'order_line_id');
     }
 }

@@ -48,9 +48,29 @@ class SaleReturn extends Model
         'order_id' => 'integer',
         'entry_stock_time' => 'datetime',
         'is_refund_required' => 'boolean',
-        'refund_amount' => 'decimal',
+        'refund_amount' => 'decimal:3',
         'is_refunded' => 'boolean',
         'refund_time' => 'datetime',
     ];
+    }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderHeader::class, 'order_id');
+    }
+
+    public function saleReturnItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SaleReturnItem::class);
+    }
+
+    public function refunds(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Refund::class);
     }
 }

@@ -44,4 +44,14 @@ class DocumentType extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function documentCategory(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DocumentCategory::class);
+    }
+
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
 }

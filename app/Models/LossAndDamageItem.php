@@ -44,4 +44,14 @@ class LossAndDamageItem extends Model
         'item_id' => 'integer',
     ];
     }
+
+    public function lossAndDamage(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(LossAndDamage::class);
+    }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

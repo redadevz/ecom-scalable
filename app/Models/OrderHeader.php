@@ -90,16 +90,16 @@ class OrderHeader extends Model
         'created_by' => 'integer',
         'approved_by' => 'integer',
         'managed_by' => 'integer',
-        'price_before_tax' => 'decimal',
-        'total_tax_value' => 'decimal',
-        'price_after_tax' => 'decimal',
-        'price_before_discount' => 'decimal',
-        'order_items_discount' => 'decimal',
-        'order_discount' => 'decimal',
-        'total_discount_value' => 'decimal',
-        'price_after_discount' => 'decimal',
-        'price_adjustment' => 'decimal',
-        'price' => 'decimal',
+        'price_before_tax' => 'decimal:3',
+        'total_tax_value' => 'decimal:3',
+        'price_after_tax' => 'decimal:3',
+        'price_before_discount' => 'decimal:3',
+        'order_items_discount' => 'decimal:3',
+        'order_discount' => 'decimal:3',
+        'total_discount_value' => 'decimal:3',
+        'price_after_discount' => 'decimal:3',
+        'price_adjustment' => 'decimal:3',
+        'price' => 'decimal:3',
         'latest_status_update' => 'datetime',
         'is_submitted' => 'boolean',
         'submitted_time' => 'datetime',
@@ -180,5 +180,35 @@ class OrderHeader extends Model
     public function orderStatusHistories(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(OrderStatusHistory::class, 'order_id');
+    }
+
+    public function shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Shipment::class, 'order_id');
+    }
+
+    public function orderReviews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderReview::class, 'order_id');
+    }
+
+    public function orderDiscounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderDiscount::class, 'order_id');
+    }
+
+    public function invoices(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Invoice::class, 'order_id');
+    }
+
+    public function saleReturns(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SaleReturn::class, 'order_id');
+    }
+
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Document::class, 'sale_order_id');
     }
 }

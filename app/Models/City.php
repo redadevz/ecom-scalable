@@ -68,4 +68,9 @@ class City extends Model
     {
         return $this->hasMany(Customer::class);
     }
+
+    public function shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Shipment::class, 'shipment_city_id');
+    }
 }

@@ -55,4 +55,19 @@ class OrderReview extends Model
         'is_compensated' => 'boolean',
     ];
     }
+
+    public function order(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderHeader::class, 'order_id');
+    }
+
+    public function customer(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Customer::class);
+    }
+
+    public function repliedBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(\Brackets\CraftablePro\Models\CraftableProUser::class, 'replied_by');
+    }
 }

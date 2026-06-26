@@ -48,4 +48,19 @@ class SaleReturnItem extends Model
         'item_id' => 'integer',
     ];
     }
+
+    public function saleReturn(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(SaleReturn::class);
+    }
+
+    public function orderLine(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderLine::class, 'order_line_id');
+    }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

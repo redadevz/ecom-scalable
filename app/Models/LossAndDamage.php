@@ -43,4 +43,14 @@ class LossAndDamage extends Model
         'exit_stock_time' => 'datetime',
     ];
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function lossAndDamageItems(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LossAndDamageItem::class);
+    }
 }

@@ -41,7 +41,17 @@ class OrderLineDiscount extends Model
         'id' => 'integer',
         'discount_id' => 'integer',
         'order_line_id' => 'integer',
-        'value' => 'decimal',
+        'value' => 'decimal:3',
     ];
+    }
+
+    public function discount(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Discount::class);
+    }
+
+    public function orderLine(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderLine::class, 'order_line_id');
     }
 }

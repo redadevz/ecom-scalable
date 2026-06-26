@@ -113,4 +113,49 @@ class Store extends Model
     {
         return $this->hasMany(OrderLine::class);
     }
+
+    public function holidays(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Holiday::class);
+    }
+
+    public function shipments(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Shipment::class);
+    }
+
+    public function purchases(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Purchase::class);
+    }
+
+    public function inventoryCounts(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(InventoryCount::class);
+    }
+
+    public function lossAndDamages(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(LossAndDamage::class);
+    }
+
+    public function stockReturns(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockReturn::class);
+    }
+
+    public function documents(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function stockHistories(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(StockHistory::class);
+    }
+
+    public function saleReturns(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(SaleReturn::class);
+    }
 }

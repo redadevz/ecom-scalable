@@ -47,11 +47,21 @@ class PurchaseItem extends Model
         'id' => 'integer',
         'purchase_id' => 'integer',
         'item_id' => 'integer',
-        'supplier_price_before_tax' => 'decimal',
-        'supplier_tax_value' => 'decimal',
-        'supplier_price_after_tax' => 'decimal',
-        'supplier_discount_value' => 'decimal',
-        'return_amount' => 'decimal',
+        'supplier_price_before_tax' => 'decimal:3',
+        'supplier_tax_value' => 'decimal:3',
+        'supplier_price_after_tax' => 'decimal:3',
+        'supplier_discount_value' => 'decimal:3',
+        'return_amount' => 'decimal:3',
     ];
+    }
+
+    public function purchase(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Purchase::class);
+    }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
     }
 }

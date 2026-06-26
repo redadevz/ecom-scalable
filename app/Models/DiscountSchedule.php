@@ -44,4 +44,9 @@ class DiscountSchedule extends Model
         'day_of_week' => 'boolean',
     ];
     }
+
+    public function discountType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(DiscountType::class);
+    }
 }

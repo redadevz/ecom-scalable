@@ -54,11 +54,11 @@ class DiscountType extends Model
         'store_id' => 'integer',
         'loyalty_card_type_id' => 'integer',
         'is_percentage' => 'boolean',
-        'value' => 'decimal',
-        'min_order_value' => 'decimal',
+        'value' => 'decimal:3',
+        'min_order_value' => 'decimal:3',
         'apply_to_all' => 'boolean',
         'apply_to_next' => 'boolean',
-        'max_discount_value' => 'decimal',
+        'max_discount_value' => 'decimal:3',
         'start_time' => 'datetime',
         'end_time' => 'datetime',
         'is_active' => 'boolean',
@@ -78,5 +78,10 @@ class DiscountType extends Model
     public function discounts(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(Discount::class);
+    }
+
+    public function discountSchedules(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DiscountSchedule::class);
     }
 }

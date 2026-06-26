@@ -46,4 +46,9 @@ class Holiday extends Model
         'ends_at' => 'datetime',
     ];
     }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
 }

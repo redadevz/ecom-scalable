@@ -46,4 +46,14 @@ class InventoryCountItem extends Model
         'item_id' => 'integer',
     ];
     }
+
+    public function inventoryCount(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(InventoryCount::class);
+    }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
 }

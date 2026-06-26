@@ -47,7 +47,7 @@ class TaxType extends Model
         'id' => 'integer',
         'store_id' => 'integer',
         'is_percentage' => 'boolean',
-        'value' => 'decimal',
+        'value' => 'decimal:3',
         'start_time' => 'datetime',
         'end_time' => 'datetime',
         'is_active' => 'boolean',
@@ -57,5 +57,10 @@ class TaxType extends Model
     public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(Store::class);
+    }
+
+    public function itemTaxTypes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(ItemTaxType::class);
     }
 }

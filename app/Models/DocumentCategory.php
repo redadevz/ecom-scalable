@@ -42,4 +42,9 @@ class DocumentCategory extends Model
         'is_active' => 'boolean',
     ];
     }
+
+    public function documentTypes(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(DocumentType::class);
+    }
 }

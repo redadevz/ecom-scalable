@@ -71,7 +71,7 @@ class Customer extends Model
         'is_company' => 'boolean',
         'is_tax_exempted' => 'boolean',
         'is_registered_online' => 'boolean',
-        'credit' => 'decimal',
+        'credit' => 'decimal:2',
         'last_login_time' => 'datetime',
         'is_active' => 'boolean',
     ];
@@ -100,5 +100,10 @@ class Customer extends Model
     public function orderHeaders(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(OrderHeader::class);
+    }
+
+    public function orderReviews(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OrderReview::class);
     }
 }

@@ -46,4 +46,14 @@ class ItemTaxType extends Model
         'end_time' => 'datetime',
     ];
     }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function taxType(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(TaxType::class);
+    }
 }

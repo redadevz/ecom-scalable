@@ -43,4 +43,14 @@ class InvoiceLine extends Model
         'order_line_id' => 'integer',
     ];
     }
+
+    public function invoice(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Invoice::class);
+    }
+
+    public function orderLine(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(OrderLine::class, 'order_line_id');
+    }
 }

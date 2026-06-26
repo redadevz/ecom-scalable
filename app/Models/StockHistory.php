@@ -49,9 +49,24 @@ class StockHistory extends Model
         'store_id' => 'integer',
         'item_id' => 'integer',
         'document_id' => 'integer',
-        'initial_item_cost' => 'decimal',
+        'initial_item_cost' => 'decimal:3',
         'is_stock_entry' => 'boolean',
-        'current_item_cost' => 'decimal',
+        'current_item_cost' => 'decimal:3',
     ];
+    }
+
+    public function store(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Store::class);
+    }
+
+    public function item(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Item::class);
+    }
+
+    public function document(): \Illuminate\Database\Eloquent\Relations\BelongsTo
+    {
+        return $this->belongsTo(Document::class);
     }
 }
