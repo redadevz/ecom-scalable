@@ -1,0 +1,116 @@
+craftable-pro:
+    models:
+        Shipment:
+            table: shipments
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                order_id: 'id foreign'
+                shipment_city_id: 'id foreign nullable'
+                picked_up_by: 'id foreign nullable'
+                shipment_address: string
+                gps_location: 'string nullable'
+                postal_code: 'string nullable'
+                shipment_notes: 'string nullable'
+                picked_up_time: 'datetime nullable'
+                shipped_time: 'datetime nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                shipment_city_id: 'sortable searchable'
+                picked_up_by: 'sortable searchable'
+                shipment_address: 'sortable searchable'
+                gps_location: 'sortable searchable'
+                postal_code: 'sortable searchable'
+                shipment_notes: 'sortable searchable'
+                picked_up_time: sortable
+                shipped_time: sortable
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - order_id
+                                    - shipment_city_id
+                                    - picked_up_by
+                                    - shipment_address
+                                    - gps_location
+                                    - postal_code
+                                    - shipment_notes
+                                    - picked_up_time
+                                    - shipped_time
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - order_id
+                        - shipment_city_id
+                        - picked_up_by
+                        - shipment_address
+                        - gps_location
+                        - postal_code
+                        - shipment_notes
+                        - picked_up_time
+                        - shipped_time
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - order_id
+                        - shipment_city_id
+                        - picked_up_by
+                        - shipment_address
+                        - gps_location
+                        - postal_code
+                        - shipment_notes
+                        - picked_up_time
+                        - shipped_time
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - order_id
+                        - shipment_city_id
+                        - picked_up_by
+                        - shipment_address
+                        - gps_location
+                        - postal_code
+                        - shipment_notes
+                        - picked_up_time
+                        - shipped_time
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - order_id
+                        - shipment_city_id
+                        - picked_up_by
+                        - shipment_address
+                        - gps_location
+                        - postal_code
+                        - shipment_notes
+                        - picked_up_time
+                        - shipped_time
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

@@ -1,0 +1,67 @@
+craftable-pro:
+    models:
+        OrderLineDiscount:
+            table: order_line_discounts
+            skip_model: false
+            columns:
+                id: id
+                discount_id: 'id foreign'
+                order_line_id: 'id foreign'
+                value: decimal
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                discount_id: 'sortable searchable'
+                order_line_id: 'sortable searchable'
+                value: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - discount_id
+                                    - order_line_id
+                                    - value
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - discount_id
+                        - order_line_id
+                        - value
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - discount_id
+                        - order_line_id
+                        - value
+                        - comments
+                update:
+                    columns:
+                        - discount_id
+                        - order_line_id
+                        - value
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - discount_id
+                        - order_line_id
+                        - value
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

@@ -1,0 +1,116 @@
+craftable-pro:
+    models:
+        OrderReview:
+            table: order_reviews
+            skip_model: false
+            columns:
+                id: id
+                order_id: 'id foreign'
+                customer_id: 'id foreign nullable'
+                replied_by: 'id foreign nullable'
+                rating: 'boolean nullable'
+                review: 'string nullable'
+                review_time: 'datetime nullable'
+                reply: 'string nullable'
+                reply_time: 'datetime nullable'
+                is_compensated: boolean
+                compensation_value: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                customer_id: 'sortable searchable'
+                replied_by: 'sortable searchable'
+                rating: 'sortable searchable'
+                review: 'sortable searchable'
+                review_time: sortable
+                reply: 'sortable searchable'
+                reply_time: sortable
+                is_compensated: 'sortable searchable'
+                compensation_value: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - order_id
+                                    - customer_id
+                                    - replied_by
+                                    - rating
+                                    - review
+                                    - review_time
+                                    - reply
+                                    - reply_time
+                                    - is_compensated
+                                    - compensation_value
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - order_id
+                        - customer_id
+                        - replied_by
+                        - rating
+                        - review
+                        - review_time
+                        - reply
+                        - reply_time
+                        - is_compensated
+                        - compensation_value
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - order_id
+                        - customer_id
+                        - replied_by
+                        - rating
+                        - review
+                        - review_time
+                        - reply
+                        - reply_time
+                        - is_compensated
+                        - compensation_value
+                        - comments
+                update:
+                    columns:
+                        - order_id
+                        - customer_id
+                        - replied_by
+                        - rating
+                        - review
+                        - review_time
+                        - reply
+                        - reply_time
+                        - is_compensated
+                        - compensation_value
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - order_id
+                        - customer_id
+                        - replied_by
+                        - rating
+                        - review
+                        - review_time
+                        - reply
+                        - reply_time
+                        - is_compensated
+                        - compensation_value
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

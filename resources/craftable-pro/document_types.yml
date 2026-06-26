@@ -1,0 +1,74 @@
+craftable-pro:
+    models:
+        DocumentType:
+            table: document_types
+            skip_model: false
+            columns:
+                id: id
+                document_category_id: 'id foreign'
+                name: string
+                description: 'string nullable'
+                is_active: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                document_category_id: 'sortable searchable'
+                name: 'sortable searchable'
+                description: 'sortable searchable'
+                is_active: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - document_category_id
+                                    - name
+                                    - description
+                                    - is_active
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - document_category_id
+                        - name
+                        - description
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - document_category_id
+                        - name
+                        - description
+                        - is_active
+                        - comments
+                update:
+                    columns:
+                        - document_category_id
+                        - name
+                        - description
+                        - is_active
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - document_category_id
+                        - name
+                        - description
+                        - is_active
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

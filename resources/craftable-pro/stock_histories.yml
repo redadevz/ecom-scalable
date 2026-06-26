@@ -1,0 +1,116 @@
+craftable-pro:
+    models:
+        StockHistory:
+            table: stock_histories
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                item_id: 'id foreign'
+                document_id: 'id foreign nullable'
+                initial_stock_quantity: integer
+                initial_item_cost: decimal
+                is_stock_entry: boolean
+                quantity: integer
+                current_stock_quantity: integer
+                current_item_cost: decimal
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                document_id: 'sortable searchable'
+                initial_stock_quantity: 'sortable searchable'
+                initial_item_cost: 'sortable searchable'
+                is_stock_entry: 'sortable searchable'
+                quantity: 'sortable searchable'
+                current_stock_quantity: 'sortable searchable'
+                current_item_cost: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - item_id
+                                    - document_id
+                                    - initial_stock_quantity
+                                    - initial_item_cost
+                                    - is_stock_entry
+                                    - quantity
+                                    - current_stock_quantity
+                                    - current_item_cost
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - item_id
+                        - document_id
+                        - initial_stock_quantity
+                        - initial_item_cost
+                        - is_stock_entry
+                        - quantity
+                        - current_stock_quantity
+                        - current_item_cost
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - item_id
+                        - document_id
+                        - initial_stock_quantity
+                        - initial_item_cost
+                        - is_stock_entry
+                        - quantity
+                        - current_stock_quantity
+                        - current_item_cost
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - item_id
+                        - document_id
+                        - initial_stock_quantity
+                        - initial_item_cost
+                        - is_stock_entry
+                        - quantity
+                        - current_stock_quantity
+                        - current_item_cost
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - item_id
+                        - document_id
+                        - initial_stock_quantity
+                        - initial_item_cost
+                        - is_stock_entry
+                        - quantity
+                        - current_stock_quantity
+                        - current_item_cost
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

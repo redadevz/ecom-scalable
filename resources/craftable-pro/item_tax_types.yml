@@ -1,0 +1,74 @@
+craftable-pro:
+    models:
+        ItemTaxType:
+            table: item_tax_types
+            skip_model: false
+            columns:
+                id: id
+                item_id: 'id foreign'
+                tax_type_id: 'id foreign'
+                start_time: 'datetime nullable'
+                end_time: 'datetime nullable'
+                description: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                tax_type_id: 'sortable searchable'
+                start_time: sortable
+                end_time: sortable
+                description: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - item_id
+                                    - tax_type_id
+                                    - start_time
+                                    - end_time
+                                    - description
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - item_id
+                        - tax_type_id
+                        - start_time
+                        - end_time
+                        - description
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - item_id
+                        - tax_type_id
+                        - start_time
+                        - end_time
+                        - description
+                update:
+                    columns:
+                        - item_id
+                        - tax_type_id
+                        - start_time
+                        - end_time
+                        - description
+                show:
+                    columns:
+                        - id
+                        - item_id
+                        - tax_type_id
+                        - start_time
+                        - end_time
+                        - description
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

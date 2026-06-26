@@ -1,0 +1,74 @@
+craftable-pro:
+    models:
+        LossAndDamageItem:
+            table: loss_and_damage_items
+            skip_model: false
+            columns:
+                id: id
+                loss_and_damage_id: 'id foreign'
+                item_id: 'id foreign'
+                quantity: integer
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                loss_and_damage_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                quantity: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - loss_and_damage_id
+                                    - item_id
+                                    - quantity
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - loss_and_damage_id
+                        - item_id
+                        - quantity
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - loss_and_damage_id
+                        - item_id
+                        - quantity
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - loss_and_damage_id
+                        - item_id
+                        - quantity
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - loss_and_damage_id
+                        - item_id
+                        - quantity
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

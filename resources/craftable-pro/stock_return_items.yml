@@ -1,0 +1,109 @@
+craftable-pro:
+    models:
+        StockReturnItem:
+            table: stock_return_items
+            skip_model: false
+            columns:
+                id: id
+                stock_return_id: 'id foreign'
+                item_id: 'id foreign'
+                quantity: integer
+                supplier_price_before_tax: decimal
+                supplier_tax_value: decimal
+                supplier_price_after_tax: decimal
+                supplier_discount_value: decimal
+                return_amount: decimal
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                stock_return_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                quantity: 'sortable searchable'
+                supplier_price_before_tax: 'sortable searchable'
+                supplier_tax_value: 'sortable searchable'
+                supplier_price_after_tax: 'sortable searchable'
+                supplier_discount_value: 'sortable searchable'
+                return_amount: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - stock_return_id
+                                    - item_id
+                                    - quantity
+                                    - supplier_price_before_tax
+                                    - supplier_tax_value
+                                    - supplier_price_after_tax
+                                    - supplier_discount_value
+                                    - return_amount
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - stock_return_id
+                        - item_id
+                        - quantity
+                        - supplier_price_before_tax
+                        - supplier_tax_value
+                        - supplier_price_after_tax
+                        - supplier_discount_value
+                        - return_amount
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - stock_return_id
+                        - item_id
+                        - quantity
+                        - supplier_price_before_tax
+                        - supplier_tax_value
+                        - supplier_price_after_tax
+                        - supplier_discount_value
+                        - return_amount
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - stock_return_id
+                        - item_id
+                        - quantity
+                        - supplier_price_before_tax
+                        - supplier_tax_value
+                        - supplier_price_after_tax
+                        - supplier_discount_value
+                        - return_amount
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - stock_return_id
+                        - item_id
+                        - quantity
+                        - supplier_price_before_tax
+                        - supplier_tax_value
+                        - supplier_price_after_tax
+                        - supplier_discount_value
+                        - return_amount
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

@@ -1,0 +1,123 @@
+craftable-pro:
+    models:
+        Document:
+            table: documents
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                document_type_id: 'id foreign'
+                sale_order_id: 'id foreign nullable'
+                purchase_id: 'id foreign nullable'
+                stock_return_id: 'id foreign nullable'
+                inventory_count_id: 'id foreign nullable'
+                loss_and_damage_id: 'id foreign nullable'
+                created_by: 'id foreign nullable'
+                number: string
+                external_number: 'string nullable'
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                document_type_id: 'sortable searchable'
+                sale_order_id: 'sortable searchable'
+                purchase_id: 'sortable searchable'
+                stock_return_id: 'sortable searchable'
+                inventory_count_id: 'sortable searchable'
+                loss_and_damage_id: 'sortable searchable'
+                created_by: 'sortable searchable'
+                number: 'sortable searchable'
+                external_number: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - document_type_id
+                                    - sale_order_id
+                                    - purchase_id
+                                    - stock_return_id
+                                    - inventory_count_id
+                                    - loss_and_damage_id
+                                    - created_by
+                                    - number
+                                    - external_number
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - document_type_id
+                        - sale_order_id
+                        - purchase_id
+                        - stock_return_id
+                        - inventory_count_id
+                        - loss_and_damage_id
+                        - created_by
+                        - number
+                        - external_number
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - document_type_id
+                        - sale_order_id
+                        - purchase_id
+                        - stock_return_id
+                        - inventory_count_id
+                        - loss_and_damage_id
+                        - created_by
+                        - number
+                        - external_number
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - document_type_id
+                        - sale_order_id
+                        - purchase_id
+                        - stock_return_id
+                        - inventory_count_id
+                        - loss_and_damage_id
+                        - created_by
+                        - number
+                        - external_number
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - document_type_id
+                        - sale_order_id
+                        - purchase_id
+                        - stock_return_id
+                        - inventory_count_id
+                        - loss_and_damage_id
+                        - created_by
+                        - number
+                        - external_number
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

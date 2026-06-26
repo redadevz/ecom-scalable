@@ -1,0 +1,31 @@
+
+
+export type Shipment = {
+    id: string | number;
+    store_id: string | number;
+    order_id: string | number;
+    shipment_city_id: string | number;
+    picked_up_by: string | number;
+    shipment_address: string;
+    gps_location: string;
+    postal_code: string;
+    shipment_notes: string;
+    picked_up_time: string;
+    shipped_time: string;
+    comments: string;
+    
+};
+
+export type ShipmentForm = {
+    store_id: string | number;
+    order_id: string | number;
+    shipment_city_id: string | number;
+    picked_up_by: string | number;
+    shipment_address: string;
+    gps_location: string;
+    postal_code: string;
+    shipment_notes: string;
+    picked_up_time: string;
+    shipped_time: string;
+    comments: string;
+};

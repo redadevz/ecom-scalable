@@ -1,0 +1,74 @@
+craftable-pro:
+    models:
+        Invoice:
+            table: invoices
+            skip_model: false
+            columns:
+                id: id
+                order_id: 'id foreign'
+                invoice_no: string
+                is_paid: boolean
+                payment_time: 'datetime nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                invoice_no: 'sortable searchable'
+                is_paid: 'sortable searchable'
+                payment_time: sortable
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - order_id
+                                    - invoice_no
+                                    - is_paid
+                                    - payment_time
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - order_id
+                        - invoice_no
+                        - is_paid
+                        - payment_time
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - order_id
+                        - invoice_no
+                        - is_paid
+                        - payment_time
+                        - comments
+                update:
+                    columns:
+                        - order_id
+                        - invoice_no
+                        - is_paid
+                        - payment_time
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - order_id
+                        - invoice_no
+                        - is_paid
+                        - payment_time
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

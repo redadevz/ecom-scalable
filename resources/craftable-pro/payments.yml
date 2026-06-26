@@ -5,22 +5,26 @@ craftable-pro:
             skip_model: false
             columns:
                 id: id
-                order_id: 'id foreign'
-                provider: string
-                provider_reference: 'string nullable'
-                status: string
+                invoice_id: 'id foreign'
+                payment_method_id: 'id foreign'
+                payment_no: 'string nullable'
                 amount: decimal
-                currency: string
+                cash_paid: 'decimal nullable'
+                cash_change: 'decimal nullable'
+                payment_time: 'datetime nullable'
+                comments: 'string nullable'
                 created_at: 'datetime nullable'
                 updated_at: 'datetime nullable'
             listing:
                 id: 'sortable searchable'
-                order_id: 'sortable searchable'
-                provider: 'sortable searchable'
-                provider_reference: 'sortable searchable'
-                status: 'sortable searchable'
+                invoice_id: 'sortable searchable'
+                payment_method_id: 'sortable searchable'
+                payment_no: 'sortable searchable'
                 amount: 'sortable searchable'
-                currency: 'sortable searchable'
+                cash_paid: 'sortable searchable'
+                cash_change: 'sortable searchable'
+                payment_time: sortable
+                comments: 'sortable searchable'
                 created_at: sortable
             form:
                 columns:
@@ -28,16 +32,64 @@ craftable-pro:
                         cards:
                             -
                                 fields:
-                                    - order_id
-                                    - provider
-                                    - provider_reference
-                                    - status
+                                    - invoice_id
+                                    - payment_method_id
+                                    - payment_no
                                     - amount
-                                    - currency
+                                    - cash_paid
+                                    - cash_change
+                                    - payment_time
+                                    - comments
             translatable: {}
-            publishable: null
+            publishable: none
             media_collections: {}
             relationships: {}
-            api: {}
-            features:
-                - export
+            api:
+                index:
+                    columns:
+                        - id
+                        - invoice_id
+                        - payment_method_id
+                        - payment_no
+                        - amount
+                        - cash_paid
+                        - cash_change
+                        - payment_time
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - invoice_id
+                        - payment_method_id
+                        - payment_no
+                        - amount
+                        - cash_paid
+                        - cash_change
+                        - payment_time
+                        - comments
+                update:
+                    columns:
+                        - invoice_id
+                        - payment_method_id
+                        - payment_no
+                        - amount
+                        - cash_paid
+                        - cash_change
+                        - payment_time
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - invoice_id
+                        - payment_method_id
+                        - payment_no
+                        - amount
+                        - cash_paid
+                        - cash_change
+                        - payment_time
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

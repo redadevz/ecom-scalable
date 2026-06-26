@@ -3,9 +3,9 @@ updated:
     - routes/web.php
     - resources/js/craftable-pro/Components/Sidebar.vue
 created:
-    - database/migrations/2026_06_23_131557_add_permissions_for_order_status_histories.php
-    - resources/js/craftable-pro/Pages/OrderStatusHistory/Index.vue
-    - resources/js/craftable-pro/Pages/OrderStatusHistory/Create.vue
-    - resources/js/craftable-pro/Pages/OrderStatusHistory/Edit.vue
-    - resources/js/craftable-pro/Pages/OrderStatusHistory/Form.vue
-    - resources/js/craftable-pro/Pages/OrderStatusHistory/types.d.ts
+    - database/migrations/2026_06_26_151644_add_permissions_for_refunds.php
+    - resources/js/craftable-pro/Pages/Refund/Index.vue
+    - resources/js/craftable-pro/Pages/Refund/Create.vue
+    - resources/js/craftable-pro/Pages/Refund/Edit.vue
+    - resources/js/craftable-pro/Pages/Refund/Form.vue
+    - resources/js/craftable-pro/Pages/Refund/types.d.ts

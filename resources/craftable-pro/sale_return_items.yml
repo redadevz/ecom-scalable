@@ -1,0 +1,95 @@
+craftable-pro:
+    models:
+        SaleReturnItem:
+            table: sale_return_items
+            skip_model: false
+            columns:
+                id: id
+                sale_return_id: 'id foreign'
+                order_line_id: 'id foreign'
+                item_id: 'id foreign nullable'
+                line_no: 'string nullable'
+                quantity: integer
+                return_quantity: integer
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                sale_return_id: 'sortable searchable'
+                order_line_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                line_no: 'sortable searchable'
+                quantity: 'sortable searchable'
+                return_quantity: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - sale_return_id
+                                    - order_line_id
+                                    - item_id
+                                    - line_no
+                                    - quantity
+                                    - return_quantity
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - sale_return_id
+                        - order_line_id
+                        - item_id
+                        - line_no
+                        - quantity
+                        - return_quantity
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - sale_return_id
+                        - order_line_id
+                        - item_id
+                        - line_no
+                        - quantity
+                        - return_quantity
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - sale_return_id
+                        - order_line_id
+                        - item_id
+                        - line_no
+                        - quantity
+                        - return_quantity
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - sale_return_id
+                        - order_line_id
+                        - item_id
+                        - line_no
+                        - quantity
+                        - return_quantity
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

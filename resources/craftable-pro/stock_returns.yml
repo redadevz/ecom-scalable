@@ -1,0 +1,81 @@
+craftable-pro:
+    models:
+        StockReturn:
+            table: stock_returns
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                purchase_id: 'id foreign nullable'
+                exit_stock_time: 'datetime nullable'
+                description: 'string nullable'
+                is_paid: boolean
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                purchase_id: 'sortable searchable'
+                exit_stock_time: sortable
+                description: 'sortable searchable'
+                is_paid: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - purchase_id
+                                    - exit_stock_time
+                                    - description
+                                    - is_paid
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - purchase_id
+                        - exit_stock_time
+                        - description
+                        - is_paid
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - purchase_id
+                        - exit_stock_time
+                        - description
+                        - is_paid
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - purchase_id
+                        - exit_stock_time
+                        - description
+                        - is_paid
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - purchase_id
+                        - exit_stock_time
+                        - description
+                        - is_paid
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

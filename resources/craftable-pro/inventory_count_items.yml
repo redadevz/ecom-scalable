@@ -1,0 +1,88 @@
+craftable-pro:
+    models:
+        InventoryCountItem:
+            table: inventory_count_items
+            skip_model: false
+            columns:
+                id: id
+                inventory_count_id: 'id foreign'
+                item_id: 'id foreign'
+                quantity_counted: integer
+                quantity_expected: integer
+                quantity_change: integer
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                inventory_count_id: 'sortable searchable'
+                item_id: 'sortable searchable'
+                quantity_counted: 'sortable searchable'
+                quantity_expected: 'sortable searchable'
+                quantity_change: 'sortable searchable'
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - inventory_count_id
+                                    - item_id
+                                    - quantity_counted
+                                    - quantity_expected
+                                    - quantity_change
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - inventory_count_id
+                        - item_id
+                        - quantity_counted
+                        - quantity_expected
+                        - quantity_change
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - inventory_count_id
+                        - item_id
+                        - quantity_counted
+                        - quantity_expected
+                        - quantity_change
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - inventory_count_id
+                        - item_id
+                        - quantity_counted
+                        - quantity_expected
+                        - quantity_change
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - inventory_count_id
+                        - item_id
+                        - quantity_counted
+                        - quantity_expected
+                        - quantity_change
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

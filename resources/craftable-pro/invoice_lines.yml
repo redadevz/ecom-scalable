@@ -1,0 +1,67 @@
+craftable-pro:
+    models:
+        InvoiceLine:
+            table: invoice_lines
+            skip_model: false
+            columns:
+                id: id
+                invoice_id: 'id foreign'
+                order_line_id: 'id foreign'
+                line_no: string
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                invoice_id: 'sortable searchable'
+                order_line_id: 'sortable searchable'
+                line_no: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - invoice_id
+                                    - order_line_id
+                                    - line_no
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - invoice_id
+                        - order_line_id
+                        - line_no
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - invoice_id
+                        - order_line_id
+                        - line_no
+                        - comments
+                update:
+                    columns:
+                        - invoice_id
+                        - order_line_id
+                        - line_no
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - invoice_id
+                        - order_line_id
+                        - line_no
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

@@ -1,0 +1,74 @@
+craftable-pro:
+    models:
+        DiscountSchedule:
+            table: discount_schedules
+            skip_model: false
+            columns:
+                id: id
+                discount_type_id: 'id foreign'
+                day_of_week: 'boolean nullable'
+                start_time: time
+                end_time: time
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                discount_type_id: 'sortable searchable'
+                day_of_week: 'sortable searchable'
+                start_time: 'sortable searchable'
+                end_time: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - discount_type_id
+                                    - day_of_week
+                                    - start_time
+                                    - end_time
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - discount_type_id
+                        - day_of_week
+                        - start_time
+                        - end_time
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - discount_type_id
+                        - day_of_week
+                        - start_time
+                        - end_time
+                        - comments
+                update:
+                    columns:
+                        - discount_type_id
+                        - day_of_week
+                        - start_time
+                        - end_time
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - discount_type_id
+                        - day_of_week
+                        - start_time
+                        - end_time
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}

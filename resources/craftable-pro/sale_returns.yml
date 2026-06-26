@@ -1,0 +1,102 @@
+craftable-pro:
+    models:
+        SaleReturn:
+            table: sale_returns
+            skip_model: false
+            columns:
+                id: id
+                store_id: 'id foreign'
+                order_id: 'id foreign'
+                entry_stock_time: 'datetime nullable'
+                is_refund_required: boolean
+                refund_amount: decimal
+                is_refunded: boolean
+                refund_time: 'datetime nullable'
+                description: 'string nullable'
+                comments: 'string nullable'
+                created_at: 'datetime nullable'
+                updated_at: 'datetime nullable'
+            listing:
+                id: 'sortable searchable'
+                store_id: 'sortable searchable'
+                order_id: 'sortable searchable'
+                entry_stock_time: sortable
+                is_refund_required: 'sortable searchable'
+                refund_amount: 'sortable searchable'
+                is_refunded: 'sortable searchable'
+                refund_time: sortable
+                description: 'sortable searchable'
+                comments: 'sortable searchable'
+                created_at: sortable
+            form:
+                columns:
+                    -
+                        cards:
+                            -
+                                fields:
+                                    - store_id
+                                    - order_id
+                                    - entry_stock_time
+                                    - is_refund_required
+                                    - refund_amount
+                                    - is_refunded
+                                    - refund_time
+                                    - description
+                                    - comments
+            translatable: {}
+            publishable: none
+            media_collections: {}
+            relationships: {}
+            api:
+                index:
+                    columns:
+                        - id
+                        - store_id
+                        - order_id
+                        - entry_stock_time
+                        - is_refund_required
+                        - refund_amount
+                        - is_refunded
+                        - refund_time
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                store:
+                    columns:
+                        - store_id
+                        - order_id
+                        - entry_stock_time
+                        - is_refund_required
+                        - refund_amount
+                        - is_refunded
+                        - refund_time
+                        - description
+                        - comments
+                update:
+                    columns:
+                        - store_id
+                        - order_id
+                        - entry_stock_time
+                        - is_refund_required
+                        - refund_amount
+                        - is_refunded
+                        - refund_time
+                        - description
+                        - comments
+                show:
+                    columns:
+                        - id
+                        - store_id
+                        - order_id
+                        - entry_stock_time
+                        - is_refund_required
+                        - refund_amount
+                        - is_refunded
+                        - refund_time
+                        - description
+                        - comments
+                        - created_at
+                        - updated_at
+                destroy: {}
+            features: {}
