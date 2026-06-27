@@ -66,7 +66,7 @@ class HolidayController extends Controller
     public function create(CreateHolidayRequest $request): Response
     {
         return Inertia::render('Holiday/Create', [
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class HolidayController extends Controller
         
         return Inertia::render('Holiday/Edit', [
             'holiday' => $holiday,
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

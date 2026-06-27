@@ -66,7 +66,10 @@ class PaymentTermController extends Controller
     public function create(CreatePaymentTermRequest $request): Response
     {
         return Inertia::render('PaymentTerm/Create', [
-            
+            'delivery_types' => \App\Models\DeliveryType::orderBy('name')->get(['id', 'name']),
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
+            'payment_times' => \App\Models\PaymentTime::orderBy('name')->get(['id', 'name']),
+            'sale_channels' => \App\Models\SaleChannel::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +91,10 @@ class PaymentTermController extends Controller
         
         return Inertia::render('PaymentTerm/Edit', [
             'paymentTerm' => $paymentTerm,
-            
+            'delivery_types' => \App\Models\DeliveryType::orderBy('name')->get(['id', 'name']),
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
+            'payment_times' => \App\Models\PaymentTime::orderBy('name')->get(['id', 'name']),
+            'sale_channels' => \App\Models\SaleChannel::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

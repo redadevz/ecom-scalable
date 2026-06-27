@@ -7,17 +7,25 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.invoice_id"
                                 name="invoice_id"
-                                :label="$t('craftable-pro', 'Invoice Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Invoice')"
+                                mode="single"
+                                :options="$page.props.invoices ?? []"
+                                options-value-prop="id"
+                                options-label="invoice_no"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.order_line_id"
                                 name="order_line_id"
-                                :label="$t('craftable-pro', 'Order Line Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Order Line')"
+                                mode="single"
+                                :options="$page.props.order_lines ?? []"
+                                options-value-prop="id"
+                                options-label="line_no"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.line_no"

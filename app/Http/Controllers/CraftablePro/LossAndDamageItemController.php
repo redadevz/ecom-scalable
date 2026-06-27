@@ -66,7 +66,8 @@ class LossAndDamageItemController extends Controller
     public function create(CreateLossAndDamageItemRequest $request): Response
     {
         return Inertia::render('LossAndDamageItem/Create', [
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'loss_and_damages' => \App\Models\LossAndDamage::orderBy('id')->get(['id']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class LossAndDamageItemController extends Controller
         
         return Inertia::render('LossAndDamageItem/Edit', [
             'lossAndDamageItem' => $lossAndDamageItem,
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'loss_and_damages' => \App\Models\LossAndDamage::orderBy('id')->get(['id']),
         ]);
     }
 

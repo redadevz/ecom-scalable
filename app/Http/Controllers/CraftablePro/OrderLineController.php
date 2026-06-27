@@ -66,7 +66,9 @@ class OrderLineController extends Controller
     public function create(CreateOrderLineRequest $request): Response
     {
         return Inertia::render('OrderLine/Create', [
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class OrderLineController extends Controller
         
         return Inertia::render('OrderLine/Edit', [
             'orderLine' => $orderLine,
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

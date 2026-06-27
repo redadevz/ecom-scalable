@@ -66,7 +66,8 @@ class OrderLineDiscountController extends Controller
     public function create(CreateOrderLineDiscountRequest $request): Response
     {
         return Inertia::render('OrderLineDiscount/Create', [
-            
+            'discounts' => \App\Models\Discount::orderBy('id')->get(['id']),
+            'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class OrderLineDiscountController extends Controller
         
         return Inertia::render('OrderLineDiscount/Edit', [
             'orderLineDiscount' => $orderLineDiscount,
-            
+            'discounts' => \App\Models\Discount::orderBy('id')->get(['id']),
+            'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
         ]);
     }
 

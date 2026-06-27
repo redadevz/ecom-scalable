@@ -66,7 +66,9 @@ class PriceController extends Controller
     public function create(CreatePriceRequest $request): Response
     {
         return Inertia::render('Price/Create', [
-            
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class PriceController extends Controller
         
         return Inertia::render('Price/Edit', [
             'price' => $price,
-            
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

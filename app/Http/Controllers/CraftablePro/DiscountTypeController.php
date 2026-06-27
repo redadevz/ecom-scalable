@@ -66,7 +66,8 @@ class DiscountTypeController extends Controller
     public function create(CreateDiscountTypeRequest $request): Response
     {
         return Inertia::render('DiscountType/Create', [
-            
+            'loyalty_card_types' => \App\Models\LoyaltyCardType::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class DiscountTypeController extends Controller
         
         return Inertia::render('DiscountType/Edit', [
             'discountType' => $discountType,
-            
+            'loyalty_card_types' => \App\Models\LoyaltyCardType::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

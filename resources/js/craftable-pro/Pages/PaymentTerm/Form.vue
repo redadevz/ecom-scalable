@@ -7,29 +7,45 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.sale_channel_id"
                                 name="sale_channel_id"
-                                :label="$t('craftable-pro', 'Sale Channel Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Sale Channel')"
+                                mode="single"
+                                :options="$page.props.sale_channels ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.delivery_type_id"
                                 name="delivery_type_id"
-                                :label="$t('craftable-pro', 'Delivery Type Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Delivery Type')"
+                                mode="single"
+                                :options="$page.props.delivery_types ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.payment_method_id"
                                 name="payment_method_id"
-                                :label="$t('craftable-pro', 'Payment Method Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Payment Method')"
+                                mode="single"
+                                :options="$page.props.payment_methods ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.payment_time_id"
                                 name="payment_time_id"
-                                :label="$t('craftable-pro', 'Payment Time Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Payment Time')"
+                                mode="single"
+                                :options="$page.props.payment_times ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <Checkbox
                                 v-model="form.is_allowed"

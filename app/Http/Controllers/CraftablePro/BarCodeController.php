@@ -66,7 +66,7 @@ class BarCodeController extends Controller
     public function create(CreateBarCodeRequest $request): Response
     {
         return Inertia::render('BarCode/Create', [
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class BarCodeController extends Controller
         
         return Inertia::render('BarCode/Edit', [
             'barCode' => $barCode,
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

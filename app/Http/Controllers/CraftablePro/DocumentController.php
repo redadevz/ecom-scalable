@@ -66,7 +66,14 @@ class DocumentController extends Controller
     public function create(CreateDocumentRequest $request): Response
     {
         return Inertia::render('Document/Create', [
-            
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'document_types' => \App\Models\DocumentType::orderBy('name')->get(['id', 'name']),
+            'inventory_counts' => \App\Models\InventoryCount::orderBy('id')->get(['id']),
+            'loss_and_damages' => \App\Models\LossAndDamage::orderBy('id')->get(['id']),
+            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +95,14 @@ class DocumentController extends Controller
         
         return Inertia::render('Document/Edit', [
             'document' => $document,
-            
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'document_types' => \App\Models\DocumentType::orderBy('name')->get(['id', 'name']),
+            'inventory_counts' => \App\Models\InventoryCount::orderBy('id')->get(['id']),
+            'loss_and_damages' => \App\Models\LossAndDamage::orderBy('id')->get(['id']),
+            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

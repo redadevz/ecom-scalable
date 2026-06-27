@@ -7,11 +7,15 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.item_id"
                                 name="item_id"
-                                :label="$t('craftable-pro', 'Item Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Item')"
+                                mode="single"
+                                :options="$page.props.items ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.bar_code"

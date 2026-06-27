@@ -66,7 +66,9 @@ class OrderReviewController extends Controller
     public function create(CreateOrderReviewRequest $request): Response
     {
         return Inertia::render('OrderReview/Create', [
-            
+            'customers' => \App\Models\Customer::orderBy('code')->get(['id', 'code']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class OrderReviewController extends Controller
         
         return Inertia::render('OrderReview/Edit', [
             'orderReview' => $orderReview,
-            
+            'customers' => \App\Models\Customer::orderBy('code')->get(['id', 'code']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
         ]);
     }
 

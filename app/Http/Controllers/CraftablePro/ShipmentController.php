@@ -66,7 +66,10 @@ class ShipmentController extends Controller
     public function create(CreateShipmentRequest $request): Response
     {
         return Inertia::render('Shipment/Create', [
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +91,10 @@ class ShipmentController extends Controller
         
         return Inertia::render('Shipment/Edit', [
             'shipment' => $shipment,
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

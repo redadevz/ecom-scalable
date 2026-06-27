@@ -66,7 +66,9 @@ class SupplierController extends Controller
     public function create(CreateSupplierRequest $request): Response
     {
         return Inertia::render('Supplier/Create', [
-            
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class SupplierController extends Controller
         
         return Inertia::render('Supplier/Edit', [
             'supplier' => $supplier,
-            
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

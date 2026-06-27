@@ -7,23 +7,35 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.store_id"
                                 name="store_id"
-                                :label="$t('craftable-pro', 'Store Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Store')"
+                                mode="single"
+                                :options="$page.props.stores ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.order_id"
                                 name="order_id"
-                                :label="$t('craftable-pro', 'Order Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Order')"
+                                mode="single"
+                                :options="$page.props.order_headers ?? []"
+                                options-value-prop="id"
+                                options-label="order_no"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.item_id"
                                 name="item_id"
-                                :label="$t('craftable-pro', 'Item Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Item')"
+                                mode="single"
+                                :options="$page.props.items ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.line_no"
@@ -47,61 +59,61 @@
                                 v-model="form.quantity"
                                 name="quantity"
                                 :label="$t('craftable-pro', 'Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.current_item_cost"
                                 name="current_item_cost"
                                 :label="$t('craftable-pro', 'Current Item Cost')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.markup_percentage"
                                 name="markup_percentage"
                                 :label="$t('craftable-pro', 'Markup Percentage')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.price_before_tax"
                                 name="price_before_tax"
                                 :label="$t('craftable-pro', 'Price Before Tax')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.tax_value"
                                 name="tax_value"
                                 :label="$t('craftable-pro', 'Tax Value')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.price_after_tax"
                                 name="price_after_tax"
                                 :label="$t('craftable-pro', 'Price After Tax')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.price_before_discount"
                                 name="price_before_discount"
                                 :label="$t('craftable-pro', 'Price Before Discount')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.discount_value"
                                 name="discount_value"
                                 :label="$t('craftable-pro', 'Discount Value')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.price_after_discount"
                                 name="price_after_discount"
                                 :label="$t('craftable-pro', 'Price After Discount')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.price_adjustment"
                                 name="price_adjustment"
                                 :label="$t('craftable-pro', 'Price Adjustment')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.price_adjustment_reason"
@@ -113,7 +125,7 @@
                                 v-model="form.price"
                                 name="price"
                                 :label="$t('craftable-pro', 'Price')"
-                                type="text"
+                                type="number"
                             />
                             <Checkbox
                                 v-model="form.is_canceled"
@@ -142,7 +154,7 @@
                                 v-model="form.return_quantity"
                                 name="return_quantity"
                                 :label="$t('craftable-pro', 'Return Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <DatePicker
                                 v-model="form.return_time"

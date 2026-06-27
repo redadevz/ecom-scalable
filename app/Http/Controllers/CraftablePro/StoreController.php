@@ -66,7 +66,9 @@ class StoreController extends Controller
     public function create(CreateStoreRequest $request): Response
     {
         return Inertia::render('Store/Create', [
-            
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'currencies' => \App\Models\Currency::orderBy('name')->get(['id', 'name']),
+            'languages' => \App\Models\Language::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class StoreController extends Controller
         
         return Inertia::render('Store/Edit', [
             'store' => $store,
-            
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'currencies' => \App\Models\Currency::orderBy('name')->get(['id', 'name']),
+            'languages' => \App\Models\Language::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

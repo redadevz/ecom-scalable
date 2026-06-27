@@ -7,29 +7,45 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.store_id"
                                 name="store_id"
-                                :label="$t('craftable-pro', 'Store Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Store')"
+                                mode="single"
+                                :options="$page.props.stores ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.item_category_id"
                                 name="item_category_id"
-                                :label="$t('craftable-pro', 'Item Category Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Item Category')"
+                                mode="single"
+                                :options="$page.props.item_categories ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.supplier_id"
                                 name="supplier_id"
-                                :label="$t('craftable-pro', 'Supplier Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Supplier')"
+                                mode="single"
+                                :options="$page.props.suppliers ?? []"
+                                options-value-prop="id"
+                                options-label="code"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.measure_unit_id"
                                 name="measure_unit_id"
-                                :label="$t('craftable-pro', 'Measure Unit Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Measure Unit')"
+                                mode="single"
+                                :options="$page.props.measure_units ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.sku_code"
@@ -68,25 +84,25 @@
                                 v-model="form.default_quantity"
                                 name="default_quantity"
                                 :label="$t('craftable-pro', 'Default Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.current_stock_quantity"
                                 name="current_stock_quantity"
                                 :label="$t('craftable-pro', 'Current Stock Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.preferred_stock_quantity"
                                 name="preferred_stock_quantity"
                                 :label="$t('craftable-pro', 'Preferred Stock Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.min_stock_quantity"
                                 name="min_stock_quantity"
                                 :label="$t('craftable-pro', 'Min Stock Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <Checkbox
                                 v-model="form.low_stock_warning"
@@ -97,7 +113,7 @@
                                 v-model="form.low_stock_quantity"
                                 name="low_stock_quantity"
                                 :label="$t('craftable-pro', 'Low Stock Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <Checkbox
                                 v-model="form.is_active"

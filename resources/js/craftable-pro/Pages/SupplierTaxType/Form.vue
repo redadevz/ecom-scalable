@@ -7,11 +7,15 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.supplier_id"
                                 name="supplier_id"
-                                :label="$t('craftable-pro', 'Supplier Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Supplier')"
+                                mode="single"
+                                :options="$page.props.suppliers ?? []"
+                                options-value-prop="id"
+                                options-label="code"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.name"
@@ -40,7 +44,7 @@
                                 v-model="form.value"
                                 name="value"
                                 :label="$t('craftable-pro', 'Value')"
-                                type="text"
+                                type="number"
                             />
                             <DatePicker
                                 v-model="form.start_time"

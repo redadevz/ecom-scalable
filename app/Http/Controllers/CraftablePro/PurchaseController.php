@@ -66,7 +66,8 @@ class PurchaseController extends Controller
     public function create(CreatePurchaseRequest $request): Response
     {
         return Inertia::render('Purchase/Create', [
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
+            'suppliers' => \App\Models\Supplier::orderBy('code')->get(['id', 'code']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class PurchaseController extends Controller
         
         return Inertia::render('Purchase/Edit', [
             'purchase' => $purchase,
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
+            'suppliers' => \App\Models\Supplier::orderBy('code')->get(['id', 'code']),
         ]);
     }
 

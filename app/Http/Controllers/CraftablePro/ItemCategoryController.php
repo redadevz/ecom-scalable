@@ -66,7 +66,7 @@ class ItemCategoryController extends Controller
     public function create(CreateItemCategoryRequest $request): Response
     {
         return Inertia::render('ItemCategory/Create', [
-            
+            'item_categories' => \App\Models\ItemCategory::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class ItemCategoryController extends Controller
         
         return Inertia::render('ItemCategory/Edit', [
             'itemCategory' => $itemCategory,
-            
+            'item_categories' => \App\Models\ItemCategory::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

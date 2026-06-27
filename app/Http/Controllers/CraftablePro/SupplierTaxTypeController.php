@@ -66,7 +66,7 @@ class SupplierTaxTypeController extends Controller
     public function create(CreateSupplierTaxTypeRequest $request): Response
     {
         return Inertia::render('SupplierTaxType/Create', [
-            
+            'suppliers' => \App\Models\Supplier::orderBy('code')->get(['id', 'code']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class SupplierTaxTypeController extends Controller
         
         return Inertia::render('SupplierTaxType/Edit', [
             'supplierTaxType' => $supplierTaxType,
-            
+            'suppliers' => \App\Models\Supplier::orderBy('code')->get(['id', 'code']),
         ]);
     }
 

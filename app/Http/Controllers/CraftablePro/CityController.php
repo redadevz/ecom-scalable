@@ -66,7 +66,8 @@ class CityController extends Controller
     public function create(CreateCityRequest $request): Response
     {
         return Inertia::render('City/Create', [
-            
+            'regions' => \App\Models\Region::orderBy('name')->get(['id', 'name']),
+            'time_zones' => \App\Models\TimeZone::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class CityController extends Controller
         
         return Inertia::render('City/Edit', [
             'city' => $city,
-            
+            'regions' => \App\Models\Region::orderBy('name')->get(['id', 'name']),
+            'time_zones' => \App\Models\TimeZone::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

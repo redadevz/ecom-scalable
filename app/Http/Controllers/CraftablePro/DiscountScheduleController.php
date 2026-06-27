@@ -66,7 +66,7 @@ class DiscountScheduleController extends Controller
     public function create(CreateDiscountScheduleRequest $request): Response
     {
         return Inertia::render('DiscountSchedule/Create', [
-            
+            'discount_types' => \App\Models\DiscountType::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class DiscountScheduleController extends Controller
         
         return Inertia::render('DiscountSchedule/Edit', [
             'discountSchedule' => $discountSchedule,
-            
+            'discount_types' => \App\Models\DiscountType::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

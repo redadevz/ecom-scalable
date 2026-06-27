@@ -66,7 +66,7 @@ class InvoiceController extends Controller
     public function create(CreateInvoiceRequest $request): Response
     {
         return Inertia::render('Invoice/Create', [
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
         ]);
     }
 
@@ -88,7 +88,8 @@ class InvoiceController extends Controller
         
         return Inertia::render('Invoice/Edit', [
             'invoice' => $invoice,
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
         ]);
     }
 

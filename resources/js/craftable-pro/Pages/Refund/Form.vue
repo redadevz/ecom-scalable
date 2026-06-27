@@ -7,17 +7,25 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.sale_return_id"
                                 name="sale_return_id"
-                                :label="$t('craftable-pro', 'Sale Return Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Sale Return')"
+                                mode="single"
+                                :options="$page.props.sale_returns ?? []"
+                                options-value-prop="id"
+                                options-label="id"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.payment_method_id"
                                 name="payment_method_id"
-                                :label="$t('craftable-pro', 'Payment Method Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Payment Method')"
+                                mode="single"
+                                :options="$page.props.payment_methods ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.refund_no"
@@ -29,19 +37,19 @@
                                 v-model="form.amount"
                                 name="amount"
                                 :label="$t('craftable-pro', 'Amount')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.cash_paid"
                                 name="cash_paid"
                                 :label="$t('craftable-pro', 'Cash Paid')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.cash_change"
                                 name="cash_change"
                                 :label="$t('craftable-pro', 'Cash Change')"
-                                type="text"
+                                type="number"
                             />
                             <DatePicker
                                 v-model="form.refund_time"

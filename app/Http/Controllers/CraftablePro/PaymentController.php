@@ -66,7 +66,8 @@ class PaymentController extends Controller
     public function create(CreatePaymentRequest $request): Response
     {
         return Inertia::render('Payment/Create', [
-            
+            'invoices' => \App\Models\Invoice::orderBy('invoice_no')->get(['id', 'invoice_no']),
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class PaymentController extends Controller
         
         return Inertia::render('Payment/Edit', [
             'payment' => $payment,
-            
+            'invoices' => \App\Models\Invoice::orderBy('invoice_no')->get(['id', 'invoice_no']),
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

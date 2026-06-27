@@ -7,23 +7,35 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.city_id"
                                 name="city_id"
-                                :label="$t('craftable-pro', 'City Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'City')"
+                                mode="single"
+                                :options="$page.props.cities ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.language_id"
                                 name="language_id"
-                                :label="$t('craftable-pro', 'Language Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Language')"
+                                mode="single"
+                                :options="$page.props.languages ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.currency_id"
                                 name="currency_id"
-                                :label="$t('craftable-pro', 'Currency Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Currency')"
+                                mode="single"
+                                :options="$page.props.currencies ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.code"

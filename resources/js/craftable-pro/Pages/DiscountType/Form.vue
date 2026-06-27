@@ -7,17 +7,25 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.store_id"
                                 name="store_id"
-                                :label="$t('craftable-pro', 'Store Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Store')"
+                                mode="single"
+                                :options="$page.props.stores ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.loyalty_card_type_id"
                                 name="loyalty_card_type_id"
-                                :label="$t('craftable-pro', 'Loyalty Card Type Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Loyalty Card Type')"
+                                mode="single"
+                                :options="$page.props.loyalty_card_types ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.name"
@@ -40,7 +48,7 @@
                                 v-model="form.value"
                                 name="value"
                                 :label="$t('craftable-pro', 'Value')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.coupon_code"
@@ -52,13 +60,13 @@
                                 v-model="form.min_order_value"
                                 name="min_order_value"
                                 :label="$t('craftable-pro', 'Min Order Value')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.min_item_quantity"
                                 name="min_item_quantity"
                                 :label="$t('craftable-pro', 'Min Item Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <Checkbox
                                 v-model="form.apply_to_all"
@@ -74,7 +82,7 @@
                                 v-model="form.max_discount_value"
                                 name="max_discount_value"
                                 :label="$t('craftable-pro', 'Max Discount Value')"
-                                type="text"
+                                type="number"
                             />
                             <DatePicker
                                 v-model="form.start_time"

@@ -23,7 +23,7 @@
                                 v-model="form.sequence_no"
                                 name="sequence_no"
                                 :label="$t('craftable-pro', 'Sequence No')"
-                                type="text"
+                                type="number"
                             />
                             <Checkbox
                                 v-model="form.is_active"

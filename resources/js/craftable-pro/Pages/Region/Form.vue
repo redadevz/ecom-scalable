@@ -13,11 +13,15 @@
                                 :label="$t('craftable-pro', 'Name')"
                                 type="text"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.country_id"
                                 name="country_id"
-                                :label="$t('craftable-pro', 'Country Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Country')"
+                                mode="single"
+                                :options="$page.props.countries ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                         </div>
                     </Card>

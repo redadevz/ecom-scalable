@@ -66,7 +66,8 @@ class SaleReturnController extends Controller
     public function create(CreateSaleReturnRequest $request): Response
     {
         return Inertia::render('SaleReturn/Create', [
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class SaleReturnController extends Controller
         
         return Inertia::render('SaleReturn/Edit', [
             'saleReturn' => $saleReturn,
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

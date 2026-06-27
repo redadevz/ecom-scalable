@@ -7,35 +7,43 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.inventory_count_id"
                                 name="inventory_count_id"
-                                :label="$t('craftable-pro', 'Inventory Count Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Inventory Count')"
+                                mode="single"
+                                :options="$page.props.inventory_counts ?? []"
+                                options-value-prop="id"
+                                options-label="id"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.item_id"
                                 name="item_id"
-                                :label="$t('craftable-pro', 'Item Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Item')"
+                                mode="single"
+                                :options="$page.props.items ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.quantity_counted"
                                 name="quantity_counted"
                                 :label="$t('craftable-pro', 'Quantity Counted')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.quantity_expected"
                                 name="quantity_expected"
                                 :label="$t('craftable-pro', 'Quantity Expected')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.quantity_change"
                                 name="quantity_change"
                                 :label="$t('craftable-pro', 'Quantity Change')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.description"

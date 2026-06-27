@@ -66,7 +66,8 @@ class StockReturnItemController extends Controller
     public function create(CreateStockReturnItemRequest $request): Response
     {
         return Inertia::render('StockReturnItem/Create', [
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class StockReturnItemController extends Controller
         
         return Inertia::render('StockReturnItem/Edit', [
             'stockReturnItem' => $stockReturnItem,
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id']),
         ]);
     }
 

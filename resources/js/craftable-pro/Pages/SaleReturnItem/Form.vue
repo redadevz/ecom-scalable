@@ -7,23 +7,35 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.sale_return_id"
                                 name="sale_return_id"
-                                :label="$t('craftable-pro', 'Sale Return Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Sale Return')"
+                                mode="single"
+                                :options="$page.props.sale_returns ?? []"
+                                options-value-prop="id"
+                                options-label="id"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.order_line_id"
                                 name="order_line_id"
-                                :label="$t('craftable-pro', 'Order Line Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Order Line')"
+                                mode="single"
+                                :options="$page.props.order_lines ?? []"
+                                options-value-prop="id"
+                                options-label="line_no"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.item_id"
                                 name="item_id"
-                                :label="$t('craftable-pro', 'Item Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Item')"
+                                mode="single"
+                                :options="$page.props.items ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.line_no"
@@ -35,13 +47,13 @@
                                 v-model="form.quantity"
                                 name="quantity"
                                 :label="$t('craftable-pro', 'Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.return_quantity"
                                 name="return_quantity"
                                 :label="$t('craftable-pro', 'Return Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.description"

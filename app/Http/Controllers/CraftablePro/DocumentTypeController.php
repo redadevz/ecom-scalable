@@ -66,7 +66,7 @@ class DocumentTypeController extends Controller
     public function create(CreateDocumentTypeRequest $request): Response
     {
         return Inertia::render('DocumentType/Create', [
-            
+            'document_categories' => \App\Models\DocumentCategory::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class DocumentTypeController extends Controller
         
         return Inertia::render('DocumentType/Edit', [
             'documentType' => $documentType,
-            
+            'document_categories' => \App\Models\DocumentCategory::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

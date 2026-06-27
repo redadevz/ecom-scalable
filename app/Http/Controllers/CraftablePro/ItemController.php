@@ -66,7 +66,10 @@ class ItemController extends Controller
     public function create(CreateItemRequest $request): Response
     {
         return Inertia::render('Item/Create', [
-            
+            'item_categories' => \App\Models\ItemCategory::orderBy('name')->get(['id', 'name']),
+            'measure_units' => \App\Models\MeasureUnit::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
+            'suppliers' => \App\Models\Supplier::orderBy('code')->get(['id', 'code']),
         ]);
     }
 
@@ -88,7 +91,10 @@ class ItemController extends Controller
         
         return Inertia::render('Item/Edit', [
             'item' => $item,
-            
+            'item_categories' => \App\Models\ItemCategory::orderBy('name')->get(['id', 'name']),
+            'measure_units' => \App\Models\MeasureUnit::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
+            'suppliers' => \App\Models\Supplier::orderBy('code')->get(['id', 'code']),
         ]);
     }
 

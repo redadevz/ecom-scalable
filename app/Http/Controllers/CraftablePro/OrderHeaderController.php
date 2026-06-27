@@ -66,7 +66,14 @@ class OrderHeaderController extends Controller
     public function create(CreateOrderHeaderRequest $request): Response
     {
         return Inertia::render('OrderHeader/Create', [
-            
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'customers' => \App\Models\Customer::orderBy('code')->get(['id', 'code']),
+            'delivery_types' => \App\Models\DeliveryType::orderBy('name')->get(['id', 'name']),
+            'loyalty_cards' => \App\Models\LoyaltyCard::orderBy('code')->get(['id', 'code']),
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
+            'payment_times' => \App\Models\PaymentTime::orderBy('name')->get(['id', 'name']),
+            'sale_channels' => \App\Models\SaleChannel::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +95,14 @@ class OrderHeaderController extends Controller
         
         return Inertia::render('OrderHeader/Edit', [
             'orderHeader' => $orderHeader,
-            
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
+            'customers' => \App\Models\Customer::orderBy('code')->get(['id', 'code']),
+            'delivery_types' => \App\Models\DeliveryType::orderBy('name')->get(['id', 'name']),
+            'loyalty_cards' => \App\Models\LoyaltyCard::orderBy('code')->get(['id', 'code']),
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
+            'payment_times' => \App\Models\PaymentTime::orderBy('name')->get(['id', 'name']),
+            'sale_channels' => \App\Models\SaleChannel::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

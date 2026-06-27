@@ -66,7 +66,8 @@ class InvoiceLineController extends Controller
     public function create(CreateInvoiceLineRequest $request): Response
     {
         return Inertia::render('InvoiceLine/Create', [
-            
+            'invoices' => \App\Models\Invoice::orderBy('invoice_no')->get(['id', 'invoice_no']),
+            'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class InvoiceLineController extends Controller
         
         return Inertia::render('InvoiceLine/Edit', [
             'invoiceLine' => $invoiceLine,
-            
+            'invoices' => \App\Models\Invoice::orderBy('invoice_no')->get(['id', 'invoice_no']),
+            'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
         ]);
     }
 

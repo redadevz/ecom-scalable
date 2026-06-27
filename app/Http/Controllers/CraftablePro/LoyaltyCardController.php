@@ -66,7 +66,8 @@ class LoyaltyCardController extends Controller
     public function create(CreateLoyaltyCardRequest $request): Response
     {
         return Inertia::render('LoyaltyCard/Create', [
-            
+            'customers' => \App\Models\Customer::orderBy('code')->get(['id', 'code']),
+            'loyalty_card_types' => \App\Models\LoyaltyCardType::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class LoyaltyCardController extends Controller
         
         return Inertia::render('LoyaltyCard/Edit', [
             'loyaltyCard' => $loyaltyCard,
-            
+            'customers' => \App\Models\Customer::orderBy('code')->get(['id', 'code']),
+            'loyalty_card_types' => \App\Models\LoyaltyCardType::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

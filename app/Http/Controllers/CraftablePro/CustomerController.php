@@ -66,7 +66,9 @@ class CustomerController extends Controller
     public function create(CreateCustomerRequest $request): Response
     {
         return Inertia::render('Customer/Create', [
-            
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class CustomerController extends Controller
         
         return Inertia::render('Customer/Edit', [
             'customer' => $customer,
-            
+            'cities' => \App\Models\City::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
+            'craftable_pro_users' => \Brackets\CraftablePro\Models\CraftableProUser::orderBy('email')->get(['id', 'email']),
         ]);
     }
 

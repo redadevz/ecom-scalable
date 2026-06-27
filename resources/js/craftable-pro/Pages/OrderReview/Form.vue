@@ -7,23 +7,35 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.order_id"
                                 name="order_id"
-                                :label="$t('craftable-pro', 'Order Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Order')"
+                                mode="single"
+                                :options="$page.props.order_headers ?? []"
+                                options-value-prop="id"
+                                options-label="order_no"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.customer_id"
                                 name="customer_id"
-                                :label="$t('craftable-pro', 'Customer Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Customer')"
+                                mode="single"
+                                :options="$page.props.customers ?? []"
+                                options-value-prop="id"
+                                options-label="code"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.replied_by"
                                 name="replied_by"
                                 :label="$t('craftable-pro', 'Replied By')"
-                                type="text"
+                                mode="single"
+                                :options="$page.props.craftable_pro_users ?? []"
+                                options-value-prop="id"
+                                options-label="email"
+                                :searchable="true"
                             />
                             <Checkbox
                                 v-model="form.rating"

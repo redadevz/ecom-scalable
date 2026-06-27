@@ -66,7 +66,9 @@ class SaleReturnItemController extends Controller
     public function create(CreateSaleReturnItemRequest $request): Response
     {
         return Inertia::render('SaleReturnItem/Create', [
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class SaleReturnItemController extends Controller
         
         return Inertia::render('SaleReturnItem/Edit', [
             'saleReturnItem' => $saleReturnItem,
-            
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
         ]);
     }
 

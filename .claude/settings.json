@@ -1,7 +1,15 @@
 {
   "permissions": {
     "allow": [
-      "Bash(php /tmp/claude-1000/-home-mediaplus-Desktop-projects-ecom-app/bbe2e7c5-7919-43a3-ada2-ba2fdab8d203/scratchpad/add_relations_2.php)"
+      "Bash(php /tmp/claude-1000/-home-mediaplus-Desktop-projects-ecom-app/bbe2e7c5-7919-43a3-ada2-ba2fdab8d203/scratchpad/add_relations_2.php)",
+      "Bash(grep -rA12 \"<Multiselect\" vendor/brackets/craftable-pro/resources/js)",
+      "Bash(./vendor/bin/sail php *)",
+      "Bash(sed -n '/public function edit/,/^    }/p' app/Http/Controllers/CraftablePro/InvoiceController.php)",
+      "Bash(php -l app/Http/Controllers/CraftablePro/InvoiceController.php)",
+      "Bash(docker exec *)",
+      "Bash(./vendor/bin/sail exec *)",
+      "Bash(break)",
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code} final=%{url_effective}\\\\n\" -L http://localhost/admin)"
     ]
   }
 }

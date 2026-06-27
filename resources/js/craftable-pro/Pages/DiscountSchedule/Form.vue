@@ -7,11 +7,15 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.discount_type_id"
                                 name="discount_type_id"
-                                :label="$t('craftable-pro', 'Discount Type Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Discount Type')"
+                                mode="single"
+                                :options="$page.props.discount_types ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <Checkbox
                                 v-model="form.day_of_week"

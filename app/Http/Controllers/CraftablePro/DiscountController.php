@@ -66,7 +66,9 @@ class DiscountController extends Controller
     public function create(CreateDiscountRequest $request): Response
     {
         return Inertia::render('Discount/Create', [
-            
+            'discount_types' => \App\Models\DiscountType::orderBy('name')->get(['id', 'name']),
+            'item_categories' => \App\Models\ItemCategory::orderBy('name')->get(['id', 'name']),
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class DiscountController extends Controller
         
         return Inertia::render('Discount/Edit', [
             'discount' => $discount,
-            
+            'discount_types' => \App\Models\DiscountType::orderBy('name')->get(['id', 'name']),
+            'item_categories' => \App\Models\ItemCategory::orderBy('name')->get(['id', 'name']),
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

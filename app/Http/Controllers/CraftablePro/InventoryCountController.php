@@ -66,7 +66,7 @@ class InventoryCountController extends Controller
     public function create(CreateInventoryCountRequest $request): Response
     {
         return Inertia::render('InventoryCount/Create', [
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class InventoryCountController extends Controller
         
         return Inertia::render('InventoryCount/Edit', [
             'inventoryCount' => $inventoryCount,
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

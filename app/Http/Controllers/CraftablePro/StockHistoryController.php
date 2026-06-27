@@ -66,7 +66,9 @@ class StockHistoryController extends Controller
     public function create(CreateStockHistoryRequest $request): Response
     {
         return Inertia::render('StockHistory/Create', [
-            
+            'documents' => \App\Models\Document::orderBy('number')->get(['id', 'number']),
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +90,9 @@ class StockHistoryController extends Controller
         
         return Inertia::render('StockHistory/Edit', [
             'stockHistory' => $stockHistory,
-            
+            'documents' => \App\Models\Document::orderBy('number')->get(['id', 'number']),
+            'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

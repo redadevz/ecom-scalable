@@ -66,7 +66,8 @@ class RefundController extends Controller
     public function create(CreateRefundRequest $request): Response
     {
         return Inertia::render('Refund/Create', [
-            
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class RefundController extends Controller
         
         return Inertia::render('Refund/Edit', [
             'refund' => $refund,
-            
+            'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
         ]);
     }
 

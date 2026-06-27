@@ -66,7 +66,7 @@ class RegionController extends Controller
     public function create(CreateRegionRequest $request): Response
     {
         return Inertia::render('Region/Create', [
-            
+            'countries' => \App\Models\Country::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class RegionController extends Controller
         
         return Inertia::render('Region/Edit', [
             'region' => $region,
-            
+            'countries' => \App\Models\Country::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

@@ -66,7 +66,8 @@ class OrderStatusHistoryController extends Controller
     public function create(CreateOrderStatusHistoryRequest $request): Response
     {
         return Inertia::render('OrderStatusHistory/Create', [
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'order_statuses' => \App\Models\OrderStatus::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +89,8 @@ class OrderStatusHistoryController extends Controller
         
         return Inertia::render('OrderStatusHistory/Edit', [
             'orderStatusHistory' => $orderStatusHistory,
-            
+            'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
+            'order_statuses' => \App\Models\OrderStatus::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

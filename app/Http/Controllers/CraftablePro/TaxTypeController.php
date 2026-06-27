@@ -66,7 +66,7 @@ class TaxTypeController extends Controller
     public function create(CreateTaxTypeRequest $request): Response
     {
         return Inertia::render('TaxType/Create', [
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 
@@ -88,7 +88,7 @@ class TaxTypeController extends Controller
         
         return Inertia::render('TaxType/Edit', [
             'taxType' => $taxType,
-            
+            'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
 

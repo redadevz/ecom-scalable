@@ -13,23 +13,31 @@
                                 :label="$t('craftable-pro', 'Name')"
                                 type="text"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.region_id"
                                 name="region_id"
-                                :label="$t('craftable-pro', 'Region Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Region')"
+                                mode="single"
+                                :options="$page.props.regions ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.timezone_id"
                                 name="timezone_id"
-                                :label="$t('craftable-pro', 'Timezone Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Timezone')"
+                                mode="single"
+                                :options="$page.props.time_zones ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.zipcode"
                                 name="zipcode"
                                 :label="$t('craftable-pro', 'Zipcode')"
-                                type="text"
+                                type="number"
                             />
                         </div>
                     </Card>

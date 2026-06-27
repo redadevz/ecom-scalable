@@ -7,29 +7,45 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.store_id"
                                 name="store_id"
-                                :label="$t('craftable-pro', 'Store Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Store')"
+                                mode="single"
+                                :options="$page.props.stores ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.order_id"
                                 name="order_id"
-                                :label="$t('craftable-pro', 'Order Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Order')"
+                                mode="single"
+                                :options="$page.props.order_headers ?? []"
+                                options-value-prop="id"
+                                options-label="order_no"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.shipment_city_id"
                                 name="shipment_city_id"
-                                :label="$t('craftable-pro', 'Shipment City Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Shipment City')"
+                                mode="single"
+                                :options="$page.props.cities ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.picked_up_by"
                                 name="picked_up_by"
                                 :label="$t('craftable-pro', 'Picked Up By')"
-                                type="text"
+                                mode="single"
+                                :options="$page.props.craftable_pro_users ?? []"
+                                options-value-prop="id"
+                                options-label="email"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.shipment_address"

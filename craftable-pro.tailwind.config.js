@@ -21,7 +21,7 @@ module.exports = {
         info: colors.sky,
       },
       fontFamily: {
-        sans: ["Nunito", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter", "Nunito", ...defaultTheme.fontFamily.sans],
       },
       screens: {
         '3xl': '1800px',

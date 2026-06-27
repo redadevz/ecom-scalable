@@ -7,53 +7,61 @@
                 <div class="flex-1 space-y-4">
                     <Card>
                         <div class="space-y-4">
-                            <TextInput
+                            <Multiselect
                                 v-model="form.purchase_id"
                                 name="purchase_id"
-                                :label="$t('craftable-pro', 'Purchase Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Purchase')"
+                                mode="single"
+                                :options="$page.props.purchases ?? []"
+                                options-value-prop="id"
+                                options-label="id"
+                                :searchable="true"
                             />
-                            <TextInput
+                            <Multiselect
                                 v-model="form.item_id"
                                 name="item_id"
-                                :label="$t('craftable-pro', 'Item Id')"
-                                type="text"
+                                :label="$t('craftable-pro', 'Item')"
+                                mode="single"
+                                :options="$page.props.items ?? []"
+                                options-value-prop="id"
+                                options-label="name"
+                                :searchable="true"
                             />
                             <TextInput
                                 v-model="form.supplier_price_before_tax"
                                 name="supplier_price_before_tax"
                                 :label="$t('craftable-pro', 'Supplier Price Before Tax')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.supplier_tax_value"
                                 name="supplier_tax_value"
                                 :label="$t('craftable-pro', 'Supplier Tax Value')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.supplier_price_after_tax"
                                 name="supplier_price_after_tax"
                                 :label="$t('craftable-pro', 'Supplier Price After Tax')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.supplier_discount_value"
                                 name="supplier_discount_value"
                                 :label="$t('craftable-pro', 'Supplier Discount Value')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.quantity"
                                 name="quantity"
                                 :label="$t('craftable-pro', 'Quantity')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.return_amount"
                                 name="return_amount"
                                 :label="$t('craftable-pro', 'Return Amount')"
-                                type="text"
+                                type="number"
                             />
                             <TextInput
                                 v-model="form.description"
