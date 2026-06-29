@@ -29,7 +29,7 @@ class StockService{
             $delta = $isIn ? $quantity : -$quantity;
             $newQty = $initialQty + $delta;
 
-            // block negative stock on the way out
+            
             if (! $isIn && $newQty < 0) {
                 throw new InsufficientStockException(
                     "Not enough stock for {$item->name}. Have {$initialQty}, need {$quantity}."

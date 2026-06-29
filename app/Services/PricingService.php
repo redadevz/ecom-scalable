@@ -9,39 +9,35 @@ use RuntimeException;
 
 class PricingService
 {
-    /**
-     * Compute the money numbers for ONE order line.
-     * Reads the item's active price (per unit) and multiplies by quantity.
-     * Returns an array — it does NOT save. The caller decides to persist.
-     */
+
     public function priceLine(OrderLine $line): array
     {
         $price = $this->activePrice($line->item_id);
-        $qty = (float) $line->quantity;
+        $qty = $line->quantity;
 
-        $unitBeforeTax = (float) $price->price_before_tax;
-        $unitTax = (float) $price->tax_value;
-        $unitAfterTax = (float) $price->price_after_tax;
+        $unitBeforeTax = $price->price_before_tax;
+        $unitTax = $price->tax_value;
+        $unitAfterTax = $price->price_after_tax;
 
         $lineBeforeTax = $this->round($unitBeforeTax * $qty);
         $lineTax = $this->round($unitTax * $qty);
         $lineAfterTax = $this->round($unitAfterTax * $qty);
 
-        // discount is handled later by DiscountService — zero for now
+        
         $discountValue = 0.0;
         $priceBeforeDiscount = $lineAfterTax;
         $priceAfterDiscount = $this->round($priceBeforeDiscount - $discountValue);
 
         return [
-            'current_item_cost'     => (float) $price->current_item_cost,
-            'markup_percentage'     => (float) $price->markup_percentage,
+            'current_item_cost'     => $price->current_item_cost,
+            'markup_percentage'     => $price->markup_percentage,
             'price_before_tax'      => $lineBeforeTax,
             'tax_value'             => $lineTax,
             'price_after_tax'       => $lineAfterTax,
             'price_before_discount' => $priceBeforeDiscount,
             'discount_value'        => $discountValue,
             'price_after_discount'  => $priceAfterDiscount,
-            'price'                 => $priceAfterDiscount,   // final line total
+            'price'                 => $priceAfterDiscount, 
         ];
     }
 
@@ -82,20 +78,15 @@ class PricingService
         ];
     }
 
-    /**
-     * Find the currently-active price for an item.
-     * Active = is_active, and (if a window is set) today is inside it.
-     */
+
     protected function activePrice(int $itemId): Price
     {
         $now = now();
 
         $price = Price::query()
             ->where('item_id', $itemId)
-            ->where('is_active', true)
-            ->where(fn ($q) => $q->whereNull('start_time')->orWhere('start_time', '<=', $now))
-            ->where(fn ($q) => $q->whereNull('end_time')->orWhere('end_time', '>=', $now))
-            ->orderByDesc('id')   // newest active price wins
+            ->active()
+            ->latest('id')
             ->first();
 
         if (! $price) {

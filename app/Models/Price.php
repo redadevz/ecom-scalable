@@ -6,6 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class Price extends Model
 {
@@ -78,5 +80,15 @@ class Price extends Model
     public function createdBy(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(\Brackets\CraftablePro\Models\CraftableProUser::class, 'created_by');
+    }
+
+    public function scopreActive(Builder $query) : Builder {
+        $now = now();
+        
+        return $query 
+            ->where('is_active', true)
+            ->where(fn ($q) => $q->whereNull('start_time')->orWhere('start_time', '<=', $now))
+            ->where(fn ($q) => $q->whereNull('end_time')->orWhere('end_time', '>=', $now));
+            
     }
 }
