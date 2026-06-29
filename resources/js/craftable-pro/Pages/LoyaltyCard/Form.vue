@@ -1,47 +1,53 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <Multiselect
-                                v-model="form.loyalty_card_type_id"
-                                name="loyalty_card_type_id"
-                                :label="$t('craftable-pro', 'Loyalty Card Type')"
-                                mode="single"
-                                :options="$page.props.loyalty_card_types ?? []"
-                                options-value-prop="id"
-                                options-label="name"
-                                :searchable="true"
-                            />
-                            <Multiselect
-                                v-model="form.customer_id"
-                                name="customer_id"
-                                :label="$t('craftable-pro', 'Customer')"
-                                mode="single"
-                                :options="$page.props.customers ?? []"
-                                options-value-prop="id"
-                                options-label="code"
-                                :searchable="true"
-                            />
-                            <TextInput
-                                v-model="form.code"
-                                name="code"
-                                :label="$t('craftable-pro', 'Code')"
-                                type="text"
-                            />
-                            <Checkbox
-                                v-model="form.is_active"
-                                name="is_active"
-                                :label="$t('craftable-pro', 'Is Active')"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Relations">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <Multiselect
+                        v-model="form.loyalty_card_type_id"
+                        name="loyalty_card_type_id"
+                        label="Loyalty Card Type"
+                        mode="single"
+                        :options="$page.props.loyalty_card_types ?? []"
+                        options-value-prop="id"
+                        options-label="name"
+                        :searchable="true"
+                    />
+                    <Multiselect
+                        v-model="form.customer_id"
+                        name="customer_id"
+                        label="Customer"
+                        mode="single"
+                        :options="$page.props.customers ?? []"
+                        options-value-prop="id"
+                        options-label="code"
+                        :searchable="true"
+                    />
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.code"
+                        name="code"
+                        label="Code"
+                        type="text"
+                    />
+                </div>
+            </Card>
+
+            <Card title="Options">
+                <div class="flex flex-wrap gap-x-10 gap-y-4">
+                    <Checkbox
+                        v-model="form.is_active"
+                        name="is_active"
+                        label="Is Active"
+                    />
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>

@@ -1,94 +1,100 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <Multiselect
-                                v-model="form.order_id"
-                                name="order_id"
-                                :label="$t('craftable-pro', 'Order')"
-                                mode="single"
-                                :options="$page.props.order_headers ?? []"
-                                options-value-prop="id"
-                                options-label="order_no"
-                                :searchable="true"
-                            />
-                            <Multiselect
-                                v-model="form.customer_id"
-                                name="customer_id"
-                                :label="$t('craftable-pro', 'Customer')"
-                                mode="single"
-                                :options="$page.props.customers ?? []"
-                                options-value-prop="id"
-                                options-label="code"
-                                :searchable="true"
-                            />
-                            <Multiselect
-                                v-model="form.replied_by"
-                                name="replied_by"
-                                :label="$t('craftable-pro', 'Replied By')"
-                                mode="single"
-                                :options="$page.props.craftable_pro_users ?? []"
-                                options-value-prop="id"
-                                options-label="email"
-                                :searchable="true"
-                            />
-                            <Checkbox
-                                v-model="form.rating"
-                                name="rating"
-                                :label="$t('craftable-pro', 'Rating')"
-                            />
-                            <TextInput
-                                v-model="form.review"
-                                name="review"
-                                :label="$t('craftable-pro', 'Review')"
-                                type="text"
-                            />
-                            <DatePicker
-                                v-model="form.review_time"
-                                name="review_time"
-                                mode="dateTime"
-                                :label="$t('craftable-pro', 'Review Time')"
-                                
-                            />
-                            <TextInput
-                                v-model="form.reply"
-                                name="reply"
-                                :label="$t('craftable-pro', 'Reply')"
-                                type="text"
-                            />
-                            <DatePicker
-                                v-model="form.reply_time"
-                                name="reply_time"
-                                mode="dateTime"
-                                :label="$t('craftable-pro', 'Reply Time')"
-                                
-                            />
-                            <Checkbox
-                                v-model="form.is_compensated"
-                                name="is_compensated"
-                                :label="$t('craftable-pro', 'Is Compensated')"
-                            />
-                            <TextInput
-                                v-model="form.compensation_value"
-                                name="compensation_value"
-                                :label="$t('craftable-pro', 'Compensation Value')"
-                                type="text"
-                            />
-                            <TextInput
-                                v-model="form.comments"
-                                name="comments"
-                                :label="$t('craftable-pro', 'Comments')"
-                                type="text"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Relations">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <Multiselect
+                        v-model="form.order_id"
+                        name="order_id"
+                        label="Order"
+                        mode="single"
+                        :options="$page.props.order_headers ?? []"
+                        options-value-prop="id"
+                        options-label="order_no"
+                        :searchable="true"
+                    />
+                    <Multiselect
+                        v-model="form.customer_id"
+                        name="customer_id"
+                        label="Customer"
+                        mode="single"
+                        :options="$page.props.customers ?? []"
+                        options-value-prop="id"
+                        options-label="code"
+                        :searchable="true"
+                    />
+                    <Multiselect
+                        v-model="form.replied_by"
+                        name="replied_by"
+                        label="Replied By"
+                        mode="single"
+                        :options="$page.props.craftable_pro_users ?? []"
+                        options-value-prop="id"
+                        options-label="email"
+                        :searchable="true"
+                    />
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.review"
+                        name="review"
+                        label="Review"
+                        type="text"
+                    />
+                    <DatePicker
+                        v-model="form.review_time"
+                        name="review_time"
+                        mode="dateTime"
+                        label="Review Time"
+                    />
+                    <TextInput
+                        v-model="form.reply"
+                        name="reply"
+                        label="Reply"
+                        type="text"
+                    />
+                    <DatePicker
+                        v-model="form.reply_time"
+                        name="reply_time"
+                        mode="dateTime"
+                        label="Reply Time"
+                    />
+                    <TextInput
+                        v-model="form.compensation_value"
+                        name="compensation_value"
+                        label="Compensation Value"
+                        type="text"
+                    />
+                    <div class="sm:col-span-2">
+                        <TextInput
+                            v-model="form.comments"
+                            name="comments"
+                            label="Comments"
+                            type="text"
+                        />
+                    </div>
+                </div>
+            </Card>
+
+            <Card title="Options">
+                <div class="flex flex-wrap gap-x-10 gap-y-4">
+                    <Checkbox
+                        v-model="form.rating"
+                        name="rating"
+                        label="Rating"
+                    />
+                    <Checkbox
+                        v-model="form.is_compensated"
+                        name="is_compensated"
+                        label="Is Compensated"
+                    />
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>

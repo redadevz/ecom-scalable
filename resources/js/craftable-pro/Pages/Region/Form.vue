@@ -1,32 +1,33 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <TextInput
-                                v-model="form.name"
-                                name="name"
-                                :label="$t('craftable-pro', 'Name')"
-                                type="text"
-                            />
-                            <Multiselect
-                                v-model="form.country_id"
-                                name="country_id"
-                                :label="$t('craftable-pro', 'Country')"
-                                mode="single"
-                                :options="$page.props.countries ?? []"
-                                options-value-prop="id"
-                                options-label="name"
-                                :searchable="true"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Relations">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <Multiselect
+                        v-model="form.country_id"
+                        name="country_id"
+                        label="Country"
+                        mode="single"
+                        :options="$page.props.countries ?? []"
+                        options-value-prop="id"
+                        options-label="name"
+                        :searchable="true"
+                    />
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.name"
+                        name="name"
+                        label="Name"
+                        type="text"
+                    />
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>

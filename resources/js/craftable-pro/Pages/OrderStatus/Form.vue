@@ -1,32 +1,35 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <TextInput
-                                v-model="form.name"
-                                name="name"
-                                :label="$t('craftable-pro', 'Name')"
-                                type="text"
-                            />
-                            <TextArea
-                                v-model="form.description"
-                                name="description"
-                                :label="$t('craftable-pro', 'Description')"
-                            />
-                            <Checkbox
-                                v-model="form.is_default"
-                                name="is_default"
-                                :label="$t('craftable-pro', 'Is Default')"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.name"
+                        name="name"
+                        label="Name"
+                        type="text"
+                    />
+                    <div class="sm:col-span-2">
+                        <TextArea
+                            v-model="form.description"
+                            name="description"
+                            label="Description"
+                        />
+                    </div>
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Options">
+                <div class="flex flex-wrap gap-x-10 gap-y-4">
+                    <Checkbox
+                        v-model="form.is_default"
+                        name="is_default"
+                        label="Is Default"
+                    />
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>

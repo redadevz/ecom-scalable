@@ -9,7 +9,13 @@
       "Bash(docker exec *)",
       "Bash(./vendor/bin/sail exec *)",
       "Bash(break)",
-      "Bash(curl -s -o /dev/null -w \"status=%{http_code} final=%{url_effective}\\\\n\" -L http://localhost/admin)"
+      "Bash(curl -s -o /dev/null -w \"status=%{http_code} final=%{url_effective}\\\\n\" -L http://localhost/admin)",
+      "Bash(./vendor/bin/sail ps *)",
+      "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code}\\\\n\" http://localhost/admin)",
+      "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code} \\(root\\)\\\\n\" http://localhost)",
+      "Bash(grep -iv \"warning\\\\|^$\")",
+      "Bash(grep -n 'label\\\\|$t\\\\|___\\\\|trans' vendor/brackets/craftable-pro/resources/js/Components/Multiselect.vue)",
+      "Bash(php /tmp/claude-1000/-home-mediaplus-Desktop-projects-ecom-app/bbe2e7c5-7919-43a3-ada2-ba2fdab8d203/scratchpad/premium_forms.php)"
     ]
   }
 }

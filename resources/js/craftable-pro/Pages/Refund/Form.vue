@@ -1,73 +1,75 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <Multiselect
-                                v-model="form.sale_return_id"
-                                name="sale_return_id"
-                                :label="$t('craftable-pro', 'Sale Return')"
-                                mode="single"
-                                :options="$page.props.sale_returns ?? []"
-                                options-value-prop="id"
-                                options-label="id"
-                                :searchable="true"
-                            />
-                            <Multiselect
-                                v-model="form.payment_method_id"
-                                name="payment_method_id"
-                                :label="$t('craftable-pro', 'Payment Method')"
-                                mode="single"
-                                :options="$page.props.payment_methods ?? []"
-                                options-value-prop="id"
-                                options-label="name"
-                                :searchable="true"
-                            />
-                            <TextInput
-                                v-model="form.refund_no"
-                                name="refund_no"
-                                :label="$t('craftable-pro', 'Refund No')"
-                                type="text"
-                            />
-                            <TextInput
-                                v-model="form.amount"
-                                name="amount"
-                                :label="$t('craftable-pro', 'Amount')"
-                                type="number"
-                            />
-                            <TextInput
-                                v-model="form.cash_paid"
-                                name="cash_paid"
-                                :label="$t('craftable-pro', 'Cash Paid')"
-                                type="number"
-                            />
-                            <TextInput
-                                v-model="form.cash_change"
-                                name="cash_change"
-                                :label="$t('craftable-pro', 'Cash Change')"
-                                type="number"
-                            />
-                            <DatePicker
-                                v-model="form.refund_time"
-                                name="refund_time"
-                                mode="dateTime"
-                                :label="$t('craftable-pro', 'Refund Time')"
-                                
-                            />
-                            <TextInput
-                                v-model="form.comments"
-                                name="comments"
-                                :label="$t('craftable-pro', 'Comments')"
-                                type="text"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Relations">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <Multiselect
+                        v-model="form.sale_return_id"
+                        name="sale_return_id"
+                        label="Sale Return"
+                        mode="single"
+                        :options="$page.props.sale_returns ?? []"
+                        options-value-prop="id"
+                        options-label="id"
+                        :searchable="true"
+                    />
+                    <Multiselect
+                        v-model="form.payment_method_id"
+                        name="payment_method_id"
+                        label="Payment Method"
+                        mode="single"
+                        :options="$page.props.payment_methods ?? []"
+                        options-value-prop="id"
+                        options-label="name"
+                        :searchable="true"
+                    />
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.refund_no"
+                        name="refund_no"
+                        label="Refund No"
+                        type="text"
+                    />
+                    <TextInput
+                        v-model="form.amount"
+                        name="amount"
+                        label="Amount"
+                        type="number"
+                    />
+                    <TextInput
+                        v-model="form.cash_paid"
+                        name="cash_paid"
+                        label="Cash Paid"
+                        type="number"
+                    />
+                    <TextInput
+                        v-model="form.cash_change"
+                        name="cash_change"
+                        label="Cash Change"
+                        type="number"
+                    />
+                    <DatePicker
+                        v-model="form.refund_time"
+                        name="refund_time"
+                        mode="dateTime"
+                        label="Refund Time"
+                    />
+                    <div class="sm:col-span-2">
+                        <TextInput
+                            v-model="form.comments"
+                            name="comments"
+                            label="Comments"
+                            type="text"
+                        />
+                    </div>
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>

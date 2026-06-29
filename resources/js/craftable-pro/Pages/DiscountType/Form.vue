@@ -1,118 +1,126 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <Multiselect
-                                v-model="form.store_id"
-                                name="store_id"
-                                :label="$t('craftable-pro', 'Store')"
-                                mode="single"
-                                :options="$page.props.stores ?? []"
-                                options-value-prop="id"
-                                options-label="name"
-                                :searchable="true"
-                            />
-                            <Multiselect
-                                v-model="form.loyalty_card_type_id"
-                                name="loyalty_card_type_id"
-                                :label="$t('craftable-pro', 'Loyalty Card Type')"
-                                mode="single"
-                                :options="$page.props.loyalty_card_types ?? []"
-                                options-value-prop="id"
-                                options-label="name"
-                                :searchable="true"
-                            />
-                            <TextInput
-                                v-model="form.name"
-                                name="name"
-                                :label="$t('craftable-pro', 'Name')"
-                                type="text"
-                            />
-                            <TextInput
-                                v-model="form.description"
-                                name="description"
-                                :label="$t('craftable-pro', 'Description')"
-                                type="text"
-                            />
-                            <Checkbox
-                                v-model="form.is_percentage"
-                                name="is_percentage"
-                                :label="$t('craftable-pro', 'Is Percentage')"
-                            />
-                            <TextInput
-                                v-model="form.value"
-                                name="value"
-                                :label="$t('craftable-pro', 'Value')"
-                                type="number"
-                            />
-                            <TextInput
-                                v-model="form.coupon_code"
-                                name="coupon_code"
-                                :label="$t('craftable-pro', 'Coupon Code')"
-                                type="text"
-                            />
-                            <TextInput
-                                v-model="form.min_order_value"
-                                name="min_order_value"
-                                :label="$t('craftable-pro', 'Min Order Value')"
-                                type="number"
-                            />
-                            <TextInput
-                                v-model="form.min_item_quantity"
-                                name="min_item_quantity"
-                                :label="$t('craftable-pro', 'Min Item Quantity')"
-                                type="number"
-                            />
-                            <Checkbox
-                                v-model="form.apply_to_all"
-                                name="apply_to_all"
-                                :label="$t('craftable-pro', 'Apply To All')"
-                            />
-                            <Checkbox
-                                v-model="form.apply_to_next"
-                                name="apply_to_next"
-                                :label="$t('craftable-pro', 'Apply To Next')"
-                            />
-                            <TextInput
-                                v-model="form.max_discount_value"
-                                name="max_discount_value"
-                                :label="$t('craftable-pro', 'Max Discount Value')"
-                                type="number"
-                            />
-                            <DatePicker
-                                v-model="form.start_time"
-                                name="start_time"
-                                mode="dateTime"
-                                :label="$t('craftable-pro', 'Start Time')"
-                                
-                            />
-                            <DatePicker
-                                v-model="form.end_time"
-                                name="end_time"
-                                mode="dateTime"
-                                :label="$t('craftable-pro', 'End Time')"
-                                
-                            />
-                            <Checkbox
-                                v-model="form.is_active"
-                                name="is_active"
-                                :label="$t('craftable-pro', 'Is Active')"
-                            />
-                            <TextInput
-                                v-model="form.comments"
-                                name="comments"
-                                :label="$t('craftable-pro', 'Comments')"
-                                type="text"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Relations">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <Multiselect
+                        v-model="form.store_id"
+                        name="store_id"
+                        label="Store"
+                        mode="single"
+                        :options="$page.props.stores ?? []"
+                        options-value-prop="id"
+                        options-label="name"
+                        :searchable="true"
+                    />
+                    <Multiselect
+                        v-model="form.loyalty_card_type_id"
+                        name="loyalty_card_type_id"
+                        label="Loyalty Card Type"
+                        mode="single"
+                        :options="$page.props.loyalty_card_types ?? []"
+                        options-value-prop="id"
+                        options-label="name"
+                        :searchable="true"
+                    />
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.name"
+                        name="name"
+                        label="Name"
+                        type="text"
+                    />
+                    <div class="sm:col-span-2">
+                        <TextInput
+                            v-model="form.description"
+                            name="description"
+                            label="Description"
+                            type="text"
+                        />
+                    </div>
+                    <TextInput
+                        v-model="form.value"
+                        name="value"
+                        label="Value"
+                        type="number"
+                    />
+                    <TextInput
+                        v-model="form.coupon_code"
+                        name="coupon_code"
+                        label="Coupon Code"
+                        type="text"
+                    />
+                    <TextInput
+                        v-model="form.min_order_value"
+                        name="min_order_value"
+                        label="Min Order Value"
+                        type="number"
+                    />
+                    <TextInput
+                        v-model="form.min_item_quantity"
+                        name="min_item_quantity"
+                        label="Min Item Quantity"
+                        type="number"
+                    />
+                    <TextInput
+                        v-model="form.max_discount_value"
+                        name="max_discount_value"
+                        label="Max Discount Value"
+                        type="number"
+                    />
+                    <DatePicker
+                        v-model="form.start_time"
+                        name="start_time"
+                        mode="dateTime"
+                        label="Start Time"
+                    />
+                    <DatePicker
+                        v-model="form.end_time"
+                        name="end_time"
+                        mode="dateTime"
+                        label="End Time"
+                    />
+                    <div class="sm:col-span-2">
+                        <TextInput
+                            v-model="form.comments"
+                            name="comments"
+                            label="Comments"
+                            type="text"
+                        />
+                    </div>
+                </div>
+            </Card>
+
+            <Card title="Options">
+                <div class="flex flex-wrap gap-x-10 gap-y-4">
+                    <Checkbox
+                        v-model="form.is_percentage"
+                        name="is_percentage"
+                        label="Is Percentage"
+                    />
+                    <Checkbox
+                        v-model="form.apply_to_all"
+                        name="apply_to_all"
+                        label="Apply To All"
+                    />
+                    <Checkbox
+                        v-model="form.apply_to_next"
+                        name="apply_to_next"
+                        label="Apply To Next"
+                    />
+                    <Checkbox
+                        v-model="form.is_active"
+                        name="is_active"
+                        label="Is Active"
+                    />
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>

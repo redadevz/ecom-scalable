@@ -1,50 +1,57 @@
 <template>
     <PageContent>
-        <div class="mx-auto max-w-3xl 2xl:max-w-4xl">
-            
+        <div class="mx-auto max-w-5xl space-y-6">
 
-            <div class="flex flex-col gap-4 md:flex-row">
-                <div class="flex-1 space-y-4">
-                    <Card>
-                        <div class="space-y-4">
-                            <Multiselect
-                                v-model="form.order_id"
-                                name="order_id"
-                                :label="$t('craftable-pro', 'Order')"
-                                mode="single"
-                                :options="$page.props.order_headers ?? []"
-                                options-value-prop="id"
-                                options-label="order_no"
-                                :searchable="true"
-                            />
-                            <TextInput
-                                v-model="form.invoice_no"
-                                name="invoice_no"
-                                :label="$t('craftable-pro', 'Invoice No')"
-                                type="text"
-                            />
-                            <Checkbox
-                                v-model="form.is_paid"
-                                name="is_paid"
-                                :label="$t('craftable-pro', 'Is Paid')"
-                            />
-                            <DatePicker
-                                v-model="form.payment_time"
-                                name="payment_time"
-                                mode="dateTime"
-                                :label="$t('craftable-pro', 'Payment Time')"
-                                
-                            />
-                            <TextInput
-                                v-model="form.comments"
-                                name="comments"
-                                :label="$t('craftable-pro', 'Comments')"
-                                type="text"
-                            />
-                        </div>
-                    </Card>
+            <Card title="Relations">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <Multiselect
+                        v-model="form.order_id"
+                        name="order_id"
+                        label="Order"
+                        mode="single"
+                        :options="$page.props.order_headers ?? []"
+                        options-value-prop="id"
+                        options-label="order_no"
+                        :searchable="true"
+                    />
                 </div>
-            </div>
+            </Card>
+
+            <Card title="Details">
+                <div class="grid grid-cols-1 gap-x-6 gap-y-5 sm:grid-cols-2">
+                    <TextInput
+                        v-model="form.invoice_no"
+                        name="invoice_no"
+                        label="Invoice No"
+                        type="text"
+                    />
+                    <DatePicker
+                        v-model="form.payment_time"
+                        name="payment_time"
+                        mode="dateTime"
+                        label="Payment Time"
+                    />
+                    <div class="sm:col-span-2">
+                        <TextInput
+                            v-model="form.comments"
+                            name="comments"
+                            label="Comments"
+                            type="text"
+                        />
+                    </div>
+                </div>
+            </Card>
+
+            <Card title="Options">
+                <div class="flex flex-wrap gap-x-10 gap-y-4">
+                    <Checkbox
+                        v-model="form.is_paid"
+                        name="is_paid"
+                        label="Is Paid"
+                    />
+                </div>
+            </Card>
+
         </div>
     </PageContent>
 </template>
