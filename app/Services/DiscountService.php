@@ -30,6 +30,25 @@ class DiscountService {
     }
 
 
+    public function orderDiscount(OrderHeader $order, $amount){
+        $types = DiscountType::query()
+            ->active()
+            ->where('apply_to_all', true)
+            ->get();
+
+        $best = 0.0;
+        foreach($types as $type){
+            // skip if the order is too small to qualify
+            if($type->min_order_value && $amount < $type->min_order_value){
+                continue;
+            }
+            $best = max($best, $this->compute($type, $amount));
+        }
+
+        return $best;
+    }
+
+
     protected function compute(DiscountType $type, $base){
         $amount = $type->is_percentage ? $base * ($type->value / 100) : $type->value;
 

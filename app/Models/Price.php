@@ -82,7 +82,7 @@ class Price extends Model
         return $this->belongsTo(\Brackets\CraftablePro\Models\CraftableProUser::class, 'created_by');
     }
 
-    public function scopreActive(Builder $query) : Builder {
+    public function scopeActive(Builder $query) : Builder {
         $now = now();
         
         return $query 
