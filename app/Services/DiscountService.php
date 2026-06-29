@@ -20,6 +20,24 @@ class DiscountService {
             ->whereHas('discountType', fn ($q) => $q->active())
             ->with('discountType')
             ->get();
+
+        $best = 0.0;
+        foreach($discounts as $discount){
+            $best = max($best, $this->compute($discount->discountType, $amount));
+        }
+
+        return $best;
+    }
+
+
+    protected function compute(DiscountType $type, $base){
+        $amount = $type->is_percentage ? $base * ($type->value / 100) : $type->value;
+
+        if($type->max_discount_value && $amount > $type->max_discount_value){
+            $amount = $type->max_discount_value; 
+        }
+
+        return round(min($amount, $base), 2);
     }
 }
 
