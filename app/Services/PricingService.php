@@ -96,9 +96,6 @@ class PricingService
         return $price;
     }
 
-    /**
-     * Money is decimal(15,3) in your schema — round to 3 places.
-     */
     protected function round(float $value): float
     {
         return round($value, 3);

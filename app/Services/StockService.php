@@ -25,7 +25,7 @@ class StockService{
         return DB::transaction(function () use ($item, $quantity, $isIn){
             $item = Item::whereKey($item->getKey())->lockForUpdate()->firstOrFail();
 
-            $initialQty = (float) $item->current_stock_quantity;
+            $initialQty = $item->current_stock_quantity;
             $delta = $isIn ? $quantity : -$quantity;
             $newQty = $initialQty + $delta;
 
