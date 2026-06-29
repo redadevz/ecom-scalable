@@ -21,6 +21,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Exceptions\InsufficientStockException;
+use App\Services\OrderService;
 
 class OrderHeaderController extends Controller
 {
@@ -154,4 +156,16 @@ class OrderHeaderController extends Controller
 
         return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
     }
+
+    public function confirm(OrderHeader $orderHeader, OrderService $orders)
+{
+    try {
+        $orders->confirm($orderHeader);
+
+        return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    } catch (InsufficientStockException $e) {
+        return redirect()->back()->with(['error' => ___('craftable-pro', 'Insufficient stock')]);
+    }
+}
+
 }
