@@ -49,7 +49,7 @@ class OrderHeaderController extends Controller
         }
 
         $orderHeaders = $orderHeadersQuery
-            ->with([])
+            ->with(['customer:id,first_name,last_name,company_name,is_company'])
             ->select('id', 'store_id', 'sale_channel_id', 'delivery_type_id', 'payment_method_id', 'payment_time_id', 'customer_id', 'loyalty_card_id', 'created_by', 'approved_by', 'managed_by', 'order_no', 'customer_notes', 'price_before_tax', 'total_tax_value', 'price_after_tax', 'price_before_discount', 'order_items_discount', 'order_discount', 'total_discount_value', 'price_after_discount', 'price_adjustment', 'price_adjustment_reason', 'price', 'latest_status', 'latest_status_update', 'is_submitted', 'submitted_time', 'is_approved', 'approved_time', 'is_canceled', 'canceled_time', 'cancel_reason', 'is_scheduled', 'scheduled_time', 'is_ready', 'ready_time', 'is_delivered', 'delivered_time', 'is_paid', 'payment_time', 'is_completed', 'completed_time', 'return_required', 'return_time', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

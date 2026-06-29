@@ -70,18 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='store_id'>
-                    {{ $t("craftable-pro", "Store Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_id'>
-                    {{ $t("craftable-pro", "Order Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='item_id'>
-                    {{ $t("craftable-pro", "Item Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='line_no'>
                     {{ $t("craftable-pro", "Line No") }}
                 </ListingHeaderCell>
@@ -163,19 +151,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.store_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.order_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.item_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.line_no }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.line_no }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.description }}
@@ -227,7 +203,7 @@
                     />
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.canceled_time && dayjs(item.canceled_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.canceled_time && dayjs(item.canceled_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.cancel_reason }}
@@ -243,7 +219,7 @@
                      {{ item.return_quantity }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.return_time && dayjs(item.return_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.return_time && dayjs(item.return_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.customer_review }}
@@ -259,7 +235,7 @@
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

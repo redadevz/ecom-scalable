@@ -70,15 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_id'>
-                    {{ $t("craftable-pro", "Order Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='customer_id'>
-                    {{ $t("craftable-pro", "Customer Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='replied_by'>
                     {{ $t("craftable-pro", "Replied By") }}
                 </ListingHeaderCell>
@@ -115,16 +106,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.order_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.customer_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.replied_by }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.replied_by }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <ListingToggle
@@ -137,13 +119,13 @@
                      {{ item.review }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.review_time && dayjs(item.review_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.review_time && dayjs(item.review_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.reply }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.reply_time && dayjs(item.reply_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.reply_time && dayjs(item.reply_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <ListingToggle
@@ -159,7 +141,7 @@
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

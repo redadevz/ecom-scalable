@@ -70,15 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='invoice_id'>
-                    {{ $t("craftable-pro", "Invoice Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_line_id'>
-                    {{ $t("craftable-pro", "Order Line Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='line_no'>
                     {{ $t("craftable-pro", "Line No") }}
                 </ListingHeaderCell>
@@ -94,22 +85,13 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.invoice_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.order_line_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.line_no }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.line_no }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

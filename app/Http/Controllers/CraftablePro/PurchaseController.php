@@ -49,7 +49,7 @@ class PurchaseController extends Controller
         }
 
         $purchases = $purchasesQuery
-            ->with([])
+            ->with(['supplier:id,code,company_name'])
             ->select('id', 'store_id', 'supplier_id', 'entry_stock_time', 'description', 'is_paid', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

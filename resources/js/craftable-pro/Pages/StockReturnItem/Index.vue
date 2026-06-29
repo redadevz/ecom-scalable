@@ -70,15 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='stock_return_id'>
-                    {{ $t("craftable-pro", "Stock Return Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='item_id'>
-                    {{ $t("craftable-pro", "Item Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='quantity'>
                     {{ $t("craftable-pro", "Quantity") }}
                 </ListingHeaderCell>
@@ -112,16 +103,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.stock_return_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.item_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.quantity }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.quantity }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.supplier_price_before_tax }}
@@ -145,7 +127,7 @@
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

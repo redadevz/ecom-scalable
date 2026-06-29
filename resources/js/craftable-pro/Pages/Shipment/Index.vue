@@ -70,18 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='store_id'>
-                    {{ $t("craftable-pro", "Store Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_id'>
-                    {{ $t("craftable-pro", "Order Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='shipment_city_id'>
-                    {{ $t("craftable-pro", "Shipment City Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='picked_up_by'>
                     {{ $t("craftable-pro", "Picked Up By") }}
                 </ListingHeaderCell>
@@ -115,19 +103,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.store_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.order_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.shipment_city_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.picked_up_by }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.picked_up_by }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.shipment_address }}
@@ -142,16 +118,16 @@
                      {{ item.shipment_notes }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.picked_up_time && dayjs(item.picked_up_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.picked_up_time && dayjs(item.picked_up_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.shipped_time && dayjs(item.shipped_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.shipped_time && dayjs(item.shipped_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

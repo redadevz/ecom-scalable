@@ -70,30 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='store_id'>
-                    {{ $t("craftable-pro", "Store Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='document_type_id'>
-                    {{ $t("craftable-pro", "Document Type Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='sale_order_id'>
-                    {{ $t("craftable-pro", "Sale Order Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='purchase_id'>
-                    {{ $t("craftable-pro", "Purchase Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='stock_return_id'>
-                    {{ $t("craftable-pro", "Stock Return Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='inventory_count_id'>
-                    {{ $t("craftable-pro", "Inventory Count Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='loss_and_damage_id'>
-                    {{ $t("craftable-pro", "Loss And Damage Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='created_by'>
                     {{ $t("craftable-pro", "Created By") }}
                 </ListingHeaderCell>
@@ -118,31 +94,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.store_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.document_type_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.sale_order_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.purchase_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.stock_return_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.inventory_count_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.loss_and_damage_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.created_by }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.created_by }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.number }}
@@ -157,7 +109,7 @@
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

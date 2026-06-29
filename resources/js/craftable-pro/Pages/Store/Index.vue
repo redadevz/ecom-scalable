@@ -70,18 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='city_id'>
-                    {{ $t("craftable-pro", "City Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='language_id'>
-                    {{ $t("craftable-pro", "Language Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='currency_id'>
-                    {{ $t("craftable-pro", "Currency Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='code'>
                     {{ $t("craftable-pro", "Code") }}
                 </ListingHeaderCell>
@@ -133,19 +121,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.city_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.language_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.currency_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.code }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.code }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.name }}
@@ -191,7 +167,7 @@
                      {{ item.bank_account }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

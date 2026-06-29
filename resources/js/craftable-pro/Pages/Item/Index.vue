@@ -8,7 +8,6 @@
         >
             {{ $t("craftable-pro", "New Item") }}
         </Button>
-        
     </PageHeader>
 
     <PageContent>
@@ -69,103 +68,69 @@
                     </template>
                 </Modal>
             </template>
+
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='store_id'>
-                    {{ $t("craftable-pro", "Store Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='item_category_id'>
-                    {{ $t("craftable-pro", "Item Category Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='supplier_id'>
-                    {{ $t("craftable-pro", "Supplier Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='measure_unit_id'>
-                    {{ $t("craftable-pro", "Measure Unit Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='sku_code'>
-                    {{ $t("craftable-pro", "Sku Code") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='name'>
-                    {{ $t("craftable-pro", "Name") }}
+                    {{ $t("craftable-pro", "Item") }}
                 </ListingHeaderCell>
-                <ListingHeaderCell sortBy='description'>
-                    {{ $t("craftable-pro", "Description") }}
+                <ListingHeaderCell sortBy='current_stock_quantity'>
+                    {{ $t("craftable-pro", "Stock") }}
                 </ListingHeaderCell>
                 <ListingHeaderCell sortBy='is_service'>
-                    {{ $t("craftable-pro", "Is Service") }}
+                    {{ $t("craftable-pro", "Type") }}
                 </ListingHeaderCell>
                 <ListingHeaderCell sortBy='in_stock'>
                     {{ $t("craftable-pro", "In Stock") }}
                 </ListingHeaderCell>
-                <ListingHeaderCell sortBy='using_default_quantity'>
-                    {{ $t("craftable-pro", "Using Default Quantity") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='default_quantity'>
-                    {{ $t("craftable-pro", "Default Quantity") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='current_stock_quantity'>
-                    {{ $t("craftable-pro", "Current Stock Quantity") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='preferred_stock_quantity'>
-                    {{ $t("craftable-pro", "Preferred Stock Quantity") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='min_stock_quantity'>
-                    {{ $t("craftable-pro", "Min Stock Quantity") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='low_stock_warning'>
-                    {{ $t("craftable-pro", "Low Stock Warning") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='low_stock_quantity'>
-                    {{ $t("craftable-pro", "Low Stock Quantity") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='is_active'>
-                    {{ $t("craftable-pro", "Is Active") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='comments'>
-                    {{ $t("craftable-pro", "Comments") }}
+                    {{ $t("craftable-pro", "Active") }}
                 </ListingHeaderCell>
                 <ListingHeaderCell sortBy='created_at'>
-                    {{ $t("craftable-pro", "Created At") }}
+                    {{ $t("craftable-pro", "Created") }}
                 </ListingHeaderCell>
                 <ListingHeaderCell>
                     <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
                 </ListingHeaderCell>
             </template>
+
             <template #tableRow="{ item, action }: any">
+                <!-- Item: name + SKU -->
                 <ListingDataCell>
-                     {{ item.id }}
+                    <div class="flex flex-col">
+                        <span class="font-medium text-gray-900 dark:text-white">{{ item.name }}</span>
+                        <span class="text-xs text-gray-400">{{ item.sku_code }}</span>
+                    </div>
                 </ListingDataCell>
+
+                <!-- Stock with low-stock highlight -->
                 <ListingDataCell>
-                     {{ item.store_id }}
+                    <span
+                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums"
+                        :class="
+                            item.current_stock_quantity <= item.low_stock_quantity
+                                ? 'bg-danger-50 text-danger-700 dark:bg-danger-500/10 dark:text-danger-400'
+                                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300'
+                        "
+                    >
+                        {{ item.current_stock_quantity ?? 0 }}
+                    </span>
                 </ListingDataCell>
+
+                <!-- Type pill: Service vs Product -->
                 <ListingDataCell>
-                     {{ item.item_category_id }}
+                    <span
+                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                        :class="
+                            item.is_service
+                                ? 'bg-info-50 text-info-700 dark:bg-info-500/10 dark:text-info-400'
+                                : 'bg-secondary-50 text-secondary-700 dark:bg-secondary-500/10 dark:text-secondary-400'
+                        "
+                    >
+                        {{ item.is_service ? $t("craftable-pro", "Service") : $t("craftable-pro", "Product") }}
+                    </span>
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.supplier_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.measure_unit_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.sku_code }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.name }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.description }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <ListingToggle
-                        name="is_service"
-                        v-model="item.is_service"
-                        :updateUrl="route('craftable-pro.items.update', item.id)"
-                    />
-                </ListingDataCell>
+
+                <!-- In Stock toggle -->
                 <ListingDataCell>
                     <ListingToggle
                         name="in_stock"
@@ -173,35 +138,8 @@
                         :updateUrl="route('craftable-pro.items.update', item.id)"
                     />
                 </ListingDataCell>
-                <ListingDataCell>
-                    <ListingToggle
-                        name="using_default_quantity"
-                        v-model="item.using_default_quantity"
-                        :updateUrl="route('craftable-pro.items.update', item.id)"
-                    />
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.default_quantity }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.current_stock_quantity }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.preferred_stock_quantity }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.min_stock_quantity }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <ListingToggle
-                        name="low_stock_warning"
-                        v-model="item.low_stock_warning"
-                        :updateUrl="route('craftable-pro.items.update', item.id)"
-                    />
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.low_stock_quantity }}
-                </ListingDataCell>
+
+                <!-- Active toggle -->
                 <ListingDataCell>
                     <ListingToggle
                         name="is_active"
@@ -209,12 +147,15 @@
                         :updateUrl="route('craftable-pro.items.update', item.id)"
                     />
                 </ListingDataCell>
+
+                <!-- Created -->
                 <ListingDataCell>
-                     {{ item.comments }}
+                    <span class="text-sm text-gray-500">
+                        {{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}
+                    </span>
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
-                </ListingDataCell>
+
+                <!-- Actions -->
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">
                         <IconButton

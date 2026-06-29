@@ -70,15 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_id'>
-                    {{ $t("craftable-pro", "Order Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_status_id'>
-                    {{ $t("craftable-pro", "Order Status Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='start_time'>
                     {{ $t("craftable-pro", "Start Time") }}
                 </ListingHeaderCell>
@@ -94,22 +85,13 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
+                    <span class="text-sm text-gray-500">{{ item.start_time && dayjs(item.start_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.order_id }}
+                    <span class="text-sm text-gray-500">{{ item.end_time && dayjs(item.end_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.order_status_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.start_time && dayjs(item.start_time).format('DD.MM.YYYY HH:mm') }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.end_time && dayjs(item.end_time).format('DD.MM.YYYY HH:mm') }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

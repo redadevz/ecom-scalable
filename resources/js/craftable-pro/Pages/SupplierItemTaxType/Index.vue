@@ -70,15 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='item_id'>
-                    {{ $t("craftable-pro", "Item Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='supplier_tax_type_id'>
-                    {{ $t("craftable-pro", "Supplier Tax Type Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='start_time'>
                     {{ $t("craftable-pro", "Start Time") }}
                 </ListingHeaderCell>
@@ -97,25 +88,16 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
+                    <span class="text-sm text-gray-500">{{ item.start_time && dayjs(item.start_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.item_id }}
+                    <span class="text-sm text-gray-500">{{ item.end_time && dayjs(item.end_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.supplier_tax_type_id }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.description }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.start_time && dayjs(item.start_time).format('DD.MM.YYYY HH:mm') }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.end_time && dayjs(item.end_time).format('DD.MM.YYYY HH:mm') }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.description }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

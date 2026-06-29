@@ -70,15 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='sale_return_id'>
-                    {{ $t("craftable-pro", "Sale Return Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='payment_method_id'>
-                    {{ $t("craftable-pro", "Payment Method Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='refund_no'>
                     {{ $t("craftable-pro", "Refund No") }}
                 </ListingHeaderCell>
@@ -106,16 +97,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.sale_return_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.payment_method_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.refund_no }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.refund_no }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.amount }}
@@ -127,13 +109,13 @@
                      {{ item.cash_change }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.refund_time && dayjs(item.refund_time).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.refund_time && dayjs(item.refund_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

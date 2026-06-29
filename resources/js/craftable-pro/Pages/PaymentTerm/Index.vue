@@ -70,21 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='sale_channel_id'>
-                    {{ $t("craftable-pro", "Sale Channel Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='delivery_type_id'>
-                    {{ $t("craftable-pro", "Delivery Type Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='payment_method_id'>
-                    {{ $t("craftable-pro", "Payment Method Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='payment_time_id'>
-                    {{ $t("craftable-pro", "Payment Time Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='is_allowed'>
                     {{ $t("craftable-pro", "Is Allowed") }}
                 </ListingHeaderCell>
@@ -103,21 +88,6 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.sale_channel_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.delivery_type_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.payment_method_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.payment_time_id }}
-                </ListingDataCell>
-                <ListingDataCell>
                     <ListingToggle
                         name="is_allowed"
                         v-model="item.is_allowed"
@@ -132,10 +102,10 @@
                     />
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.comments }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.comments }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

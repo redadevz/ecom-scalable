@@ -70,12 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='store_id'>
-                    {{ $t("craftable-pro", "Store Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='exit_stock_time'>
                     {{ $t("craftable-pro", "Exit Stock Time") }}
                 </ListingHeaderCell>
@@ -94,22 +88,16 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
+                    <span class="text-sm text-gray-500">{{ item.exit_stock_time && dayjs(item.exit_stock_time).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.store_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.exit_stock_time && dayjs(item.exit_stock_time).format('DD.MM.YYYY HH:mm') }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.description }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.description }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                      {{ item.comments }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

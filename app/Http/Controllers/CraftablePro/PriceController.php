@@ -49,7 +49,7 @@ class PriceController extends Controller
         }
 
         $prices = $pricesQuery
-            ->with([])
+            ->with(['item:id,name,sku_code'])
             ->select('id', 'item_id', 'store_id', 'created_by', 'description', 'current_item_cost', 'markup_percentage', 'price_before_tax', 'tax_value', 'price_after_tax', 'sale_price', 'price_change_allowed', 'start_time', 'end_time', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

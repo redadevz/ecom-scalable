@@ -70,12 +70,6 @@
                 </Modal>
             </template>
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>
-                    {{ $t("craftable-pro", "Id") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='item_id'>
-                    {{ $t("craftable-pro", "Item Id") }}
-                </ListingHeaderCell>
                 <ListingHeaderCell sortBy='bar_code'>
                     {{ $t("craftable-pro", "Bar Code") }}
                 </ListingHeaderCell>
@@ -94,13 +88,7 @@
             </template>
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                     {{ item.id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.item_id }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.bar_code }}
+                    <span class="font-medium text-gray-900 dark:text-white">{{ item.bar_code }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <ListingToggle
@@ -113,7 +101,7 @@
                      {{ item.description }}
                 </ListingDataCell>
                 <ListingDataCell>
-                     {{ item.created_at && dayjs(item.created_at).format('DD.MM.YYYY HH:mm') }}
+                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <div class="flex items-center justify-end gap-3">

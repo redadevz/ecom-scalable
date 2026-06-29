@@ -15,7 +15,13 @@
       "Bash(curl -sS -o /dev/null -w \"HTTP %{http_code} \\(root\\)\\\\n\" http://localhost)",
       "Bash(grep -iv \"warning\\\\|^$\")",
       "Bash(grep -n 'label\\\\|$t\\\\|___\\\\|trans' vendor/brackets/craftable-pro/resources/js/Components/Multiselect.vue)",
-      "Bash(php /tmp/claude-1000/-home-mediaplus-Desktop-projects-ecom-app/bbe2e7c5-7919-43a3-ada2-ba2fdab8d203/scratchpad/premium_forms.php)"
+      "Bash(php /tmp/claude-1000/-home-mediaplus-Desktop-projects-ecom-app/bbe2e7c5-7919-43a3-ada2-ba2fdab8d203/scratchpad/premium_forms.php)",
+      "Bash(grep -v \"warning\\\\|^$\\\\|INFO\\\\|Psy\")",
+      "Bash(php /tmp/claude-1000/-home-mediaplus-Desktop-projects-ecom-app/bbe2e7c5-7919-43a3-ada2-ba2fdab8d203/scratchpad/premium_tables.php)",
+      "Bash(php -r ' *)"
+    ],
+    "additionalDirectories": [
+      "/home/mediaplus/Desktop/projects/ecom-app/resources/js/craftable-pro/Pages/*"
     ]
   }
 }
