@@ -36,14 +36,16 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - Button: "Receive Stock" in `Pages/Purchase/Edit.vue` (disables to "Received" once stocked) ✅
 - Seed data: unreceived Purchase #1 in `RetailDataSeeder` for testing ✅
 
-### Step 10 — OrderService@cancel (undo a sale) ⬜  ← next
-- File: `app/Services/OrderService.php`
-- Logic: guard (approved & not canceled) → `stockIn` each non-service line → set
-  `is_canceled`, `canceled_time`, `cancel_reason`, status `Cancelled` → record status row
-- Wire: route `order-headers/{orderHeader}/cancel` + `OrderHeaderController@cancel` + button
+### Step 10 — OrderService@cancel (undo a sale) ✅
+- File: `app/Services/OrderService.php` — `cancel()` + generalized `recordStatus($order, $statusName)`
+- Logic: guard (not already canceled) → if approved, `stockIn` each non-service line → set
+  `is_canceled`, `canceled_time`, `cancel_reason`, status `Cancelled` → record status row ✅
+- Wire: route `order-headers/{orderHeader}/cancel` + `OrderHeaderController@cancel` + red Cancel button ✅
 - Test: confirm then cancel → stock returns to pre-sale value
 
-### Step 11 — SaleReturnService (customer returns) ⬜
+> ✅ Full stock loop now works end-to-end: **in (purchase receive) → out (sale confirm) → back (cancel)**
+
+### Step 11 — SaleReturnService (customer returns) ⬜  ← next
 - File: `app/Services/SaleReturnService.php`
 - Logic: `process(SaleReturn)` → `stockIn` returned qty, set order line `return_quantity`/`return_time`,
   optionally create a Refund row
