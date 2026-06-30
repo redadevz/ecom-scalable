@@ -21,6 +21,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Services\SaleReturnService;
 
 class SaleReturnController extends Controller
 {
@@ -141,5 +142,15 @@ class SaleReturnController extends Controller
         //        });
 
         return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    public function process(SaleReturn $saleReturn, SaleReturnService $saleReturns){
+        try{
+            $saleReturns->process($saleReturn);
+
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Return processed')]);
+        }catch (\App\Exceptions\SaleReturnAlreadyProcessedException $e){
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 }
