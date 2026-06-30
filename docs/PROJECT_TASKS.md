@@ -45,13 +45,15 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 > ✅ Full stock loop now works end-to-end: **in (purchase receive) → out (sale confirm) → back (cancel)**
 
-### Step 11 — SaleReturnService (customer returns) ⬜  ← next
-- File: `app/Services/SaleReturnService.php`
-- Logic: `process(SaleReturn)` → `stockIn` returned qty, set order line `return_quantity`/`return_time`,
-  optionally create a Refund row
-- Wire endpoint + button · Test
+### Step 11 — SaleReturnService (customer returns) ✅
+- File: `app/Services/SaleReturnService.php` (best-practice: row lock, domain exception, `restockLine()`, strict types)
+- Exception: `app/Exceptions/SaleReturnAlreadyProcessedException.php` ✅
+- Logic: `process(SaleReturn)` → `stockIn` returned qty, mark order line `return_quantity`/`return_time`/`return_required` ✅
+- Wire: route `sale-returns/{saleReturn}/process` + `SaleReturnController@process` + "Process Return" button ✅
+- Seed: unprocessed SaleReturn #1 (2× Fresh Milk on ORD-1002) for testing ✅
+- (Refund money intentionally deferred to Step 16 — PaymentService)
 
-### Step 12 — StockReturnService (return to supplier) ⬜
+### Step 12 — StockReturnService (return to supplier) ⬜  ← next
 - File: `app/Services/StockReturnService.php`
 - Logic: `process(StockReturn)` → `stockOut` each line (goods leave)
 - Wire endpoint + button · Test

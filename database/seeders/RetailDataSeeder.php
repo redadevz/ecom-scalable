@@ -24,6 +24,8 @@ use App\Models\Price;
 use App\Models\Purchase;
 use App\Models\PurchaseItem;
 use App\Models\Region;
+use App\Models\SaleReturn;
+use App\Models\SaleReturnItem;
 use App\Models\SaleChannel;
 use App\Models\Store;
 use App\Models\Supplier;
@@ -294,6 +296,27 @@ class RetailDataSeeder extends Seeder
                     'supplier_discount_value'   => 0,
                     'quantity'                  => $qty,
                     'return_amount'             => 0,
+                ]
+            );
+        }
+
+        // --- An UNPROCESSED sale return (customer returns 2x Fresh Milk) -----
+        $returnOrder = OrderHeader::with('orderLines')->where('order_no', 'ORD-1002')->first();
+        $milkLine = $returnOrder?->orderLines->firstWhere('item_id', $items[7]->id); // Fresh Milk
+
+        if ($milkLine) {
+            $saleReturn = SaleReturn::firstOrCreate(
+                ['store_id' => $store->id, 'order_id' => $returnOrder->id, 'description' => 'Customer returned 2x Fresh Milk'],
+                ['is_refund_required' => true, 'is_refunded' => false]   // entry_stock_time null = not yet processed
+            );
+
+            SaleReturnItem::firstOrCreate(
+                ['sale_return_id' => $saleReturn->id, 'order_line_id' => $milkLine->id],
+                [
+                    'item_id'         => $items[7]->id,
+                    'line_no'         => 1,
+                    'quantity'        => 2,
+                    'return_quantity' => 2,
                 ]
             );
         }

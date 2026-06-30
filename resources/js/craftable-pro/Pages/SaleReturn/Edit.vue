@@ -6,21 +6,36 @@
             saleReturn.updated_at
         ).format('DD.MM.YYYY')}`"
     >
-        <Button
-            :leftIcon="ArrowDownTrayIcon"
-            @click="submit"
-            :loading="form.processing"
-            v-can="'craftable-pro.sale-returns.edit'"
-        >
-            {{ $t("craftable-pro", "Save") }}
-        </Button>
+        <div class="flex items-center gap-3">
+            <Button
+                :leftIcon="ArrowDownTrayIcon"
+                @click="submit"
+                :loading="form.processing"
+                variant="outline"
+                color="gray"
+                v-can="'craftable-pro.sale-returns.edit'"
+            >
+                {{ $t("craftable-pro", "Save") }}
+            </Button>
+            <Button
+                :leftIcon="ArrowUturnLeftIcon"
+                @click="processReturn"
+                :loading="processing"
+                :disabled="!!saleReturn.entry_stock_time"
+                v-can="'craftable-pro.sale-returns.edit'"
+            >
+                {{ saleReturn.entry_stock_time ? $t("craftable-pro", "Processed") : $t("craftable-pro", "Process Return") }}
+            </Button>
+        </div>
     </PageHeader>
 
     <Form :form="form" :submit="submit"  />
 </template>
 
 <script setup lang="ts">
-import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
+import { ArrowDownTrayIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/outline";
+import { router } from "@inertiajs/vue3";
 import { PageHeader, Button } from "craftable-pro/Components";
 import { useForm } from "craftable-pro/hooks/useForm";
 import Form from "./Form.vue";
@@ -35,10 +50,24 @@ dayjs.extend(customParseFormat);
 
 interface Props {
     saleReturn: SaleReturn;
-    
+
 }
 
 const props = defineProps<Props>();
+
+const processing = ref(false);
+
+const processReturn = () => {
+    router.post(
+        route("craftable-pro.sale-returns.process", props.saleReturn.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (processing.value = true),
+            onFinish: () => (processing.value = false),
+        }
+    );
+};
 
 const { form, submit } = useForm<SaleReturnForm>(
     {
