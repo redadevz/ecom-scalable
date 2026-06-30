@@ -562,6 +562,8 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::match(['put', 'patch'], 'purchase-items/{purchaseItem}', [App\Http\Controllers\CraftablePro\PurchaseItemController::class, 'update'])->name('purchase-items.update');
     Route::delete('purchase-items/{purchaseItem}', [App\Http\Controllers\CraftablePro\PurchaseItemController::class, 'destroy'])->name('purchase-items.destroy');
     Route::post('purchase-items/bulk-destroy', [App\Http\Controllers\CraftablePro\PurchaseItemController::class, 'bulkDestroy'])->name('purchase-items.bulk-destroy');
+    Route::post('purchases/{purchase}/receive', [App\Http\Controllers\CraftablePro\PurchaseController::class, 'receive'])->name('purchases.receive');
+
     
 });
 

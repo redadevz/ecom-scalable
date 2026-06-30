@@ -6,21 +6,36 @@
             purchase.updated_at
         ).format('DD.MM.YYYY')}`"
     >
-        <Button
-            :leftIcon="ArrowDownTrayIcon"
-            @click="submit"
-            :loading="form.processing"
-            v-can="'craftable-pro.purchases.edit'"
-        >
-            {{ $t("craftable-pro", "Save") }}
-        </Button>
+        <div class="flex items-center gap-3">
+            <Button
+                :leftIcon="ArrowDownTrayIcon"
+                @click="submit"
+                :loading="form.processing"
+                variant="outline"
+                color="gray"
+                v-can="'craftable-pro.purchases.edit'"
+            >
+                {{ $t("craftable-pro", "Save") }}
+            </Button>
+            <Button
+                :leftIcon="ArrowDownOnSquareStackIcon"
+                @click="receiveStock"
+                :loading="receiving"
+                :disabled="!!purchase.entry_stock_time"
+                v-can="'craftable-pro.purchases.edit'"
+            >
+                {{ purchase.entry_stock_time ? $t("craftable-pro", "Received") : $t("craftable-pro", "Receive Stock") }}
+            </Button>
+        </div>
     </PageHeader>
 
     <Form :form="form" :submit="submit"  />
 </template>
 
 <script setup lang="ts">
-import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
+import { ArrowDownTrayIcon, ArrowDownOnSquareStackIcon } from "@heroicons/vue/24/outline";
+import { router } from "@inertiajs/vue3";
 import { PageHeader, Button } from "craftable-pro/Components";
 import { useForm } from "craftable-pro/hooks/useForm";
 import Form from "./Form.vue";
@@ -35,10 +50,24 @@ dayjs.extend(customParseFormat);
 
 interface Props {
     purchase: Purchase;
-    
+
 }
 
 const props = defineProps<Props>();
+
+const receiving = ref(false);
+
+const receiveStock = () => {
+    router.post(
+        route("craftable-pro.purchases.receive", props.purchase.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (receiving.value = true),
+            onFinish: () => (receiving.value = false),
+        }
+    );
+};
 
 const { form, submit } = useForm<PurchaseForm>(
     {

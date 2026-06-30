@@ -26,18 +26,17 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 ## 🔨 Do next — in this exact order
 
-### Step 8 — PurchaseService (restock) 🔨
+### Step 8 — PurchaseService (restock) ✅
 - File: `app/Services/PurchaseService.php`
 - Logic: `receive(Purchase)` → `stockIn` each line, stamp `entry_stock_time`, idempotent, in a transaction
 
-### Step 9 — Wire the Receive endpoint ⬜
+### Step 9 — Wire the Receive endpoint ✅
 - Route: `purchases/{purchase}/receive` (POST), name `purchases.receive` — `routes/web.php`
-- Controller: `PurchaseController@receive(Purchase $purchase, PurchaseService $purchases)`
-  - ⚠️ param **`$purchase`** must match `{purchase}`
-- Button: "Receive Stock" in `Pages/Purchase/Edit.vue` (mirror the Confirm button)
-- Test: receive a purchase → stock goes up, `entry_stock_time` set, can't receive twice
+- Controller: `PurchaseController@receive(Purchase $purchase, PurchaseService $purchases)` ✅ (param `$purchase`)
+- Button: "Receive Stock" in `Pages/Purchase/Edit.vue` (disables to "Received" once stocked) ✅
+- Seed data: unreceived Purchase #1 in `RetailDataSeeder` for testing ✅
 
-### Step 10 — OrderService@cancel (undo a sale) ⬜
+### Step 10 — OrderService@cancel (undo a sale) ⬜  ← next
 - File: `app/Services/OrderService.php`
 - Logic: guard (approved & not canceled) → `stockIn` each non-service line → set
   `is_canceled`, `canceled_time`, `cancel_reason`, status `Cancelled` → record status row

@@ -21,6 +21,8 @@ use App\Models\OrderStatus;
 use App\Models\PaymentMethod;
 use App\Models\PaymentTime;
 use App\Models\Price;
+use App\Models\Purchase;
+use App\Models\PurchaseItem;
 use App\Models\Region;
 use App\Models\SaleChannel;
 use App\Models\Store;
@@ -272,6 +274,29 @@ class RetailDataSeeder extends Seeder
         $this->seedDraftOrder($store, $customers[2], $adminId, 'ORD-1002', $lookups, [
             [$items[7], 4], [$items[8], 2], [$items[9], 1],   // dairy-heavy -> triggers Dairy 15%
         ]);
+
+        // --- An UNRECEIVED purchase (ready to receive into stock) -----------
+        $purchase = Purchase::firstOrCreate(
+            ['store_id' => $store->id, 'supplier_id' => $suppliers['SUP-ATLAS']->id, 'description' => 'Weekly restock — Atlas'],
+            ['is_paid' => false]   // entry_stock_time left null = not yet received
+        );
+
+        foreach ([[$items[0], 100], [$items[1], 50], [$items[2], 120]] as [$item, $qty]) {
+            $cost = (float) $item->prices()->where('is_active', true)->value('current_item_cost');
+            $tax  = round($cost * 0.20, 3);
+
+            PurchaseItem::firstOrCreate(
+                ['purchase_id' => $purchase->id, 'item_id' => $item->id],
+                [
+                    'supplier_price_before_tax' => $cost,
+                    'supplier_tax_value'        => $tax,
+                    'supplier_price_after_tax'  => round($cost + $tax, 3),
+                    'supplier_discount_value'   => 0,
+                    'quantity'                  => $qty,
+                    'return_amount'             => 0,
+                ]
+            );
+        }
     }
 
     /**
