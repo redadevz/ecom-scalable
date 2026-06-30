@@ -21,6 +21,8 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+use App\Services\PurchaseService;
+
 
 class PurchaseController extends Controller
 {
@@ -141,5 +143,16 @@ class PurchaseController extends Controller
         //        });
 
         return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    public function receive(Purchase $purchase, PurchaseService $purchases){
+         
+        try{
+            $purchases->receive($purchase);
+
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        }catch (\RuntimeException $e){
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 }
