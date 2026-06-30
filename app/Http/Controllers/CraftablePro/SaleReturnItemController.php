@@ -68,7 +68,7 @@ class SaleReturnItemController extends Controller
         return Inertia::render('SaleReturnItem/Create', [
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
             'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
-            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 
@@ -92,7 +92,7 @@ class SaleReturnItemController extends Controller
             'saleReturnItem' => $saleReturnItem,
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
             'order_lines' => \App\Models\OrderLine::orderBy('line_no')->get(['id', 'line_no']),
-            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 

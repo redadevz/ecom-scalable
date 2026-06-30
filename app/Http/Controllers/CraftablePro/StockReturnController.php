@@ -11,6 +11,7 @@ use App\Http\Requests\CraftablePro\StockReturn\IndexStockReturnRequest;
 use App\Http\Requests\CraftablePro\StockReturn\StoreStockReturnRequest;
 use App\Http\Requests\CraftablePro\StockReturn\UpdateStockReturnRequest;
 use App\Models\StockReturn;
+use App\Services\StockReturnService;
 use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -49,7 +50,7 @@ class StockReturnController extends Controller
         }
 
         $stockReturns = $stockReturnsQuery
-            ->with([])
+            ->with(['purchase:id,supplier_id', 'purchase.supplier:id,company_name,code'])
             ->select('id', 'store_id', 'purchase_id', 'exit_stock_time', 'description', 'is_paid', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 
@@ -66,7 +67,7 @@ class StockReturnController extends Controller
     public function create(CreateStockReturnRequest $request): Response
     {
         return Inertia::render('StockReturn/Create', [
-            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id']),
+            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
             'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }
@@ -77,8 +78,22 @@ class StockReturnController extends Controller
     public function store(StoreStockReturnRequest $request): RedirectResponse
     {
         $stockReturn = StockReturn::create($request->validated());
-        
+
         return redirect()->route('craftable-pro.stock-returns.index')->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    /**
+     * Process the stock return — sends each line's goods back out of stock.
+     */
+    public function process(StockReturn $stockReturn, StockReturnService $stockReturns): RedirectResponse
+    {
+        try {
+            $stockReturns->process($stockReturn);
+
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Stock return processed')]);
+        } catch (\App\Exceptions\StockReturnAlreadyProcessedException | \App\Exceptions\InsufficientStockException $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -89,7 +104,7 @@ class StockReturnController extends Controller
         
         return Inertia::render('StockReturn/Edit', [
             'stockReturn' => $stockReturn,
-            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id']),
+            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
             'stores' => \App\Models\Store::orderBy('name')->get(['id', 'name']),
         ]);
     }

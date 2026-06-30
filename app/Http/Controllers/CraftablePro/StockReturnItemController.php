@@ -67,7 +67,7 @@ class StockReturnItemController extends Controller
     {
         return Inertia::render('StockReturnItem/Create', [
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
-            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id']),
+            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 
@@ -90,7 +90,7 @@ class StockReturnItemController extends Controller
         return Inertia::render('StockReturnItem/Edit', [
             'stockReturnItem' => $stockReturnItem,
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
-            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id']),
+            'stock_returns' => \App\Models\StockReturn::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 

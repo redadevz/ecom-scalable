@@ -26,6 +26,8 @@ use App\Models\PurchaseItem;
 use App\Models\Region;
 use App\Models\SaleReturn;
 use App\Models\SaleReturnItem;
+use App\Models\StockReturn;
+use App\Models\StockReturnItem;
 use App\Models\SaleChannel;
 use App\Models\Store;
 use App\Models\Supplier;
@@ -320,6 +322,27 @@ class RetailDataSeeder extends Seeder
                 ]
             );
         }
+
+        // --- An UNPROCESSED stock return (send 10x Cola Can back to supplier) -
+        $stockReturn = StockReturn::firstOrCreate(
+            ['store_id' => $store->id, 'purchase_id' => $purchase->id, 'description' => 'Returned 10x Cola Can to supplier'],
+            ['is_paid' => false]   // exit_stock_time null = not yet processed
+        );
+
+        $colaCost = (float) $items[2]->prices()->where('is_active', true)->value('current_item_cost');
+        $colaTax  = round($colaCost * 0.20, 3);
+
+        StockReturnItem::firstOrCreate(
+            ['stock_return_id' => $stockReturn->id, 'item_id' => $items[2]->id],   // Cola Can
+            [
+                'quantity'                  => 10,
+                'supplier_price_before_tax' => $colaCost,
+                'supplier_tax_value'        => $colaTax,
+                'supplier_price_after_tax'  => round($colaCost + $colaTax, 3),
+                'supplier_discount_value'   => 0,
+                'return_amount'             => 0,
+            ]
+        );
     }
 
     /**

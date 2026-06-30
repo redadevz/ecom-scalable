@@ -67,7 +67,7 @@ class RefundController extends Controller
     {
         return Inertia::render('Refund/Create', [
             'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
-            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 
@@ -90,7 +90,7 @@ class RefundController extends Controller
         return Inertia::render('Refund/Edit', [
             'refund' => $refund,
             'payment_methods' => \App\Models\PaymentMethod::orderBy('name')->get(['id', 'name']),
-            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id']),
+            'sale_returns' => \App\Models\SaleReturn::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 

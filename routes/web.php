@@ -641,7 +641,8 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::match(['put', 'patch'], 'stock-returns/{stockReturn}', [App\Http\Controllers\CraftablePro\StockReturnController::class, 'update'])->name('stock-returns.update');
     Route::delete('stock-returns/{stockReturn}', [App\Http\Controllers\CraftablePro\StockReturnController::class, 'destroy'])->name('stock-returns.destroy');
     Route::post('stock-returns/bulk-destroy', [App\Http\Controllers\CraftablePro\StockReturnController::class, 'bulkDestroy'])->name('stock-returns.bulk-destroy');
-    
+    Route::post('stock-returns/{stockReturn}/process', [App\Http\Controllers\CraftablePro\StockReturnController::class, 'process'])->name('stock-returns.process');
+
 });
 
 

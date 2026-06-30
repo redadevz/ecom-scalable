@@ -66,7 +66,7 @@ class InventoryCountItemController extends Controller
     public function create(CreateInventoryCountItemRequest $request): Response
     {
         return Inertia::render('InventoryCountItem/Create', [
-            'inventory_counts' => \App\Models\InventoryCount::orderBy('id')->get(['id']),
+            'inventory_counts' => \App\Models\InventoryCount::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
         ]);
     }
@@ -89,7 +89,7 @@ class InventoryCountItemController extends Controller
         
         return Inertia::render('InventoryCountItem/Edit', [
             'inventoryCountItem' => $inventoryCountItem,
-            'inventory_counts' => \App\Models\InventoryCount::orderBy('id')->get(['id']),
+            'inventory_counts' => \App\Models\InventoryCount::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
         ]);
     }

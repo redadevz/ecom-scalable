@@ -66,7 +66,7 @@ class OrderDiscountController extends Controller
     public function create(CreateOrderDiscountRequest $request): Response
     {
         return Inertia::render('OrderDiscount/Create', [
-            'discounts' => \App\Models\Discount::orderBy('id')->get(['id']),
+            'discounts' => \App\Models\Discount::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
             'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
         ]);
     }
@@ -89,7 +89,7 @@ class OrderDiscountController extends Controller
         
         return Inertia::render('OrderDiscount/Edit', [
             'orderDiscount' => $orderDiscount,
-            'discounts' => \App\Models\Discount::orderBy('id')->get(['id']),
+            'discounts' => \App\Models\Discount::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
             'order_headers' => \App\Models\OrderHeader::orderBy('order_no')->get(['id', 'order_no']),
         ]);
     }

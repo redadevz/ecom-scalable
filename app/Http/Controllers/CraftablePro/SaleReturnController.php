@@ -50,7 +50,7 @@ class SaleReturnController extends Controller
         }
 
         $saleReturns = $saleReturnsQuery
-            ->with([])
+            ->with(['order:id,order_no'])
             ->select('id', 'store_id', 'order_id', 'entry_stock_time', 'is_refund_required', 'refund_amount', 'is_refunded', 'refund_time', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

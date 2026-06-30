@@ -67,7 +67,7 @@ class PurchaseItemController extends Controller
     {
         return Inertia::render('PurchaseItem/Create', [
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
-            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id']),
+            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 
@@ -90,7 +90,7 @@ class PurchaseItemController extends Controller
         return Inertia::render('PurchaseItem/Edit', [
             'purchaseItem' => $purchaseItem,
             'items' => \App\Models\Item::orderBy('name')->get(['id', 'name']),
-            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id']),
+            'purchases' => \App\Models\Purchase::orderBy('id')->get(['id', 'description'])->map(fn ($m) => ['id' => $m->id, 'description' => '#' . $m->id . ' ' . ($m->description ?? '')]),
         ]);
     }
 

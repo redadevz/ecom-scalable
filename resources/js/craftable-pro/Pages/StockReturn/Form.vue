@@ -21,7 +21,7 @@
                         mode="single"
                         :options="$page.props.purchases ?? []"
                         options-value-prop="id"
-                        options-label="id"
+                        options-label="description"
                         :searchable="true"
                     />
                 </div>

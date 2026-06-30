@@ -11,7 +11,7 @@
                         mode="single"
                         :options="$page.props.discounts ?? []"
                         options-value-prop="id"
-                        options-label="id"
+                        options-label="description"
                         :searchable="true"
                     />
                     <Multiselect

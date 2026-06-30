@@ -6,21 +6,36 @@
             stockReturn.updated_at
         ).format('DD.MM.YYYY')}`"
     >
-        <Button
-            :leftIcon="ArrowDownTrayIcon"
-            @click="submit"
-            :loading="form.processing"
-            v-can="'craftable-pro.stock-returns.edit'"
-        >
-            {{ $t("craftable-pro", "Save") }}
-        </Button>
+        <div class="flex items-center gap-3">
+            <Button
+                :leftIcon="ArrowDownTrayIcon"
+                @click="submit"
+                :loading="form.processing"
+                variant="outline"
+                color="gray"
+                v-can="'craftable-pro.stock-returns.edit'"
+            >
+                {{ $t("craftable-pro", "Save") }}
+            </Button>
+            <Button
+                :leftIcon="ArrowUturnRightIcon"
+                @click="processReturn"
+                :loading="processing"
+                :disabled="!!stockReturn.exit_stock_time"
+                v-can="'craftable-pro.stock-returns.edit'"
+            >
+                {{ stockReturn.exit_stock_time ? $t("craftable-pro", "Processed") : $t("craftable-pro", "Process Return") }}
+            </Button>
+        </div>
     </PageHeader>
 
     <Form :form="form" :submit="submit"  />
 </template>
 
 <script setup lang="ts">
-import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
+import { ref } from "vue";
+import { ArrowDownTrayIcon, ArrowUturnRightIcon } from "@heroicons/vue/24/outline";
+import { router } from "@inertiajs/vue3";
 import { PageHeader, Button } from "craftable-pro/Components";
 import { useForm } from "craftable-pro/hooks/useForm";
 import Form from "./Form.vue";
@@ -35,10 +50,24 @@ dayjs.extend(customParseFormat);
 
 interface Props {
     stockReturn: StockReturn;
-    
+
 }
 
 const props = defineProps<Props>();
+
+const processing = ref(false);
+
+const processReturn = () => {
+    router.post(
+        route("craftable-pro.stock-returns.process", props.stockReturn.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (processing.value = true),
+            onFinish: () => (processing.value = false),
+        }
+    );
+};
 
 const { form, submit } = useForm<StockReturnForm>(
     {

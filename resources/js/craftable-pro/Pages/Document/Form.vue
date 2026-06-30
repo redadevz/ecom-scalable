@@ -41,7 +41,7 @@
                         mode="single"
                         :options="$page.props.purchases ?? []"
                         options-value-prop="id"
-                        options-label="id"
+                        options-label="description"
                         :searchable="true"
                     />
                     <Multiselect
@@ -51,7 +51,7 @@
                         mode="single"
                         :options="$page.props.stock_returns ?? []"
                         options-value-prop="id"
-                        options-label="id"
+                        options-label="description"
                         :searchable="true"
                     />
                     <Multiselect
@@ -61,7 +61,7 @@
                         mode="single"
                         :options="$page.props.inventory_counts ?? []"
                         options-value-prop="id"
-                        options-label="id"
+                        options-label="description"
                         :searchable="true"
                     />
                     <Multiselect
@@ -71,7 +71,7 @@
                         mode="single"
                         :options="$page.props.loss_and_damages ?? []"
                         options-value-prop="id"
-                        options-label="id"
+                        options-label="description"
                         :searchable="true"
                     />
                     <Multiselect
