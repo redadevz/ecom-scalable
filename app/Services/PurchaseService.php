@@ -17,7 +17,7 @@ class PurchaseService{
 
         return DB::transaction(function () use ($purchase){
             if($purchase->entry_stock_time){
-                throw new RuntimeException('Purchase #($purchace->id) has already been received.');
+                throw new RuntimeException('Purchase #{$purchace->id} has already been received.');
             }
 
             $purchase->load('purchaseItems.item');
