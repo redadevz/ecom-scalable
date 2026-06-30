@@ -21,9 +21,21 @@
                 :leftIcon="CheckCircleIcon"
                 @click="confirmOrder"
                 :loading="confirming"
+                :disabled="orderHeader.is_canceled"
                 v-can="'craftable-pro.order-headers.edit'"
             >
                 {{ $t("craftable-pro", "Confirm Order") }}
+            </Button>
+            <Button
+                :leftIcon="XCircleIcon"
+                @click="cancelOrder"
+                :loading="canceling"
+                :disabled="orderHeader.is_canceled"
+                color="danger"
+                variant="outline"
+                v-can="'craftable-pro.order-headers.edit'"
+            >
+                {{ orderHeader.is_canceled ? $t("craftable-pro", "Canceled") : $t("craftable-pro", "Cancel Order") }}
             </Button>
         </div>
     </PageHeader>
@@ -33,7 +45,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { ArrowDownTrayIcon, CheckCircleIcon } from "@heroicons/vue/24/outline";
+import { ArrowDownTrayIcon, CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
 import { router } from "@inertiajs/vue3";
 import { PageHeader, Button } from "craftable-pro/Components";
 import { useForm } from "craftable-pro/hooks/useForm";
@@ -64,6 +76,23 @@ const confirmOrder = () => {
             preserveScroll: true,
             onStart: () => (confirming.value = true),
             onFinish: () => (confirming.value = false),
+        }
+    );
+};
+
+const canceling = ref(false);
+
+const cancelOrder = () => {
+    if (!confirm("Cancel this order? Stock will be returned to inventory.")) {
+        return;
+    }
+    router.post(
+        route("craftable-pro.order-headers.cancel", props.orderHeader.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (canceling.value = true),
+            onFinish: () => (canceling.value = false),
         }
     );
 };

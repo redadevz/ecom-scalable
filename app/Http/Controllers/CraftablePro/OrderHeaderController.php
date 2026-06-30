@@ -168,4 +168,16 @@ class OrderHeaderController extends Controller
     }
 }
 
+
+    public function cancel(OrderHeader $orderHeader, OrderService $orders){
+        try{
+            $orders->cancel($orderHeader);
+
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        }catch(\RuntimeException $e){
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+
+        }
+    }
+
 }

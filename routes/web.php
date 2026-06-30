@@ -371,6 +371,8 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::delete('order-headers/{orderHeader}', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'destroy'])->name('order-headers.destroy');
     Route::post('order-headers/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'bulkDestroy'])->name('order-headers.bulk-destroy');
     Route::post('order-headers/{orderHeader}/confirm', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'confirm'])->name('order-headers.confirm');
+    Route::post('order-headers/{orderHeader}/cancel', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'cancel'])->name('order-headers.cancel');
+
     
 });
 

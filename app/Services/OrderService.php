@@ -90,9 +90,9 @@ class OrderService{
         });
     }
 
-    protected function recordStatus(OrderHeader $order): void
+    protected function recordStatus(OrderHeader $order, string $statusName = 'Approved'): void
     {
-        $status = OrderStatus::where('name', 'Approved')->first()
+        $status = OrderStatus::where('name', $statusName)->first()
             ?? OrderStatus::where('is_default', true)->first();
 
         if(! $status){
@@ -113,5 +113,36 @@ class OrderService{
             'latest_status' => $status->name,
             'latest_status_update' => now(),
         ]);
+    }
+
+    public function cancel(OrderHeader $order, string $reason='') {
+
+        return DB::transaction(function () use ($order, $reason){
+            if($order->is_canceled){
+                throw new \RuntimeException("Order #{$order->id} is already canceled");
+            }
+
+            $order->load('orderLines.item');
+
+            if($order->is_approved){
+                foreach($order->orderLines as $line){
+                    if($line->is_canceled || ! $line->item || $line->item->is_service){
+                        continue;
+                    }
+
+                    $this->stock->stockIn($line->item, (int) $line->quantity);
+                }
+            }
+
+            $order->update([
+                'is_canceled'   => true,
+                'canceled_time' => now(),
+                'cancel_reason' => $reason,
+            ]);
+
+            $this->recordStatus($order, 'Cancelled');
+
+            return $order->refresh();
+        });
     }
 }
