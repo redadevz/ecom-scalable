@@ -80,12 +80,16 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 > ✅ **Stock domain complete** — 7 operations: receive (in) · confirm (out) · cancel (back) · sale return (back) · stock return (out) · inventory count (both) · loss/damage (out)
 
-### Step 15 — InvoiceService ⬜  ← next
-- File: `app/Services/InvoiceService.php`
-- Logic: `generate(OrderHeader)` → create `Invoice` + `InvoiceLine` per line, no double-invoice
-- Wire (auto on confirm, or its own button) · Test
+### Step 15 — InvoiceService ✅
+- File: `app/Services/InvoiceService.php` (row lock, `OrderAlreadyInvoicedException`, guards approved + no double-invoice, `nextInvoiceNo()`)
+- Exception: `app/Exceptions/OrderAlreadyInvoicedException.php` ✅
+- Logic: `generate(OrderHeader)` → create `Invoice` + one `InvoiceLine` per non-canceled order line ✅
+- Wire: route `order-headers/{orderHeader}/invoice` + `OrderHeaderController@invoice` + "Generate Invoice" button (enabled when approved & not canceled) ✅
+- Demo data: `DemoOrdersSeeder` — 6 orders pushed through confirm → invoice → paid (real totals + stock) ✅
 
-### Step 16 — PaymentService ⬜
+> ✅ Billing started — app now flows **stock → sale → invoice**. `DemoOrdersSeeder` populates Orders/Invoices/StockHistory with realistic data via the live services.
+
+### Step 16 — PaymentService ⬜  ← next
 - File: `app/Services/PaymentService.php`
 - Logic: `record(Invoice, ...)` → create `Payment`, mark `is_paid` when settled; refunds for returns
 - Wire endpoint + button · Test

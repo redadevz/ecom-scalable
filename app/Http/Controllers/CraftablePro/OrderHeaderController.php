@@ -22,6 +22,7 @@ use Inertia\Response;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Exceptions\InsufficientStockException;
+use App\Services\InvoiceService;
 use App\Services\OrderService;
 
 class OrderHeaderController extends Controller
@@ -177,6 +178,15 @@ class OrderHeaderController extends Controller
         }catch(\RuntimeException $e){
             return redirect()->back()->with(['error' => $e->getMessage()]);
 
+        }
+    }
+
+    public function invoice(OrderHeader $orderHeader, InvoiceService $invoices){
+        try{
+            $invoices->generate($orderHeader);
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        }catch(\App\Exceptions\OrderAlreadyInvoicedException | \RuntimeException $e){
+            return redirect()->back()->with(['error' => $e->getMessage]);
         }
     }
 

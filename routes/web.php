@@ -149,6 +149,7 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::match(['put', 'patch'], 'order-statuses/{orderStatus}', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'update'])->name('order-statuses.update');
     Route::delete('order-statuses/{orderStatus}', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'destroy'])->name('order-statuses.destroy');
     Route::post('order-statuses/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderStatusController::class, 'bulkDestroy'])->name('order-statuses.bulk-destroy');
+
     
 });
 
@@ -372,6 +373,7 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::post('order-headers/bulk-destroy', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'bulkDestroy'])->name('order-headers.bulk-destroy');
     Route::post('order-headers/{orderHeader}/confirm', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'confirm'])->name('order-headers.confirm');
     Route::post('order-headers/{orderHeader}/cancel', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'cancel'])->name('order-headers.cancel');
+    Route::post('order-headers/{orderHeader}/invoice', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'invoice'])->name('order-headers.invoice');
 
     
 });

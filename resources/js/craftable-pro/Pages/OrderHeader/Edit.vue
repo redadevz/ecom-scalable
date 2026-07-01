@@ -27,6 +27,17 @@
                 {{ $t("craftable-pro", "Confirm Order") }}
             </Button>
             <Button
+                :leftIcon="DocumentTextIcon"
+                @click="generateInvoice"
+                :loading="invoicing"
+                :disabled="!orderHeader.is_approved || orderHeader.is_canceled"
+                variant="outline"
+                color="gray"
+                v-can="'craftable-pro.order-headers.edit'"
+            >
+                {{ $t("craftable-pro", "Generate Invoice") }}
+            </Button>
+            <Button
                 :leftIcon="XCircleIcon"
                 @click="cancelOrder"
                 :loading="canceling"
@@ -45,7 +56,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { ArrowDownTrayIcon, CheckCircleIcon, XCircleIcon } from "@heroicons/vue/24/outline";
+import { ArrowDownTrayIcon, CheckCircleIcon, XCircleIcon, DocumentTextIcon } from "@heroicons/vue/24/outline";
 import { router } from "@inertiajs/vue3";
 import { PageHeader, Button } from "craftable-pro/Components";
 import { useForm } from "craftable-pro/hooks/useForm";
@@ -93,6 +104,20 @@ const cancelOrder = () => {
             preserveScroll: true,
             onStart: () => (canceling.value = true),
             onFinish: () => (canceling.value = false),
+        }
+    );
+};
+
+const invoicing = ref(false);
+
+const generateInvoice = () => {
+    router.post(
+        route("craftable-pro.order-headers.invoice", props.orderHeader.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (invoicing.value = true),
+            onFinish: () => (invoicing.value = false),
         }
     );
 };
