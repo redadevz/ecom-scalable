@@ -2,45 +2,35 @@
     <PageHeader :title="$t('craftable-pro', 'Dashboard')" />
 
     <PageContent>
-        <!-- Hero -->
-        <div
-            class="relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary-600 via-primary-600 to-teal-500 px-8 py-10 text-white shadow-lg"
-        >
-            <div class="relative z-10 max-w-2xl">
-                <p class="text-sm font-medium uppercase tracking-wider text-white/70">
-                    {{ greeting }}
-                </p>
-                <h2 class="mt-1 text-3xl font-semibold tracking-tight">
-                    Welcome back 👋
-                </h2>
-                <p class="mt-2 text-base text-white/80">
-                    Manage your catalog, orders, stock and customers — all from one place.
-                    Pick up where you left off below.
-                </p>
-            </div>
-            <!-- decorative -->
-            <div class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl" />
-            <div class="pointer-events-none absolute -bottom-24 right-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
+        <!-- Greeting -->
+        <div class="mb-6">
+            <p class="text-sm text-gray-500">{{ greeting }}</p>
+            <h2 class="mt-0.5 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                Welcome back
+            </h2>
+            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                Manage your catalog, orders, stock and customers — all from one place.
+            </p>
         </div>
 
         <!-- Quick actions -->
-        <h3 class="mb-4 mt-8 text-sm font-semibold uppercase tracking-wider text-gray-400">
+        <h3 class="mb-3 text-xs font-semibold uppercase tracking-wide text-gray-400">
             Quick access
         </h3>
-        <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link
                 v-for="card in cards"
                 :key="card.label"
                 :href="card.href"
-                class="group relative flex items-start gap-4 overflow-hidden rounded-2xl border border-gray-100 bg-white p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-800 dark:bg-gray-900"
+                class="group flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-gray-300 hover:bg-gray-50/50 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-800/50"
             >
                 <span
-                    class="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl bg-primary-50 text-primary-600 transition-colors group-hover:bg-primary-600 group-hover:text-white dark:bg-primary-500/10"
+                    class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-600 dark:bg-gray-800"
                 >
-                    <component :is="card.icon" class="h-6 w-6" />
+                    <component :is="card.icon" class="h-5 w-5" />
                 </span>
                 <div class="min-w-0">
-                    <p class="font-semibold text-gray-900 dark:text-white">
+                    <p class="font-medium text-gray-900 dark:text-white">
                         {{ card.label }}
                     </p>
                     <p class="mt-0.5 text-sm text-gray-500 dark:text-gray-400">

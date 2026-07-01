@@ -45,9 +45,17 @@
 
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                    <div class="flex flex-col">
-                        <span class="font-medium text-gray-900 dark:text-white">{{ name(item) }}</span>
-                        <span class="text-xs text-gray-400">{{ item.code }}</span>
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full text-xs font-bold uppercase ring-1 ring-inset"
+                            :class="avatarClass(name(item))"
+                        >
+                            {{ initials(name(item)) }}
+                        </span>
+                        <div class="flex flex-col">
+                            <span class="font-medium text-gray-900 dark:text-white">{{ name(item) }}</span>
+                            <span class="text-xs text-gray-400">{{ item.code }}</span>
+                        </div>
                     </div>
                 </ListingDataCell>
                 <ListingDataCell>
@@ -102,6 +110,23 @@ const money = (v: any) =>
 
 const name = (c: any) =>
     (c.is_company ? c.company_name : `${c.first_name ?? ""} ${c.last_name ?? ""}`).trim() || "—";
+
+const initials = (n: string) =>
+    (n || "?").split(/\s+/).map((w) => w[0]).slice(0, 2).join("").toUpperCase();
+
+const palette = [
+    "bg-emerald-50 text-emerald-700 ring-emerald-200 dark:bg-emerald-500/10 dark:text-emerald-300 dark:ring-emerald-500/20",
+    "bg-sky-50 text-sky-700 ring-sky-200 dark:bg-sky-500/10 dark:text-sky-300 dark:ring-sky-500/20",
+    "bg-violet-50 text-violet-700 ring-violet-200 dark:bg-violet-500/10 dark:text-violet-300 dark:ring-violet-500/20",
+    "bg-amber-50 text-amber-700 ring-amber-200 dark:bg-amber-500/10 dark:text-amber-300 dark:ring-amber-500/20",
+    "bg-rose-50 text-rose-700 ring-rose-200 dark:bg-rose-500/10 dark:text-rose-300 dark:ring-rose-500/20",
+    "bg-teal-50 text-teal-700 ring-teal-200 dark:bg-teal-500/10 dark:text-teal-300 dark:ring-teal-500/20",
+];
+const avatarClass = (n: string) => {
+    let h = 0;
+    for (const ch of n || "?") h = (h + ch.charCodeAt(0)) % palette.length;
+    return palette[h];
+};
 
 interface Props {
     customers: PaginatedCollection<Customer>;
