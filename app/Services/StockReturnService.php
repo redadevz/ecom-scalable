@@ -21,7 +21,7 @@ class StockReturnService{
                 throw new StockReturnAlreadyProcessedException("Stock return #{$return->id} has already been processed.");
             }
 
-            $return->loadMissing('stockReturnItems.item');
+            $return->load('stockReturnItems.item');
 
             foreach($return->stockReturnItems as $line){
                 $this->processLine($line);
@@ -38,12 +38,11 @@ class StockReturnService{
             return;
         }
 
-        $qty = (int) $line->quantity;
+        $qty = $line->quantity;
         if($qty <= 0){
             return;
         }
 
-        // goods leave your shelf, back to the supplier
         $this->stock->stockOut($line->item, $qty);
     }
 }

@@ -53,12 +53,16 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - Seed: unprocessed SaleReturn #1 (2× Fresh Milk on ORD-1002) for testing ✅
 - (Refund money intentionally deferred to Step 16 — PaymentService)
 
-### Step 12 — StockReturnService (return to supplier) ⬜  ← next
-- File: `app/Services/StockReturnService.php`
-- Logic: `process(StockReturn)` → `stockOut` each line (goods leave)
-- Wire endpoint + button · Test
+### Step 12 — StockReturnService (return to supplier) ✅
+- File: `app/Services/StockReturnService.php` (best-practice: row lock, domain exception, `processLine()`, strict types)
+- Exception: `app/Exceptions/StockReturnAlreadyProcessedException.php` ✅
+- Logic: `process(StockReturn)` → `stockOut` each line (goods leave), stamp `exit_stock_time`, idempotent ✅
+- Wire: route `stock-returns/{stockReturn}/process` + `StockReturnController@process` (catches already-processed **and** insufficient-stock) + "Process Return" button ✅
+- Seed: unprocessed StockReturn #1 (10× Cola Can) for testing ✅
 
-### Step 13 — InventoryCountService (stock correction) ⬜
+> ✅ Stock engine now covers 5 operations: receive (in) · confirm (out) · cancel (back) · sale return (back) · stock return (out)
+
+### Step 13 — InventoryCountService (stock correction) ⬜  ← next
 - File: `app/Services/InventoryCountService.php`
 - Logic: `apply(InventoryCount)` → per item, diff counted vs current; `stockIn`/`stockOut` the difference
 - Wire endpoint + button · Test
