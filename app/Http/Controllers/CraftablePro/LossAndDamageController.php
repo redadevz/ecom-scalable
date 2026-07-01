@@ -11,6 +11,7 @@ use App\Http\Requests\CraftablePro\LossAndDamage\IndexLossAndDamageRequest;
 use App\Http\Requests\CraftablePro\LossAndDamage\StoreLossAndDamageRequest;
 use App\Http\Requests\CraftablePro\LossAndDamage\UpdateLossAndDamageRequest;
 use App\Models\LossAndDamage;
+use App\Services\LossAndDamageService;
 use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -139,5 +140,18 @@ class LossAndDamageController extends Controller
         //        });
 
         return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    public function apply(LossAndDamage $lossAndDamage, LossAndDamageService $losses){
+        try{
+
+            $losses->apply($lossAndDamage);
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+
+        }catch(\App\Exceptions\LossAndDamageAlreadyProcessedException | \App\Exceptions\InsufficientStockException $e){
+
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+            
+        }
     }
 }

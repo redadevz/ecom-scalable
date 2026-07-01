@@ -613,6 +613,8 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::match(['put', 'patch'], 'loss-and-damages/{lossAndDamage}', [App\Http\Controllers\CraftablePro\LossAndDamageController::class, 'update'])->name('loss-and-damages.update');
     Route::delete('loss-and-damages/{lossAndDamage}', [App\Http\Controllers\CraftablePro\LossAndDamageController::class, 'destroy'])->name('loss-and-damages.destroy');
     Route::post('loss-and-damages/bulk-destroy', [App\Http\Controllers\CraftablePro\LossAndDamageController::class, 'bulkDestroy'])->name('loss-and-damages.bulk-destroy');
+    Route::post('loss-and-damages/{lossAndDamage}/apply', [App\Http\Controllers\CraftablePro\LossAndDamageController::class, 'apply'])->name('loss-and-damages.apply');
+
     
 });
 

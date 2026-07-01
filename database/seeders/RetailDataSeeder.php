@@ -10,10 +10,14 @@ use App\Models\Customer;
 use App\Models\DeliveryType;
 use App\Models\Discount;
 use App\Models\DiscountType;
+use App\Models\InventoryCount;
+use App\Models\InventoryCountItem;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\ItemTaxType;
 use App\Models\Language;
+use App\Models\LossAndDamage;
+use App\Models\LossAndDamageItem;
 use App\Models\MeasureUnit;
 use App\Models\OrderHeader;
 use App\Models\OrderLine;
@@ -342,6 +346,31 @@ class RetailDataSeeder extends Seeder
                 'supplier_discount_value'   => 0,
                 'return_amount'             => 0,
             ]
+        );
+
+        // --- An UNAPPLIED inventory count (Water short 4, Cola over 5) --------
+        $count = InventoryCount::firstOrCreate(
+            ['store_id' => $store->id, 'description' => 'Monthly stock count — aisle 1'],
+            ['physical_count_time' => Carbon::now()]   // change_stock_time null = not yet applied
+        );
+
+        // counted values chosen to show BOTH directions vs current stock
+        foreach ([[$items[0], 336], [$items[2], 425]] as [$item, $counted]) {  // Water 340→336 (−4), Cola 420→425 (+5)
+            InventoryCountItem::firstOrCreate(
+                ['inventory_count_id' => $count->id, 'item_id' => $item->id],
+                ['quantity_counted' => $counted]
+            );
+        }
+
+        // --- An UNPROCESSED loss/damage (3x Croissant expired) ---------------
+        $loss = LossAndDamage::firstOrCreate(
+            ['store_id' => $store->id, 'description' => 'Expired stock — bakery'],
+            ['comments' => '3x Croissant past sell-by date']   // exit_stock_time null = not written off
+        );
+
+        LossAndDamageItem::firstOrCreate(
+            ['loss_and_damage_id' => $loss->id, 'item_id' => $items[11]->id],   // Croissant
+            ['quantity' => 3]
         );
     }
 

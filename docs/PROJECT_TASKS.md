@@ -62,17 +62,25 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 > ✅ Stock engine now covers 5 operations: receive (in) · confirm (out) · cancel (back) · sale return (back) · stock return (out)
 
-### Step 13 — InventoryCountService (stock correction) ⬜  ← next
-- File: `app/Services/InventoryCountService.php`
-- Logic: `apply(InventoryCount)` → per item, diff counted vs current; `stockIn`/`stockOut` the difference
-- Wire endpoint + button · Test
+### Step 13 — InventoryCountService (stock correction) ✅
+- File: `app/Services/InventoryCountService.php` (best-practice: row lock, domain exception, `applyLine()`, strict types)
+- Exception: `app/Exceptions/InventoryCountAlreadyAppliedException.php` ✅
+- Logic: `apply(InventoryCount)` → per item, diff counted vs current stock; `stockIn` (found extra) or `stockOut` (shrinkage); records `quantity_expected`/`quantity_change`; stamp `change_stock_time`, idempotent ✅
+- Wire: route `inventory-counts/{inventoryCount}/apply` + `InventoryCountController@apply` (catches already-applied **and** insufficient-stock) ✅
+- Refactor: added `StockService::isStockable(?Item)` — DRY guard used across services ✅
+- Button "Apply Count" in `Pages/InventoryCount/Edit.vue` (disables to "Applied") ✅
+- Seed: unapplied InventoryCount #1 (Water 340→336 = −4, Cola 420→425 = +5) — shows both directions ✅
 
-### Step 14 — LossAndDamageService (write-off) ⬜
-- File: `app/Services/LossAndDamageService.php`
-- Logic: `apply(LossAndDamage)` → `stockOut` each lost/damaged line
-- Wire endpoint + button · Test
+### Step 14 — LossAndDamageService (write-off) ✅
+- File: `app/Services/LossAndDamageService.php` (best-practice: row lock, domain exception, `writeOffLine()`, `isStockable()`)
+- Exception: `app/Exceptions/LossAndDamageAlreadyProcessedException.php` ✅
+- Logic: `apply(LossAndDamage)` → `stockOut` each lost/damaged line, stamp `exit_stock_time`, idempotent ✅
+- Wire: route `loss-and-damages/{lossAndDamage}/apply` + `LossAndDamageController@apply` (catches already-processed **and** insufficient-stock) + red "Write Off" button ✅
+- Seed: unprocessed LossAndDamage #1 (3× Croissant expired) for testing ✅
 
-### Step 15 — InvoiceService ⬜
+> ✅ **Stock domain complete** — 7 operations: receive (in) · confirm (out) · cancel (back) · sale return (back) · stock return (out) · inventory count (both) · loss/damage (out)
+
+### Step 15 — InvoiceService ⬜  ← next
 - File: `app/Services/InvoiceService.php`
 - Logic: `generate(OrderHeader)` → create `Invoice` + `InvoiceLine` per line, no double-invoice
 - Wire (auto on confirm, or its own button) · Test
