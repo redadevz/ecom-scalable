@@ -34,7 +34,7 @@ class StockReturnService{
     }
 
     protected function processLine(StockReturnItem $line){
-        if(! $line->item || $line->item->is_service){
+        if(! $this->stock->isStockable($line->item)){
             return;
         }
 

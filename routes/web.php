@@ -581,6 +581,8 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::match(['put', 'patch'], 'inventory-counts/{inventoryCount}', [App\Http\Controllers\CraftablePro\InventoryCountController::class, 'update'])->name('inventory-counts.update');
     Route::delete('inventory-counts/{inventoryCount}', [App\Http\Controllers\CraftablePro\InventoryCountController::class, 'destroy'])->name('inventory-counts.destroy');
     Route::post('inventory-counts/bulk-destroy', [App\Http\Controllers\CraftablePro\InventoryCountController::class, 'bulkDestroy'])->name('inventory-counts.bulk-destroy');
+    Route::post('inventory-counts/{inventoryCount}/apply', [App\Http\Controllers\CraftablePro\InventoryCountController::class, 'apply'])->name('inventory-counts.apply');
+
     
 });
 

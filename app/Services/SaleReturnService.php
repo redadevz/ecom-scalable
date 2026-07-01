@@ -40,7 +40,7 @@ class SaleReturnService
 
     protected function restockLine(SaleReturnItem $line): void
     {
-        if (! $line->item || $line->item->is_service) {
+        if (! $this->stock->isStockable($line->item)) {
             return;
         }
 

@@ -53,5 +53,10 @@ class StockService{
         });
     }
 
+    public function isStockable(?Item $item){
+        
+        return $item !== null && ! $item->is_service;
+    }
+
 }
 ?>

@@ -10,7 +10,9 @@ use App\Http\Requests\CraftablePro\InventoryCount\EditInventoryCountRequest;
 use App\Http\Requests\CraftablePro\InventoryCount\IndexInventoryCountRequest;
 use App\Http\Requests\CraftablePro\InventoryCount\StoreInventoryCountRequest;
 use App\Http\Requests\CraftablePro\InventoryCount\UpdateInventoryCountRequest;
+use App\Http\Requests\CraftablePro\InventoryCountItem\IndexInventoryCountItemRequest;
 use App\Models\InventoryCount;
+use App\Services\InventoryCountService;
 use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -139,5 +141,14 @@ class InventoryCountController extends Controller
         //        });
 
         return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    public function apply(InventoryCount $inventoryCount, InventoryCountService $counts){
+        try{
+            $counts->apply($inventoryCount);
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        } catch (\App\Exceptions\InventoryCountAlreadyAppliedException | \App\Exceptions\InsufficientStockException $e){
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
     }
 }
