@@ -89,12 +89,20 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 > ✅ Billing started — app now flows **stock → sale → invoice**. `DemoOrdersSeeder` populates Orders/Invoices/StockHistory with realistic data via the live services.
 
-### Step 16 — PaymentService ⬜  ← next
-- File: `app/Services/PaymentService.php`
-- Logic: `record(Invoice, ...)` → create `Payment`, mark `is_paid` when settled; refunds for returns
-- Wire endpoint + button · Test
+### Step 16 — PaymentService ✅
+- File: `app/Services/PaymentService.php` (replaced a stale mislabeled `PricingService` draft)
+- Logic: `record(Invoice, amount)` (partial payments, auto-marks `is_paid` when total ≥ order total),
+  `settle(Invoice)` (pay full remaining balance), `refund(SaleReturn, amount)` (marks return refunded).
+  `payment_method_id` defaults to first method (required column). ✅
+- Wire: route `invoices/{invoice}/pay` + `InvoiceController@pay` + "Mark Paid" button (disabled when paid) ✅
+- Tested: settled INV-000005 → Payment created + invoice paid ✅
+- ⬜ (optional) refund button on sale returns using `PaymentService::refund`
 
-### Step 17 — Dashboard KPIs (live data) ⬜
+> ✅ **Core backend complete (steps 0–16)** — full retail cycle:
+> purchase → stock in · sale → confirm (price/discount/stock out) → invoice → payment ·
+> returns → stock back + refund · inventory count / loss → adjust.
+
+### Step 17 — Dashboard KPIs (live data) ⬜  ← next
 - Files: new `DashboardController` (or extend home) passing stats → `Pages/Home.vue`
 - Logic: today's sales total, # orders, low-stock count, top items — replace quick-link cards with real numbers
 

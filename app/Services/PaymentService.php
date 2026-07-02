@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Invoice;
 use App\Models\Payment;
+use App\Models\PaymentMethod;
 use App\Models\Refund;
 use App\Models\SaleReturn;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +23,9 @@ class PaymentService
 
         return DB::transaction(function () use ($invoice, $amount, $paymentMethodId, $comments) {
             $invoice = Invoice::whereKey($invoice->getKey())->lockForUpdate()->firstOrFail();
+
+            // payment_method_id is required — fall back to the first method
+            $paymentMethodId ??= PaymentMethod::query()->orderBy('id')->value('id');
 
             $payment = Payment::create([
                 'invoice_id'        => $invoice->id,
@@ -69,6 +73,8 @@ class PaymentService
 
         return DB::transaction(function () use ($return, $amount, $paymentMethodId, $comments) {
             $return = SaleReturn::whereKey($return->getKey())->lockForUpdate()->firstOrFail();
+
+            $paymentMethodId ??= PaymentMethod::query()->orderBy('id')->value('id');
 
             $refund = Refund::create([
                 'sale_return_id'    => $return->id,

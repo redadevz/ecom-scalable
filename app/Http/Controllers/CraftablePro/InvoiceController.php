@@ -148,7 +148,7 @@ class InvoiceController extends Controller
             $payments->settle($invoice);
             return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
         }catch(\RuntimeException $e){
-            return redirect()->back()->with(['error' => $e->getMessage]);
+            return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
 }
