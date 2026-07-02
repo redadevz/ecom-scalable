@@ -708,6 +708,8 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::match(['put', 'patch'], 'invoices/{invoice}', [App\Http\Controllers\CraftablePro\InvoiceController::class, 'update'])->name('invoices.update');
     Route::delete('invoices/{invoice}', [App\Http\Controllers\CraftablePro\InvoiceController::class, 'destroy'])->name('invoices.destroy');
     Route::post('invoices/bulk-destroy', [App\Http\Controllers\CraftablePro\InvoiceController::class, 'bulkDestroy'])->name('invoices.bulk-destroy');
+    Route::post('invoices/{invoice}/pay', [App\Http\Controllers\CraftablePro\InvoiceController::class, 'pay'])->name('invoices.pay');
+
     
 });
 

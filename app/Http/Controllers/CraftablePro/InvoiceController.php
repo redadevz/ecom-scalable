@@ -11,6 +11,7 @@ use App\Http\Requests\CraftablePro\Invoice\IndexInvoiceRequest;
 use App\Http\Requests\CraftablePro\Invoice\StoreInvoiceRequest;
 use App\Http\Requests\CraftablePro\Invoice\UpdateInvoiceRequest;
 use App\Models\Invoice;
+use App\Services\PaymentService;
 use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -140,5 +141,14 @@ class InvoiceController extends Controller
         //        });
 
         return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+    }
+
+    public function pay(Invoice $invoice, PaymentService $payments){
+        try{
+            $payments->settle($invoice);
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        }catch(\RuntimeException $e){
+            return redirect()->back()->with(['error' => $e->getMessage]);
+        }
     }
 }
