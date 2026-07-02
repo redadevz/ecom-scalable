@@ -55,7 +55,7 @@ class DashboardController extends Controller
             'topItems'     => $topItems,
         ]);
     }
-
+    
     private function customerName($c): string
     {
         if (! $c) {
