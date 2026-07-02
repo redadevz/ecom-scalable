@@ -9,7 +9,7 @@ export default { layout: null };
 
     <!-- Left: branded gradient panel -->
     <div
-      class="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-primary-600 via-primary-600 to-teal-500 p-12 text-white lg:flex"
+      class="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-500 p-12 text-white lg:flex"
     >
       <div class="relative z-10 flex items-center gap-2 text-lg font-semibold tracking-tight">
         <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 backdrop-blur">

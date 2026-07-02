@@ -29,7 +29,7 @@
             <div class="lg:col-span-2">
                 <div class="mb-3 flex items-center justify-between">
                     <h3 class="text-sm font-semibold text-gray-900 dark:text-white">Recent orders</h3>
-                    <Link :href="route('craftable-pro.order-headers.index')" class="text-sm font-medium text-emerald-600 hover:text-emerald-500">
+                    <Link :href="route('craftable-pro.order-headers.index')" class="text-sm font-medium text-indigo-600 hover:text-indigo-500">
                         View all
                     </Link>
                 </div>
@@ -85,7 +85,7 @@
         <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
             <Link v-for="card in cards" :key="card.label" :href="card.href"
                 class="group flex items-start gap-4 rounded-xl border border-gray-200 bg-white p-5 transition-colors hover:border-gray-300 hover:bg-gray-50/50 dark:border-gray-800 dark:bg-gray-900 dark:hover:bg-gray-800/50">
-                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors group-hover:bg-emerald-50 group-hover:text-emerald-600 dark:bg-gray-800">
+                <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors group-hover:bg-indigo-50 group-hover:text-indigo-600 dark:bg-gray-800">
                     <component :is="card.icon" class="h-5 w-5" />
                 </span>
                 <div class="min-w-0">
@@ -123,18 +123,19 @@ const greeting = computed(() => {
 const money = (v: number) =>
     Number(v ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " DH";
 
+const wrap = "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400";
 const kpis = computed(() => [
-    { label: "Sales", value: money(props.stats.sales_total), icon: BanknotesIcon, iconWrap: "bg-emerald-50 text-emerald-600 dark:bg-emerald-500/10", valueClass: "text-gray-900 dark:text-white" },
-    { label: "Orders", value: String(props.stats.orders_count), icon: ShoppingCartIcon, iconWrap: "bg-sky-50 text-sky-600 dark:bg-sky-500/10", valueClass: "text-gray-900 dark:text-white" },
-    { label: "Low stock", value: String(props.stats.low_stock_count), icon: ExclamationTriangleIcon, iconWrap: "bg-amber-50 text-amber-600 dark:bg-amber-500/10", valueClass: props.stats.low_stock_count ? "text-red-600" : "text-gray-900 dark:text-white" },
-    { label: "Unpaid invoices", value: String(props.stats.unpaid_invoices), icon: DocumentTextIcon, iconWrap: "bg-violet-50 text-violet-600 dark:bg-violet-500/10", valueClass: "text-gray-900 dark:text-white" },
+    { label: "Sales", value: money(props.stats.sales_total), icon: BanknotesIcon, iconWrap: wrap, valueClass: "text-gray-900 dark:text-white" },
+    { label: "Orders", value: String(props.stats.orders_count), icon: ShoppingCartIcon, iconWrap: wrap, valueClass: "text-gray-900 dark:text-white" },
+    { label: "Low stock", value: String(props.stats.low_stock_count), icon: ExclamationTriangleIcon, iconWrap: props.stats.low_stock_count ? "bg-red-50 text-red-500 dark:bg-red-500/10" : wrap, valueClass: props.stats.low_stock_count ? "text-red-600" : "text-gray-900 dark:text-white" },
+    { label: "Unpaid invoices", value: String(props.stats.unpaid_invoices), icon: DocumentTextIcon, iconWrap: wrap, valueClass: "text-gray-900 dark:text-white" },
 ]);
 
 const statusClass = (s: string) => {
     const map: Record<string, string> = {
         Draft: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
-        Approved: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400",
-        Completed: "bg-emerald-50 text-emerald-700 dark:bg-emerald-500/10 dark:text-emerald-400",
+        Approved: "bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400",
+        Completed: "bg-indigo-50 text-indigo-700 dark:bg-indigo-500/10 dark:text-indigo-400",
         Cancelled: "bg-red-50 text-red-700 dark:bg-red-500/10 dark:text-red-400",
     };
     return map[s] ?? "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300";

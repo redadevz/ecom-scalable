@@ -58,6 +58,24 @@
   /* Sidebar links — consistent rounding */
   aside a, nav a { border-radius: 0.5rem; }
 
+  /* ---- Compact, premium sidebar --------------------------------------- */
+  .cp-sidebar a {
+    padding-top: 0.34rem !important;
+    padding-bottom: 0.34rem !important;
+    font-size: 0.8125rem !important;   /* 13px */
+    line-height: 1.1rem;
+    font-weight: 500;
+  }
+  .cp-sidebar a svg { height: 1.05rem !important; width: 1.05rem !important; }
+  /* tighter group spacing + quieter section labels */
+  .cp-sidebar > div { margin-top: 0.55rem; }
+  .cp-sidebar .group\/section > div p {
+    font-size: 0.6rem !important;
+    letter-spacing: 0.08em;
+    font-weight: 700;
+    opacity: 0.75;
+  }
+
   /* Modals / dropdowns — a touch softer */
   [role="menu"] { border-radius: 0.75rem !important; }
 }
