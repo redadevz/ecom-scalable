@@ -96,7 +96,7 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
   `payment_method_id` defaults to first method (required column). ✅
 - Wire: route `invoices/{invoice}/pay` + `InvoiceController@pay` + "Mark Paid" button (disabled when paid) ✅
 - Tested: settled INV-000005 → Payment created + invoice paid ✅
-- ⬜ (optional) refund button on sale returns using `PaymentService::refund`
+- ✅ refund button on sale returns → `SaleReturnController@refund` (auto-computes amount = returned qty × order-line unit price) + `PaymentService::refund`
 
 > ✅ **Core backend complete (steps 0–16)** — full retail cycle:
 > purchase → stock in · sale → confirm (price/discount/stock out) → invoice → payment ·

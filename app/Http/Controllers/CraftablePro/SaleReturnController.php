@@ -153,4 +153,35 @@ class SaleReturnController extends Controller
             return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
+
+    /**
+     * Refund a processed sale return — value = returned qty x order-line unit price.
+     */
+    public function refund(SaleReturn $saleReturn, \App\Services\PaymentService $payments): RedirectResponse
+    {
+        if ($saleReturn->is_refunded) {
+            return redirect()->back()->with(['error' => ___('craftable-pro', 'This return has already been refunded')]);
+        }
+
+        $saleReturn->load('saleReturnItems.orderLine');
+
+        $amount = 0.0;
+        foreach ($saleReturn->saleReturnItems as $line) {
+            $orderLine = $line->orderLine;
+            if (! $orderLine || ! (float) $orderLine->quantity) {
+                continue;
+            }
+            $unit = (float) $orderLine->price / (float) $orderLine->quantity;
+            $amount += $unit * (float) $line->quantity;
+        }
+        $amount = round($amount, 3);
+
+        try {
+            $payments->refund($saleReturn, $amount);
+
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Refund recorded')]);
+        } catch (\RuntimeException $e) {
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+    }
 }

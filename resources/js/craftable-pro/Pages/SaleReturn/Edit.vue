@@ -26,6 +26,15 @@
             >
                 {{ saleReturn.entry_stock_time ? $t("craftable-pro", "Processed") : $t("craftable-pro", "Process Return") }}
             </Button>
+            <Button
+                :leftIcon="BanknotesIcon"
+                @click="refund"
+                :loading="refunding"
+                :disabled="!!saleReturn.is_refunded"
+                v-can="'craftable-pro.sale-returns.edit'"
+            >
+                {{ saleReturn.is_refunded ? $t("craftable-pro", "Refunded") : $t("craftable-pro", "Refund") }}
+            </Button>
         </div>
     </PageHeader>
 
@@ -34,7 +43,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { ArrowDownTrayIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/outline";
+import { ArrowDownTrayIcon, ArrowUturnLeftIcon, BanknotesIcon } from "@heroicons/vue/24/outline";
 import { router } from "@inertiajs/vue3";
 import { PageHeader, Button } from "craftable-pro/Components";
 import { useForm } from "craftable-pro/hooks/useForm";
@@ -65,6 +74,20 @@ const processReturn = () => {
             preserveScroll: true,
             onStart: () => (processing.value = true),
             onFinish: () => (processing.value = false),
+        }
+    );
+};
+
+const refunding = ref(false);
+
+const refund = () => {
+    router.post(
+        route("craftable-pro.sale-returns.refund", props.saleReturn.id),
+        {},
+        {
+            preserveScroll: true,
+            onStart: () => (refunding.value = true),
+            onFinish: () => (refunding.value = false),
         }
     );
 };
