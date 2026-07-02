@@ -1,100 +1,99 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services;
 
-use App\Models\Discount;
-use App\Models\Item;
-use App\Models\Price;
-use App\Models\Store;
-use App\Models\Customer;
-use Illuminate\Support\Collection;
+use App\Models\Invoice;
+use App\Models\Payment;
+use App\Models\Refund;
+use App\Models\SaleReturn;
+use Illuminate\Support\Facades\DB;
+use RuntimeException;
 
-class PricingService
+class PaymentService
 {
-    /**
-     * Resolve the final unit price for an item in a given store context.
-     * Returns an array with all price components for transparency.
-     */
-    public function resolve(Item $item, Store $store, ?Customer $customer = null, int $quantity = 1): array
+
+    public function record(Invoice $invoice, float $amount, ?int $paymentMethodId = null, ?string $comments = null): Payment
     {
-        $price = Price::where('item_id', $item->id)
-            ->where('store_id', $store->id)
-            ->where('is_active', true)
-            ->latest()
-            ->firstOrFail();
-
-        $priceBeforeTax  = (float) $price->price_before_tax;
-        $markupPct       = (float) $price->markup_percentage;
-        $taxRate         = (float) optional($item->taxType)->percentage / 100;
-
-        // Apply markup
-        $afterMarkup     = $priceBeforeTax * (1 + $markupPct / 100);
-
-        // Apply applicable discounts
-        $discountValue   = $this->resolveDiscount($item, $store, $customer, $quantity, $afterMarkup);
-        $discounted      = max(0, $afterMarkup - $discountValue);
-
-        // Apply tax
-        $priceAfterTax   = $this->round($discounted * (1 + $taxRate), $store);
-        $taxValue        = $this->round($discounted * $taxRate, $store);
-
-        return [
-            'price_before_tax'    => $this->round($priceBeforeTax, $store),
-            'markup_percentage'   => $markupPct,
-            'price_after_markup'  => $this->round($afterMarkup, $store),
-            'discount_value'      => $this->round($discountValue, $store),
-            'price_before_tax_discounted' => $this->round($discounted, $store),
-            'tax_percentage'      => $taxRate * 100,
-            'tax_value'           => $taxValue,
-            'price_after_tax'     => $priceAfterTax,
-            'unit_price'          => $priceAfterTax,
-            'line_total'          => $this->round($priceAfterTax * $quantity, $store),
-        ];
-    }
-
-    /**
-     * Find the best applicable discount for the item/customer/quantity combination.
-     */
-    public function resolveDiscount(Item $item, Store $store, ?Customer $customer, int $quantity, float $lineTotal): float
-    {
-        $discounts = Discount::where('store_id', $store->id)
-            ->where('is_active', true)
-            ->where(fn ($q) => $q->whereNull('item_id')->orWhere('item_id', $item->id))
-            ->where(fn ($q) => $q->whereNull('min_order_value')->orWhere('min_order_value', '<=', $lineTotal))
-            ->get();
-
-        if ($discounts->isEmpty()) {
-            return 0.0;
+        if ($amount <= 0) {
+            throw new RuntimeException('Payment amount must be greater than zero.');
         }
 
-        // Pick the discount that yields the highest saving
-        $best = 0.0;
-        foreach ($discounts as $discount) {
-            $saving = $discount->is_percentage
-                ? $lineTotal * ($discount->percentage / 100)
-                : (float) $discount->value;
+        return DB::transaction(function () use ($invoice, $amount, $paymentMethodId, $comments) {
+            $invoice = Invoice::whereKey($invoice->getKey())->lockForUpdate()->firstOrFail();
 
-            if ($discount->max_discount_value) {
-                $saving = min($saving, (float) $discount->max_discount_value);
+            $payment = Payment::create([
+                'invoice_id'        => $invoice->id,
+                'payment_method_id' => $paymentMethodId,
+                'payment_no'        => $this->nextPaymentNo($invoice),
+                'amount'            => $amount,
+                'cash_paid'         => $amount,
+                'cash_change'       => 0,
+                'payment_time'      => now(),
+                'comments'          => $comments,
+            ]);
+
+            // fully paid? mark the invoice
+            $orderTotal = $invoice->order->price;
+            $paidSoFar  = $invoice->payments()->sum('amount');
+
+            if ($paidSoFar   >= $orderTotal) {
+                $invoice->update(['is_paid' => true, 'payment_time' => now()]);
             }
 
-            $best = max($best, $saving);
-        }
-
-        return $best;
+            return $payment;
+        });
     }
 
-    /**
-     * Round to the store's configured decimal places.
-     */
-    public function round(float $value, Store $store): float
+  
+    public function settle(Invoice $invoice, ?int $paymentMethodId = null): Payment
     {
-        $decimals = (int) ($store->decimal_places ?? 2);
+        $orderTotal = $invoice->order->price;
+        $paidSoFar  = $invoice->payments()->sum('amount');
+        $remaining  = round($orderTotal - $paidSoFar, 3);
 
-        return match ($store->rounding_method ?? 'half_up') {
-            'floor'   => floor($value * 10 ** $decimals) / 10 ** $decimals,
-            'ceil'    => ceil($value  * 10 ** $decimals) / 10 ** $decimals,
-            default   => round($value, $decimals),
-        };
+        if ($remaining <= 0) {
+            throw new RuntimeException("Invoice #{$invoice->invoice_no} is already fully paid.");
+        }
+
+        return $this->record($invoice, $remaining, $paymentMethodId);
+    }
+
+
+    public function refund(SaleReturn $return, float $amount, ?int $paymentMethodId = null, ?string $comments = null): Refund
+    {
+        if ($amount <= 0) {
+            throw new RuntimeException('Refund amount must be greater than zero.');
+        }
+
+        return DB::transaction(function () use ($return, $amount, $paymentMethodId, $comments) {
+            $return = SaleReturn::whereKey($return->getKey())->lockForUpdate()->firstOrFail();
+
+            $refund = Refund::create([
+                'sale_return_id'    => $return->id,
+                'payment_method_id' => $paymentMethodId,
+                'refund_no'         => 'REF-' . str_pad((string) $return->id, 5, '0', STR_PAD_LEFT),
+                'amount'            => $amount,
+                'cash_paid'         => $amount,
+                'cash_change'       => 0,
+                'refund_time'       => now(),
+                'comments'          => $comments,
+            ]);
+
+            $return->update([
+                'is_refunded'   => true,
+                'refund_amount' => $amount,
+                'refund_time'   => now(),
+            ]);
+
+            return $refund;
+        });
+    }
+
+    protected function nextPaymentNo(Invoice $invoice): string
+    {
+        $seq = $invoice->payments()->count() + 1;
+        return 'PAY-' . str_pad((string) $invoice->id, 5, '0', STR_PAD_LEFT) . '-' . $seq;
     }
 }
