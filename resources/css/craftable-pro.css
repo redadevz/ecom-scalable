@@ -4,10 +4,60 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Minimal, unobtrusive refinements only — keep Craftable's clean default look. */
+/* ===========================================================================
+   Subtle, consistent refinement — matches the dashboard card style.
+   Neutral borders, rounded cards, roomy tables, clean top bar. No loud color.
+   =========================================================================== */
+
 @layer base {
-  html {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+}
+
+/* Slim scrollbars */
+* { scrollbar-width: thin; scrollbar-color: rgb(148 163 184 / 0.4) transparent; }
+*::-webkit-scrollbar { width: 9px; height: 9px; }
+*::-webkit-scrollbar-thumb { background: rgb(148 163 184 / 0.4); border-radius: 9999px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { background: rgb(148 163 184 / 0.6); background-clip: content-box; }
+
+@layer components {
+  /* Cards — same look as the dashboard tiles: rounded, hairline border, soft shadow */
+  .rounded-md.shadow {
+    border-radius: 0.75rem !important;
+    border: 1px solid rgb(226 232 240);
+    box-shadow: 0 1px 2px rgb(15 23 42 / 0.04) !important;
   }
+  .dark .rounded-md.shadow { border-color: rgb(30 41 59); }
+
+  /* Tables — roomier, quieter headers, subtle hover */
+  table thead th {
+    font-size: 0.72rem; font-weight: 600; text-transform: none; letter-spacing: 0.01em;
+    color: rgb(100 116 139); padding-top: 0.85rem; padding-bottom: 0.85rem;
+  }
+  .dark table thead th { color: rgb(148 163 184); }
+  table tbody td { padding-top: 0.9rem; padding-bottom: 0.9rem; }
+  table tbody tr { transition: background-color 0.12s ease; }
+  table tbody tr:hover { background-color: rgb(15 23 42 / 0.025); }
+  .dark table tbody tr:hover { background-color: rgb(255 255 255 / 0.03); }
+
+  /* Inputs — soft, consistent radius + focus ring */
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+  select, textarea { border-radius: 0.55rem !important; }
+  input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
+  select:focus, textarea:focus {
+    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.12) !important;
+  }
+
+  /* Top bar — clean hairline separation */
+  header { border-color: rgb(226 232 240); }
+  .dark header { border-color: rgb(30 41 59); }
+  header h3 { font-weight: 600; }
+
+  /* Buttons — quiet depth */
+  .bg-primary-600 { box-shadow: 0 1px 2px rgb(15 23 42 / 0.08); }
+
+  /* Sidebar links — consistent rounding */
+  aside a, nav a { border-radius: 0.5rem; }
+
+  /* Modals / dropdowns — a touch softer */
+  [role="menu"] { border-radius: 0.75rem !important; }
 }

@@ -9,6 +9,11 @@ Route::get('/', function () {
 
 Route::craftablePro('admin');
 
+/* Dashboard home override — real KPI stats (must come AFTER craftablePro macro) */
+Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
+    Route::get('/', [App\Http\Controllers\CraftablePro\DashboardController::class, 'index'])->name('home');
+});
+
 
 /* Auto-generated admin routes */
 Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {

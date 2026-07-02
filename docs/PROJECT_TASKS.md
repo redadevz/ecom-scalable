@@ -103,7 +103,7 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 > returns → stock back + refund · inventory count / loss → adjust.
 
 ### Step 17 — Dashboard KPIs (live data) ⬜  ← next
-- Files: new `DashboardController` (or extend home) passing stats → `Pages/Home.vue`
+- Files: new `DashboardController` (or ext  end home) passing stats → `Pages/Home.vue`
 - Logic: today's sales total, # orders, low-stock count, top items — replace quick-link cards with real numbers
 
 ### Step 18 — Reports ⬜
