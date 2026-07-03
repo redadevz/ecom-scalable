@@ -15,7 +15,7 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 - ✅ **0. Foundation** — Craftable PRO, ~81-table DB, 55 CRUD modules, models + relations
 - ✅ **1. Seed data** — `database/seeders/RetailDataSeeder.php`
-- ✅ **2. UI polish** — emerald theme, sectioned forms, curated tables, dashboard, login
+- ✅ **2. UI polish** — Larkon orange + dark theme, sectioned forms, Larkon-style tables (thumbnail + rounded action buttons), Items grid view, dashboard, login
 - ✅ **3. StockService** — `stockIn`/`stockOut` + `InsufficientStockException`
 - ✅ **4. PricingService** — line/order totals + `Price::scopeActive()`
 - ✅ **5. DiscountService** — line/order discounts + `DiscountType::scopeActive()`
@@ -108,15 +108,21 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - `Pages/Home.vue` rebuilt: KPI cards, recent orders, top selling, quick access
 - Added **Dashboard** link to the sidebar (home icon, top)
 
-> UI polish this phase: compact full sidebar (distinct icons per item), unified **indigo / mostly-neutral** theme across the whole project, two-column Item form (main + side panel) as the form template.
+> UI polish this phase: compact full sidebar (distinct icons per item), **Larkon-style orange + dark theme** across the whole project, two-column Item form (main + side panel) as the form template.
 
-### Step 18 — Reports 🔨  ← in progress
+### Step 18 — Reports ✅
 - ✅ **Sales report** — `ReportController@sales` + route `reports/sales` + `Pages/Reports/Sales.vue` + sidebar link
   - date-range filter (From/To), summary cards (total/orders/avg/paid), orders table
   - fixed: reactive summary via `computed`; white date text in dark mode; "Sales Report" added to translations
-- ⬜ Stock report (levels + low-stock + valuation)
-- ⬜ Purchases report (by supplier)
-- ⬜ CSV/Excel export (Maatwebsite Excel installed)
+- ✅ **Stock report** — `ReportController@stock` (levels + low-stock flags + valuation), route `reports/stock`, `Pages/Reports/Stock.vue`
+- ✅ **Purchases report** — `ReportController@purchases` (by supplier + date range), route `reports/purchases`, `Pages/Reports/Purchases.vue`
+- ✅ **Excel export** — Maatwebsite Excel; `SalesReportExport` / `StockReportExport` / `PurchasesReportExport` in `app/Exports/` + `*Export` controller actions + download buttons
+
+### Step 18b — Product images (Spatie Media Library) ✅
+- Switched Item images from a simple `image` column to **Craftable's Spatie Media Library** (multiple images, thumbnails, managed in the Media module)
+- `Item` implements `HasMedia` + Craftable media traits; `images` collection (≤5 MB), auto `preview` conversion; `images` / `images_url` accessors; `$appends`
+- Form uses Craftable **`Dropzone`** (`form.images`); grid + list show `images_url` (fallback to old `image` column for seed data); `media` eager-loaded
+- Verified end-to-end via tinker (upload → conversion → preview URL)
 
 ### Step 19 — Settings ⬜
 - Store settings screen (currency, tax defaults, **negative-stock policy**)
@@ -159,7 +165,7 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - Queues for emails/exports, scheduled daily sales summary + low-stock report, enforce holidays/discount schedules
 
 ### Step 28 — Documents ⬜
-- Wire document module + attach files to orders/purchases (Spatie Media Library installed)
+- Wire document module + attach files to orders/purchases (Spatie Media Library now in use — see Item images, Step 18b)
 
 ### Step 29 — Deployment ⬜
 - Prod env, asset build, `config:cache`/`route:cache`, backups, HTTPS/domain, error monitoring
