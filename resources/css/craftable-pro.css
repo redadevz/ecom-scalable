@@ -5,77 +5,104 @@
 @tailwind utilities;
 
 /* ===========================================================================
-   Subtle, consistent refinement — matches the dashboard card style.
-   Neutral borders, rounded cards, roomy tables, clean top bar. No loud color.
+   LARKON-STYLE ADMIN  ·  warm orange accent, deep navy dark surfaces
+   Dark page bg, slightly-lighter cards, orange actions/active, clean tables.
    =========================================================================== */
 
 @layer base {
-  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+  html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+  body { letter-spacing: -0.008em; }
+  /* Larkon deep-navy page background (dark), soft gray (light) */
+  body { background-color: #f4f5f7 !important; background-image: none !important; }
+  .dark body { background-color: #16171d !important; color: #cbd2dc; }
 }
 
 /* Slim scrollbars */
-* { scrollbar-width: thin; scrollbar-color: rgb(148 163 184 / 0.4) transparent; }
+* { scrollbar-width: thin; scrollbar-color: rgb(148 163 184 / 0.35) transparent; }
 *::-webkit-scrollbar { width: 9px; height: 9px; }
-*::-webkit-scrollbar-thumb { background: rgb(148 163 184 / 0.4); border-radius: 9999px; border: 2px solid transparent; background-clip: content-box; }
-*::-webkit-scrollbar-thumb:hover { background: rgb(148 163 184 / 0.6); background-clip: content-box; }
+*::-webkit-scrollbar-thumb { background: rgb(148 163 184 / 0.35); border-radius: 9999px; border: 2px solid transparent; background-clip: content-box; }
+*::-webkit-scrollbar-thumb:hover { background: rgb(148 163 184 / 0.55); background-clip: content-box; }
 
 @layer components {
-  /* Cards — same look as the dashboard tiles: rounded, hairline border, soft shadow */
+  a, button, [role="button"], .cursor-pointer {
+    transition: background-color .16s ease, color .16s ease, border-color .16s ease, box-shadow .16s ease, transform .1s ease;
+  }
+  button:active, [role="button"]:active { transform: translateY(0.5px); }
+
+  /* Cards — rounded, soft border; dark = lifted navy surface (Larkon) */
   .rounded-md.shadow {
-    border-radius: 0.75rem !important;
-    border: 1px solid rgb(226 232 240);
+    border-radius: 0.8rem !important;
+    border: 1px solid #e5e7eb;
     box-shadow: 0 1px 2px rgb(15 23 42 / 0.04) !important;
   }
-  .dark .rounded-md.shadow { border-color: rgb(30 41 59); }
-
-  /* Tables — roomier, quieter headers, subtle hover */
-  table thead th {
-    font-size: 0.72rem; font-weight: 600; text-transform: none; letter-spacing: 0.01em;
-    color: rgb(100 116 139); padding-top: 0.85rem; padding-bottom: 0.85rem;
+  .dark .rounded-md.shadow {
+    background-color: #212330 !important;
+    border-color: #2c2f3d !important;
+    box-shadow: none !important;
   }
-  .dark table thead th { color: rgb(148 163 184); }
-  table tbody td { padding-top: 0.9rem; padding-bottom: 0.9rem; }
-  table tbody tr { transition: background-color 0.12s ease; }
-  table tbody tr:hover { background-color: rgb(15 23 42 / 0.025); }
-  .dark table tbody tr:hover { background-color: rgb(255 255 255 / 0.03); }
 
-  /* Inputs — soft, consistent radius + focus ring */
+  /* Buttons — solid orange, subtle depth */
+  .bg-primary-600 {
+    background-color: #f97316;
+    box-shadow: 0 1px 2px rgb(249 115 22 / 0.35), 0 6px 16px -6px rgb(249 115 22 / 0.5);
+  }
+  .bg-primary-600:hover { background-color: #ea6a25; }
+
+  /* Inputs — soft radius + orange focus ring; dark navy fields */
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
   select, textarea { border-radius: 0.55rem !important; }
   input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]):focus,
   select:focus, textarea:focus {
-    box-shadow: 0 0 0 3px rgb(99 102 241 / 0.12) !important;
+    border-color: #f97316 !important;
+    box-shadow: 0 0 0 3px rgb(249 115 22 / 0.18) !important;
   }
+  .dark input:not([type="checkbox"]):not([type="radio"]):not([type="file"]):not([type="range"]),
+  .dark select, .dark textarea { background-color: #1a1c27 !important; border-color: #2c2f3d !important; color: #e2e8f0; }
 
-  /* Top bar — clean hairline separation */
-  header { border-color: rgb(226 232 240); }
-  .dark header { border-color: rgb(30 41 59); }
-  header h3 { font-weight: 600; }
+  /* Tables — roomy, quiet headers, gentle hover */
+  table thead th {
+    font-size: 0.72rem; font-weight: 600; text-transform: none; letter-spacing: 0.01em;
+    color: #6b7280; padding-top: 0.85rem; padding-bottom: 0.85rem;
+  }
+  .dark table thead th { color: #8a93a2; }
+  table tbody td { padding-top: 0.9rem; padding-bottom: 0.9rem; }
+  table tbody tr { transition: background-color .12s ease; }
+  table tbody tr:hover { background-color: rgb(249 115 22 / 0.04); }
+  .dark table tbody tr:hover { background-color: rgb(249 115 22 / 0.07); }
+  .dark table tbody tr { border-color: #2c2f3d !important; }
 
-  /* Buttons — quiet depth */
-  .bg-primary-600 { box-shadow: 0 1px 2px rgb(15 23 42 / 0.08); }
+  header { border-color: #e5e7eb; }
+  .dark header { border-color: #2c2f3d; background-color: #16171d; }
+  header h3 { font-weight: 600; letter-spacing: -0.02em; }
 
-  /* Sidebar links — consistent rounding */
+  [class*="rounded-full"][class*="bg-"] { font-weight: 500; }
+}
+
+/* Sidebar — Larkon dark, orange active, compact */
+@layer components {
+  aside { background-color: #ffffff; border-right: 1px solid #e5e7eb; }
+  .dark aside { background-color: #1a1c25; border-right: 1px solid #2c2f3d; }
+
   aside a, nav a { border-radius: 0.5rem; }
+  aside a:hover, nav a:hover { background-color: rgb(249 115 22 / 0.06); }
+  .dark aside a:hover, .dark nav a:hover { background-color: rgb(255 255 255 / 0.04); }
 
-  /* ---- Compact, premium sidebar --------------------------------------- */
-  .cp-sidebar a {
-    padding-top: 0.34rem !important;
-    padding-bottom: 0.34rem !important;
-    font-size: 0.8125rem !important;   /* 13px */
-    line-height: 1.1rem;
-    font-weight: 500;
+  /* active item: orange text/icon (+ subtle tint), Larkon style */
+  nav a.bg-primary-100 {
+    background-color: rgb(249 115 22 / 0.1) !important;
+    color: #f97316 !important; font-weight: 600;
   }
+  .dark nav a.bg-primary-100, .dark [class*="6366F1"] {
+    background-color: rgb(249 115 22 / 0.12) !important;
+    color: #fb923c !important; font-weight: 600;
+  }
+
+  /* Compact sidebar */
+  .cp-sidebar a { padding-top: 0.34rem !important; padding-bottom: 0.34rem !important; font-size: 0.8125rem !important; line-height: 1.1rem; font-weight: 500; }
   .cp-sidebar a svg { height: 1.05rem !important; width: 1.05rem !important; }
-  /* tighter group spacing + quieter section labels */
-  .cp-sidebar > div { margin-top: 0.55rem; }
-  .cp-sidebar .group\/section > div p {
-    font-size: 0.6rem !important;
-    letter-spacing: 0.08em;
-    font-weight: 700;
-    opacity: 0.75;
-  }
+  .cp-sidebar > div { margin-top: 0.5rem; }
+  .cp-sidebar .group\/section > div p { font-size: 0.6rem !important; letter-spacing: 0.08em; font-weight: 700; opacity: 0.7; }
 
-  /* Modals / dropdowns — a touch softer */
-  [role="menu"] { border-radius: 0.75rem !important; }
+  [role="menu"] { border-radius: 0.8rem !important; }
+  .dark [role="menu"] { background-color: #212330; border: 1px solid #2c2f3d; }
 }

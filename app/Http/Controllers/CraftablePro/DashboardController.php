@@ -7,6 +7,7 @@ use App\Models\Invoice;
 use App\Models\Item;
 use App\Models\OrderHeader;
 use App\Models\OrderLine;
+use Illuminate\Support\Carbon;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -43,6 +44,23 @@ class DashboardController extends Controller
                 'qty'  => (int) $l->qty,
             ]);
 
+        // Monthly sales for the last 12 months (Larkon-style Performance chart)
+        $monthly = collect(range(11, 0))->map(function ($back) {
+            $month = Carbon::now()->startOfMonth()->subMonths($back);
+            $total = OrderHeader::where('is_approved', true)->where('is_canceled', false)
+                ->whereBetween('created_at', [$month->copy(), $month->copy()->endOfMonth()])
+                ->sum('price');
+            return ['label' => $month->format('M'), 'value' => round((float) $total, 2)];
+        })->values();
+
+        // this-month vs last-month trend for sales & orders
+        $tm = Carbon::now()->startOfMonth();
+        $lm = Carbon::now()->startOfMonth()->subMonth();
+        $salesThis = (float) OrderHeader::where('is_approved', true)->where('is_canceled', false)->where('created_at', '>=', $tm)->sum('price');
+        $salesLast = (float) OrderHeader::where('is_approved', true)->where('is_canceled', false)->whereBetween('created_at', [$lm, $tm])->sum('price');
+        $ordThis = OrderHeader::where('is_approved', true)->where('is_canceled', false)->where('created_at', '>=', $tm)->count();
+        $ordLast = OrderHeader::where('is_approved', true)->where('is_canceled', false)->whereBetween('created_at', [$lm, $tm])->count();
+
         return Inertia::render('Home', [
             'stats' => [
                 'sales_total'     => round((float) (clone $approved)->sum('price'), 3),
@@ -50,10 +68,21 @@ class DashboardController extends Controller
                 'low_stock_count' => Item::whereColumn('current_stock_quantity', '<=', 'low_stock_quantity')
                     ->where('is_service', false)->where('is_active', true)->count(),
                 'unpaid_invoices' => Invoice::where('is_paid', false)->count(),
+                'sales_trend'     => $this->trend($salesThis, $salesLast),
+                'orders_trend'    => $this->trend((float) $ordThis, (float) $ordLast),
             ],
+            'monthly'      => $monthly,
             'recentOrders' => $recentOrders,
             'topItems'     => $topItems,
         ]);
+    }
+
+    private function trend(float $now, float $prev): float
+    {
+        if ($prev <= 0) {
+            return $now > 0 ? 100.0 : 0.0;
+        }
+        return round((($now - $prev) / $prev) * 100, 1);
     }
     
     private function customerName($c): string

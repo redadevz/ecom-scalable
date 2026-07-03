@@ -12,8 +12,20 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        primary: colors.indigo,
-        secondary: colors.fuchsia,
+        // Larkon-style warm orange accent
+        primary: {
+          50:  "#fff4ed",
+          100: "#ffe6d5",
+          200: "#feccaa",
+          300: "#fdac74",
+          400: "#fb8b3c",
+          500: "#f97316",
+          600: "#ea6a25",
+          700: "#c2410c",
+          800: "#9a3412",
+          900: "#7c2d12",
+        },
+        secondary: colors.amber,
         gray: colors.slate,
         warning: colors.amber,
         danger: colors.red,

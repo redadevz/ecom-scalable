@@ -46,7 +46,12 @@
 
             <template #tableRow="{ item, action }: any">
                 <ListingDataCell>
-                    <span class="font-medium text-gray-900 dark:text-white">{{ item.order_no }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-gray-300">
+                            <ShoppingCartIcon class="h-5 w-5" />
+                        </span>
+                        <span class="font-medium text-gray-900 dark:text-white">{{ item.order_no }}</span>
+                    </div>
                 </ListingDataCell>
                 <ListingDataCell>
                     <span class="text-sm text-gray-600 dark:text-gray-300">{{ customerName(item.customer) }}</span>
@@ -68,11 +73,21 @@
                     <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
-                    <div class="flex items-center justify-end gap-3">
-                        <IconButton :as="Link" :href="route('craftable-pro.order-headers.edit', item)" variant="ghost" color="gray" :icon="PencilSquareIcon" v-can="'craftable-pro.order-headers.edit'" />
+                    <div class="flex items-center justify-center gap-2">
+                        <Link :href="route('craftable-pro.order-headers.edit', item)" title="View"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10">
+                            <EyeIcon class="h-4 w-4" />
+                        </Link>
+                        <Link :href="route('craftable-pro.order-headers.edit', item)" title="Edit" v-can="'craftable-pro.order-headers.edit'"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600 transition-colors hover:bg-primary-100 dark:bg-primary-500/10 dark:text-primary-400 dark:hover:bg-primary-500/20">
+                            <PencilSquareIcon class="h-4 w-4" />
+                        </Link>
                         <Modal type="danger">
                             <template #trigger="{ setIsOpen }">
-                                <IconButton @click="() => setIsOpen(true)" color="gray" variant="ghost" :icon="TrashIcon" v-can="'craftable-pro.order-headers.destroy'" />
+                                <button @click="() => setIsOpen(true)" title="Delete" v-can="'craftable-pro.order-headers.destroy'"
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-500 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20">
+                                    <TrashIcon class="h-4 w-4" />
+                                </button>
                             </template>
                             <template #title>{{ $t("craftable-pro", "Delete Order") }}</template>
                             <template #content>{{ $t("craftable-pro", "Are you sure? This action cannot be undone.") }}</template>
@@ -92,7 +107,7 @@
 
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
-import { PlusIcon, TrashIcon, PencilSquareIcon } from "@heroicons/vue/24/outline";
+import { PlusIcon, TrashIcon, PencilSquareIcon, EyeIcon, ShoppingCartIcon } from "@heroicons/vue/24/outline";
 import {
     PageHeader, PageContent, Button, Listing,
     ListingHeaderCell, ListingDataCell, Modal, IconButton,

@@ -110,11 +110,13 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 > UI polish this phase: compact full sidebar (distinct icons per item), unified **indigo / mostly-neutral** theme across the whole project, two-column Item form (main + side panel) as the form template.
 
-### Step 18 — Reports ⬜  ← next
-
-### Step 18 — Reports ⬜
-- Sales (by day/channel/customer), Stock (levels + low-stock + valuation), Purchases (by supplier)
-- Date filters + CSV/Excel export (Maatwebsite Excel installed)
+### Step 18 — Reports 🔨  ← in progress
+- ✅ **Sales report** — `ReportController@sales` + route `reports/sales` + `Pages/Reports/Sales.vue` + sidebar link
+  - date-range filter (From/To), summary cards (total/orders/avg/paid), orders table
+  - fixed: reactive summary via `computed`; white date text in dark mode; "Sales Report" added to translations
+- ⬜ Stock report (levels + low-stock + valuation)
+- ⬜ Purchases report (by supplier)
+- ⬜ CSV/Excel export (Maatwebsite Excel installed)
 
 ### Step 19 — Settings ⬜
 - Store settings screen (currency, tax defaults, **negative-stock policy**)

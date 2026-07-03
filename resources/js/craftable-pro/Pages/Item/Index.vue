@@ -1,13 +1,23 @@
 <template>
     <PageHeader :title="$t('craftable-pro', 'Items')">
-        <Button
-            :leftIcon="PlusIcon"
-            :as="Link"
-            :href="route('craftable-pro.items.create')"
-            v-can="'craftable-pro.items.create'"
-        >
-            {{ $t("craftable-pro", "New Item") }}
-        </Button>
+        <div class="flex items-center gap-2">
+            <div class="flex rounded-lg border border-gray-200 p-0.5 dark:border-[#2c2f3d]">
+                <span class="flex h-8 w-8 items-center justify-center rounded-md bg-primary-500 text-white">
+                    <ListBulletIcon class="h-5 w-5" />
+                </span>
+                <Link :href="route('craftable-pro.items.grid')" class="flex h-8 w-8 items-center justify-center rounded-md text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5">
+                    <Squares2X2Icon class="h-5 w-5" />
+                </Link>
+            </div>
+            <Button
+                :leftIcon="PlusIcon"
+                :as="Link"
+                :href="route('craftable-pro.items.create')"
+                v-can="'craftable-pro.items.create'"
+            >
+                {{ $t("craftable-pro", "New Item") }}
+            </Button>
+        </div>
     </PageHeader>
 
     <PageContent>
@@ -70,37 +80,19 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='name'>
-                    {{ $t("craftable-pro", "Item") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='current_stock_quantity'>
-                    {{ $t("craftable-pro", "Stock") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_service'>
-                    {{ $t("craftable-pro", "Type") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='in_stock'>
-                    {{ $t("craftable-pro", "In Stock") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_active'>
-                    {{ $t("craftable-pro", "Active") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>
-                    {{ $t("craftable-pro", "Created") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell>
-                    <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
-                </ListingHeaderCell>
+                <ListingHeaderCell sortBy='name'>Product</ListingHeaderCell>
+                <ListingHeaderCell>Price</ListingHeaderCell>
+                <ListingHeaderCell sortBy='current_stock_quantity'>Stock</ListingHeaderCell>
+                <ListingHeaderCell>Category</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_active'>Status</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Action</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">
-                <!-- Item: avatar + name + SKU -->
+                <!-- Product: thumbnail + name + SKU -->
                 <ListingDataCell>
                     <div class="flex items-center gap-3">
-                        <span
-                            class="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-lg text-xs font-bold uppercase ring-1 ring-inset"
-                            :class="avatarClass(item.name)"
-                        >
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-sm font-bold uppercase text-gray-500 dark:bg-white/5 dark:text-gray-300">
                             {{ (item.name || '?').slice(0, 2) }}
                         </span>
                         <div class="flex flex-col">
@@ -110,116 +102,63 @@
                     </div>
                 </ListingDataCell>
 
-                <!-- Stock with low-stock highlight -->
+                <!-- Price (active sale price) -->
                 <ListingDataCell>
-                    <span
-                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-semibold tabular-nums"
-                        :class="
-                            item.current_stock_quantity <= item.low_stock_quantity
-                                ? 'bg-danger-50 text-danger-700 dark:bg-danger-500/10 dark:text-danger-400'
-                                : 'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300'
-                        "
-                    >
-                        {{ item.current_stock_quantity ?? 0 }}
+                    <span class="font-medium tabular-nums text-gray-900 dark:text-white">{{ price(item) }}</span>
+                </ListingDataCell>
+
+                <!-- Stock: qty + alert line -->
+                <ListingDataCell>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-sm font-medium tabular-nums" :class="isLow(item) ? 'text-red-500' : 'text-gray-900 dark:text-white'">
+                            {{ item.current_stock_quantity ?? 0 }} <span class="text-xs font-normal text-gray-400">in stock</span>
+                        </span>
+                        <span class="text-xs" :class="isLow(item) ? 'text-red-400' : 'text-gray-400'">
+                            {{ isLow(item) ? 'Low stock' : 'Alert at ' + (item.low_stock_quantity ?? 0) }}
+                        </span>
+                    </div>
+                </ListingDataCell>
+
+                <!-- Category -->
+                <ListingDataCell>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ item.item_category?.name ?? '—' }}</span>
+                </ListingDataCell>
+
+                <!-- Status -->
+                <ListingDataCell>
+                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
+                        :class="item.is_active ? 'bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400'">
+                        {{ item.is_active ? 'Active' : 'Inactive' }}
                     </span>
                 </ListingDataCell>
 
-                <!-- Type pill: Service vs Product -->
+                <!-- Actions: rounded icon buttons (Larkon) -->
                 <ListingDataCell>
-                    <span
-                        class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium"
-                        :class="
-                            item.is_service
-                                ? 'bg-info-50 text-info-700 dark:bg-info-500/10 dark:text-info-400'
-                                : 'bg-secondary-50 text-secondary-700 dark:bg-secondary-500/10 dark:text-secondary-400'
-                        "
-                    >
-                        {{ item.is_service ? $t("craftable-pro", "Service") : $t("craftable-pro", "Product") }}
-                    </span>
-                </ListingDataCell>
-
-                <!-- In Stock toggle -->
-                <ListingDataCell>
-                    <ListingToggle
-                        name="in_stock"
-                        v-model="item.in_stock"
-                        :updateUrl="route('craftable-pro.items.update', item.id)"
-                    />
-                </ListingDataCell>
-
-                <!-- Active toggle -->
-                <ListingDataCell>
-                    <ListingToggle
-                        name="is_active"
-                        v-model="item.is_active"
-                        :updateUrl="route('craftable-pro.items.update', item.id)"
-                    />
-                </ListingDataCell>
-
-                <!-- Created -->
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">
-                        {{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}
-                    </span>
-                </ListingDataCell>
-
-                <!-- Actions -->
-                <ListingDataCell>
-                    <div class="flex items-center justify-end gap-3">
-                        <IconButton
-                            :as="Link"
-                            :href="route('craftable-pro.items.edit', item)"
-                            variant="ghost"
-                            color="gray"
-                            :icon="PencilSquareIcon"
-                            v-can="'craftable-pro.items.edit'"
-                        />
-
+                    <div class="flex items-center justify-center gap-2">
+                        <Link :href="route('craftable-pro.items.edit', item)" title="View"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10">
+                            <EyeIcon class="h-4 w-4" />
+                        </Link>
+                        <Link :href="route('craftable-pro.items.edit', item)" title="Edit" v-can="'craftable-pro.items.edit'"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600 transition-colors hover:bg-primary-100 dark:bg-primary-500/10 dark:text-primary-400 dark:hover:bg-primary-500/20">
+                            <PencilSquareIcon class="h-4 w-4" />
+                        </Link>
                         <Modal type="danger">
                             <template #trigger="{ setIsOpen }">
-                                <IconButton
-                                    @click="() => setIsOpen(true)"
-                                    color="gray"
-                                    variant="ghost"
-                                    :icon="TrashIcon"
-                                    v-can="'craftable-pro.items.destroy'"
-                                />
+                                <button @click="() => setIsOpen(true)" title="Delete" v-can="'craftable-pro.items.destroy'"
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-500 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20">
+                                    <TrashIcon class="h-4 w-4" />
+                                </button>
                             </template>
-
-                            <template #title>
-                                {{ $t("craftable-pro", "Delete Item") }}
-                            </template>
-
+                            <template #title>{{ $t("craftable-pro", "Delete Item") }}</template>
                             <template #content>
-                                {{
-                                    $t(
-                                        "craftable-pro",
-                                        "Are you sure you want to delete selected Item? All data will be permanently removed from our servers forever. This action cannot be undone."
-                                    )
-                                }}
+                                {{ $t("craftable-pro", "Are you sure you want to delete selected Item? All data will be permanently removed from our servers forever. This action cannot be undone.") }}
                             </template>
-
                             <template #buttons="{ setIsOpen }">
-                                <Button
-                                    @click.prevent="
-                                        () => {
-                                            action('delete', route('craftable-pro.items.destroy', item), {
-                                                onFinish: () => setIsOpen(false),
-                                            });
-                                        }
-                                    "
-                                    color="danger"
-                                    v-can="'craftable-pro.items.destroy'"
-                                >
+                                <Button @click.prevent="() => { action('delete', route('craftable-pro.items.destroy', item), { onFinish: () => setIsOpen(false) }); }" color="danger" v-can="'craftable-pro.items.destroy'">
                                     {{ $t("craftable-pro", "Delete") }}
                                 </Button>
-                                <Button
-                                    @click.prevent="() => setIsOpen()"
-                                    color="gray"
-                                    variant="outline"
-                                >
-                                    {{ $t("craftable-pro", "Cancel") }}
-                                </Button>
+                                <Button @click.prevent="() => setIsOpen()" color="gray" variant="outline">{{ $t("craftable-pro", "Cancel") }}</Button>
                             </template>
                         </Modal>
                     </div>
@@ -236,6 +175,9 @@ import {
     TrashIcon,
     PencilSquareIcon,
     ArrowDownTrayIcon,
+    EyeIcon,
+    ListBulletIcon,
+    Squares2X2Icon,
 } from "@heroicons/vue/24/outline";
 import {
     PageHeader,
@@ -262,9 +204,16 @@ dayjs.extend(customParseFormat)
 
 
 
-// deterministic pastel avatar color from the item name
-const avatarClass = (_name: string) =>
-    "bg-gray-100 text-gray-600 ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:ring-gray-700";
+const money = (v: number) =>
+    Number(v ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " DH";
+
+const price = (item: any) => {
+    const p = item.prices?.[0]?.sale_price;
+    return p != null ? money(p) : "—";
+};
+
+const isLow = (item: any) =>
+    Number(item.current_stock_quantity ?? 0) <= Number(item.low_stock_quantity ?? 0);
 
 interface Props {
     items: PaginatedCollection<Item>;

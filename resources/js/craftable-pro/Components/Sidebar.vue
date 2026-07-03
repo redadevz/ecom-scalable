@@ -7,6 +7,12 @@
       <SidebarItem :href="route('craftable-pro.reports.sales')" :icon="ChartBarIcon">
         {{ $t("craftable-pro", "Sales Report") }}
       </SidebarItem>
+      <SidebarItem :href="route('craftable-pro.reports.stock')" :icon="ArchiveBoxIcon">
+        {{ $t("craftable-pro", "Stock Report") }}
+      </SidebarItem>
+      <SidebarItem :href="route('craftable-pro.reports.purchases')" :icon="ShoppingBagIcon">
+        {{ $t("craftable-pro", "Purchases Report") }}
+      </SidebarItem>
 
       <SidebarGroup :title="$t('craftable-pro', 'Content')">
         <SidebarItem :href="route('craftable-pro.media.index')" :icon="PhotoIcon" v-can="'craftable-pro.media.index'">

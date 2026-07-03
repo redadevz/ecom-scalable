@@ -15,6 +15,10 @@
             <button @click="apply" class="rounded-lg bg-primary-600 px-4 py-2 text-sm font-medium text-white hover:bg-primary-700">
                 Apply
             </button>
+            <a :href="exportUrl" class="ml-auto inline-flex items-center gap-2 rounded-lg border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-gray-700 dark:text-gray-200 dark:hover:bg-gray-800">
+                <ArrowDownTrayIcon class="h-4 w-4" />
+                Export
+            </a>
         </div>
 
         <!-- Summary -->
@@ -61,6 +65,7 @@
 <script setup lang="ts">
 import { ref, computed } from "vue";
 import { router } from "@inertiajs/vue3";
+import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 import { PageHeader, PageContent } from "craftable-pro/Components";
 
 interface Props {
@@ -86,4 +91,8 @@ const cards = computed(() => [
 const apply = () => {
     router.get(route("craftable-pro.reports.sales"), { from: from.value, to: to.value }, { preserveState: true });
 };
+
+const exportUrl = computed(() =>
+    route("craftable-pro.reports.sales.export", { from: from.value, to: to.value })
+);
 </script>

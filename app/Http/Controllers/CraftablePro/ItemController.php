@@ -11,6 +11,7 @@ use App\Http\Requests\CraftablePro\Item\IndexItemRequest;
 use App\Http\Requests\CraftablePro\Item\StoreItemRequest;
 use App\Http\Requests\CraftablePro\Item\UpdateItemRequest;
 use App\Models\Item;
+use App\Models\ItemCategory;
 use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -49,7 +50,10 @@ class ItemController extends Controller
         }
 
         $items = $itemsQuery
-            ->with([])
+            ->with([
+                'itemCategory:id,name',
+                'prices' => fn ($q) => $q->where('is_active', true)->latest('id')->select('id', 'item_id', 'sale_price'),
+            ])
             ->select('id', 'store_id', 'item_category_id', 'supplier_id', 'measure_unit_id', 'sku_code', 'name', 'description', 'is_service', 'in_stock', 'using_default_quantity', 'default_quantity', 'current_stock_quantity', 'preferred_stock_quantity', 'min_stock_quantity', 'low_stock_warning', 'low_stock_quantity', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 
@@ -57,6 +61,32 @@ class ItemController extends Controller
 
         return Inertia::render('Item/Index', [
             'items' => $items,
+        ]);
+    }
+
+    /**
+     * Grid (card) view of items, with optional category filter.
+     */
+    public function grid(Request $request): Response
+    {
+        $categoryId = $request->integer('category') ?: null;
+        $search = trim((string) $request->get('search'));
+
+        $items = Item::query()
+            ->with([
+                'itemCategory:id,name',
+                'prices' => fn ($q) => $q->where('is_active', true)->latest('id')->select('id', 'item_id', 'sale_price'),
+            ])
+            ->when($categoryId, fn ($q) => $q->where('item_category_id', $categoryId))
+            ->when($search !== '', fn ($q) => $q->where(fn ($w) => $w->where('name', 'like', "%{$search}%")->orWhere('sku_code', 'like', "%{$search}%")))
+            ->orderBy('name')
+            ->paginate(12)
+            ->withQueryString();
+
+        return Inertia::render('Item/Grid', [
+            'items'      => $items,
+            'categories' => ItemCategory::withCount('items')->orderBy('name')->get(['id', 'name']),
+            'filters'    => ['category' => $categoryId, 'search' => $search],
         ]);
     }
 
