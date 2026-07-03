@@ -27,6 +27,7 @@ class UpdateItemRequest extends FormRequest
             'measure_unit_id' => ['sometimes'],
             'sku_code' => ['sometimes', 'string'],
             'name' => ['sometimes', 'string'],
+            'image' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'is_service' => ['sometimes', 'boolean'],
             'in_stock' => ['sometimes', 'boolean'],

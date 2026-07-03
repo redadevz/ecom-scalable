@@ -10,6 +10,27 @@
                             <TextInput v-model="form.name" name="name" label="Name" type="text" />
                             <TextInput v-model="form.sku_code" name="sku_code" label="SKU Code" type="text" />
                             <div class="sm:col-span-2">
+                                <TextInput v-model="form.image" name="image" label="Image URL" type="text" placeholder="https://… or upload below" />
+                            </div>
+                            <div class="sm:col-span-2">
+                                <label class="mb-1 block text-sm font-medium text-gray-700 dark:text-white">Upload image</label>
+                                <div class="flex items-center gap-4">
+                                    <div class="flex h-24 w-24 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg border border-dashed border-gray-300 bg-gray-50 dark:border-[#2c2f3d] dark:bg-white/5">
+                                        <img v-if="form.image" :src="form.image" alt="preview" class="h-full w-full object-cover" />
+                                        <PhotoIcon v-else class="h-8 w-8 text-gray-300" />
+                                    </div>
+                                    <div>
+                                        <label class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 dark:border-[#2c2f3d] dark:text-gray-200 dark:hover:bg-white/5">
+                                            <ArrowUpTrayIcon class="h-4 w-4" />
+                                            {{ uploading ? "Uploading…" : "Choose file" }}
+                                            <input type="file" accept="image/*" class="hidden" @change="onFile" :disabled="uploading" />
+                                        </label>
+                                        <button v-if="form.image" type="button" @click="form.image = ''" class="ml-2 text-sm text-red-500 hover:text-red-600">Remove</button>
+                                        <p class="mt-1 text-xs text-gray-400">PNG, JPG, GIF — up to 5 MB.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sm:col-span-2">
                                 <TextInput v-model="form.description" name="description" label="Description" type="text" />
                             </div>
                         </div>
@@ -71,6 +92,8 @@
 </template>
 
 <script setup lang="ts">
+import { ref } from "vue";
+import { PhotoIcon, ArrowUpTrayIcon } from "@heroicons/vue/24/outline";
 import {
     Card,
     TextInput,
@@ -87,4 +110,36 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+
+const uploading = ref(false);
+
+const getCookie = (name: string) => {
+    const m = document.cookie.match(new RegExp("(^| )" + name + "=([^;]+)"));
+    return m ? decodeURIComponent(m[2]) : "";
+};
+
+const onFile = async (e: Event) => {
+    const input = e.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const data = new FormData();
+    data.append("file", file);
+    uploading.value = true;
+    try {
+        const res = await fetch(route("craftable-pro.items.upload-image"), {
+            method: "POST",
+            body: data,
+            credentials: "same-origin",
+            headers: { "X-XSRF-TOKEN": getCookie("XSRF-TOKEN") },
+        });
+        const json = await res.json();
+        if (json.url) {
+            props.form.image = json.url;
+        }
+    } finally {
+        uploading.value = false;
+        input.value = "";
+    }
+};
 </script>

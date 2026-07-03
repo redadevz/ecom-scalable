@@ -30,6 +30,7 @@ class Item extends Model
         'measure_unit_id',
         'sku_code',
         'name',
+        'image',
         'description',
         'is_service',
         'in_stock',

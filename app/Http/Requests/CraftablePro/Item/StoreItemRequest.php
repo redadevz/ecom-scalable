@@ -27,6 +27,7 @@ class StoreItemRequest extends FormRequest
             'measure_unit_id' => ['required'],
             'sku_code' => ['required', 'string'],
             'name' => ['required', 'string'],
+            'image' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
             'is_service' => ['required', 'boolean'],
             'in_stock' => ['required', 'boolean'],

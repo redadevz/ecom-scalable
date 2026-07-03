@@ -54,7 +54,7 @@ class ItemController extends Controller
                 'itemCategory:id,name',
                 'prices' => fn ($q) => $q->where('is_active', true)->latest('id')->select('id', 'item_id', 'sale_price'),
             ])
-            ->select('id', 'store_id', 'item_category_id', 'supplier_id', 'measure_unit_id', 'sku_code', 'name', 'description', 'is_service', 'in_stock', 'using_default_quantity', 'default_quantity', 'current_stock_quantity', 'preferred_stock_quantity', 'min_stock_quantity', 'low_stock_warning', 'low_stock_quantity', 'is_active', 'comments', 'created_at')
+            ->select('id', 'store_id', 'item_category_id', 'supplier_id', 'measure_unit_id', 'sku_code', 'name', 'image', 'description', 'is_service', 'in_stock', 'using_default_quantity', 'default_quantity', 'current_stock_quantity', 'preferred_stock_quantity', 'min_stock_quantity', 'low_stock_warning', 'low_stock_quantity', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 
         Session::put('items_url', $request->fullUrl());
@@ -62,6 +62,20 @@ class ItemController extends Controller
         return Inertia::render('Item/Index', [
             'items' => $items,
         ]);
+    }
+
+    /**
+     * Upload an item image; returns its public URL.
+     */
+    public function uploadImage(Request $request): \Illuminate\Http\JsonResponse
+    {
+        $request->validate([
+            'file' => ['required', 'image', 'max:5120'], // 5 MB
+        ]);
+
+        $path = $request->file('file')->store('items', 'public');
+
+        return response()->json(['url' => \Illuminate\Support\Facades\Storage::url($path)]);
     }
 
     /**

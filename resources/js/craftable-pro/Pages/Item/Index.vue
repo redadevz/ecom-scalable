@@ -92,8 +92,9 @@
                 <!-- Product: thumbnail + name + SKU -->
                 <ListingDataCell>
                     <div class="flex items-center gap-3">
-                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-sm font-bold uppercase text-gray-500 dark:bg-white/5 dark:text-gray-300">
-                            {{ (item.name || '?').slice(0, 2) }}
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-gray-100 text-sm font-bold uppercase text-gray-500 dark:bg-white/5 dark:text-gray-300">
+                            <img v-if="item.image" :src="item.image" :alt="item.name" class="h-full w-full object-cover" />
+                            <template v-else>{{ (item.name || '?').slice(0, 2) }}</template>
                         </span>
                         <div class="flex flex-col">
                             <span class="font-medium text-gray-900 dark:text-white">{{ item.name }}</span>

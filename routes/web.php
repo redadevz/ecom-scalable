@@ -13,6 +13,7 @@ Route::craftablePro('admin');
 Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable-pro.')->group(function () {
     Route::get('/', [App\Http\Controllers\CraftablePro\DashboardController::class, 'index'])->name('home');
     Route::get('items/grid', [App\Http\Controllers\CraftablePro\ItemController::class, 'grid'])->name('items.grid');
+    Route::post('items/upload-image', [App\Http\Controllers\CraftablePro\ItemController::class, 'uploadImage'])->name('items.upload-image');
     Route::get('reports/sales', [App\Http\Controllers\CraftablePro\ReportController::class, 'sales'])->name('reports.sales');
     Route::get('reports/sales/export', [App\Http\Controllers\CraftablePro\ReportController::class, 'salesExport'])->name('reports.sales.export');
     Route::get('reports/stock', [App\Http\Controllers\CraftablePro\ReportController::class, 'stock'])->name('reports.stock');

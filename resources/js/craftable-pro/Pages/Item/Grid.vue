@@ -51,8 +51,11 @@
                 <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
                     <div v-for="item in items.data" :key="item.id"
                         class="group rounded-xl border border-gray-200 bg-white p-4 transition-shadow hover:shadow-md dark:border-[#2c2f3d] dark:bg-[#212330]">
-                        <div class="mb-4 flex h-36 items-center justify-center rounded-lg bg-gray-50 text-4xl font-bold uppercase text-gray-300 dark:bg-white/5 dark:text-gray-600">
-                            {{ (item.name || '?').slice(0, 2) }}
+                        <div class="mb-4 h-36 overflow-hidden rounded-lg bg-gray-50 dark:bg-white/5">
+                            <img v-if="item.image" :src="item.image" :alt="item.name" class="h-full w-full object-cover" />
+                            <div v-else class="flex h-full items-center justify-center text-4xl font-bold uppercase text-gray-300 dark:text-gray-600">
+                                {{ (item.name || '?').slice(0, 2) }}
+                            </div>
                         </div>
                         <div class="flex items-start justify-between gap-2">
                             <div class="min-w-0">
