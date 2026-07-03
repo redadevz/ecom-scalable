@@ -102,9 +102,15 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 > purchase → stock in · sale → confirm (price/discount/stock out) → invoice → payment ·
 > returns → stock back + refund · inventory count / loss → adjust.
 
-### Step 17 — Dashboard KPIs (live data) ⬜  ← next
-- Files: new `DashboardController` (or ext  end home) passing stats → `Pages/Home.vue`
-- Logic: today's sales total, # orders, low-stock count, top items — replace quick-link cards with real numbers
+### Step 17 — Dashboard KPIs (live data) ✅
+- `DashboardController@index` overrides the home route (registered in `web.php` AFTER `Route::craftablePro`) → feeds `Pages/Home.vue`
+- Live stats: sales total, orders count, low-stock count, unpaid invoices + recent orders table + top-selling items
+- `Pages/Home.vue` rebuilt: KPI cards, recent orders, top selling, quick access
+- Added **Dashboard** link to the sidebar (home icon, top)
+
+> UI polish this phase: compact full sidebar (distinct icons per item), unified **indigo / mostly-neutral** theme across the whole project, two-column Item form (main + side panel) as the form template.
+
+### Step 18 — Reports ⬜  ← next
 
 ### Step 18 — Reports ⬜
 - Sales (by day/channel/customer), Stock (levels + low-stock + valuation), Purchases (by supplier)

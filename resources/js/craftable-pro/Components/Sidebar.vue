@@ -4,6 +4,9 @@
       <SidebarItem :href="route('craftable-pro.home')" :icon="HomeIcon">
         {{ $t("craftable-pro", "Dashboard") }}
       </SidebarItem>
+      <SidebarItem :href="route('craftable-pro.reports.sales')" :icon="ChartBarIcon">
+        {{ $t("craftable-pro", "Sales Report") }}
+      </SidebarItem>
 
       <SidebarGroup :title="$t('craftable-pro', 'Content')">
         <SidebarItem :href="route('craftable-pro.media.index')" :icon="PhotoIcon" v-can="'craftable-pro.media.index'">
@@ -245,6 +248,7 @@
 <script setup lang="ts">
 import {
   HomeIcon,
+  ChartBarIcon,
   KeyIcon,
   LanguageIcon,
   PhotoIcon,
