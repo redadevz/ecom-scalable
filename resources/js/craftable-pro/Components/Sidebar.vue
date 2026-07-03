@@ -1,6 +1,10 @@
 <template>
   <div>
     <nav class="mt-4 space-y-0.5 cp-sidebar">
+      <SidebarItem :href="route('craftable-pro.home')" :icon="HomeIcon">
+        {{ $t("craftable-pro", "Dashboard") }}
+      </SidebarItem>
+
       <SidebarGroup :title="$t('craftable-pro', 'Content')">
         <SidebarItem :href="route('craftable-pro.media.index')" :icon="PhotoIcon" v-can="'craftable-pro.media.index'">
           {{ $t("craftable-pro", "Media") }}
@@ -240,6 +244,7 @@
 
 <script setup lang="ts">
 import {
+  HomeIcon,
   KeyIcon,
   LanguageIcon,
   PhotoIcon,
