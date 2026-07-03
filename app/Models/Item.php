@@ -4,12 +4,59 @@
 
 namespace App\Models;
 
+use Brackets\CraftablePro\Media\AutoProcessMediaTrait;
+use Brackets\CraftablePro\Media\HasMediaPreviewsTrait;
+use Brackets\CraftablePro\Media\InteractsWithMedia;
+use Brackets\CraftablePro\Media\ProcessMediaTrait;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia;
 
-class Item extends Model
+class Item extends Model implements HasMedia
 {
     use HasFactory;
+    use InteractsWithMedia;
+    use ProcessMediaTrait;
+    use AutoProcessMediaTrait;
+    use HasMediaPreviewsTrait;
+
+    /**
+     * Expose media as form/display attributes.
+     */
+    protected $appends = ['images', 'images_url'];
+
+    public function registerMediaCollections(): void
+    {
+        $this->addMediaCollection('images')
+            ->acceptsMimeTypes(['image/png', 'image/jpeg', 'image/jpg', 'image/gif', 'image/webp'])
+            ->maxFileSize(5 * 1024 * 1024);
+    }
+
+    public function registerMediaConversions($media = null): void
+    {
+        $this->autoRegisterPreviews();
+    }
+
+    /**
+     * Media collection for the form (array of uploaded files).
+     */
+    protected function images(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getThumbs200ForCollection('images'),
+        );
+    }
+
+    /**
+     * First image URL for grid/list thumbnails.
+     */
+    protected function imagesUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $this->getFirstMediaUrl('images', 'preview'),
+        );
+    }
 
     /**
      * The table associated with the model.

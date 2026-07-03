@@ -48,7 +48,7 @@ const { form, submit } = useForm<ItemForm>(
         measure_unit_id: props.item?.measure_unit_id ?? "",
         sku_code: props.item?.sku_code ?? "",
         name: props.item?.name ?? "",
-        image: props.item?.image ?? "",
+        images: props.item?.images ?? [],
         description: props.item?.description ?? "",
         is_service: props.item?.is_service ?? false,
         in_stock: props.item?.in_stock ?? false,

@@ -28,6 +28,7 @@ class UpdateItemRequest extends FormRequest
             'sku_code' => ['sometimes', 'string'],
             'name' => ['sometimes', 'string'],
             'image' => ['nullable', 'string'],
+            'images' => ['nullable', 'array'],
             'description' => ['nullable', 'string'],
             'is_service' => ['sometimes', 'boolean'],
             'in_stock' => ['sometimes', 'boolean'],

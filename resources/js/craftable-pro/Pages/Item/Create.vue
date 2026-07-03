@@ -37,7 +37,7 @@ const { form, submit } = useForm<ItemForm>(
         measure_unit_id: "",
         sku_code: "",
         name: "",
-        image: "",
+        images: [],
         description: "",
         is_service: false,
         in_stock: false,

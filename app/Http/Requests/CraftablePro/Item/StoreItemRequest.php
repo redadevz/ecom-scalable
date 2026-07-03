@@ -28,6 +28,7 @@ class StoreItemRequest extends FormRequest
             'sku_code' => ['required', 'string'],
             'name' => ['required', 'string'],
             'image' => ['nullable', 'string'],
+            'images' => ['nullable', 'array'],
             'description' => ['nullable', 'string'],
             'is_service' => ['required', 'boolean'],
             'in_stock' => ['required', 'boolean'],
