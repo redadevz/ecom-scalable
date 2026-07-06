@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\LoyaltyCardType;
 
 class LoyaltyCardTypeFactory extends Factory
@@ -12,7 +14,7 @@ class LoyaltyCardTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
             'description' => $this->faker->text(),
             'is_active' => $this->faker->boolean(),
         ];

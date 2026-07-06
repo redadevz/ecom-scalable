@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Discount;
 use App\Models\OrderLine;
 use App\Models\OrderLineDiscount;

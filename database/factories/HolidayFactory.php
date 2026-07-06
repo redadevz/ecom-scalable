@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Holiday;
 use App\Models\Store;
 
@@ -14,7 +16,7 @@ class HolidayFactory extends Factory
     {
         return [
             'store_id' => Store::factory(),
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
             'reason' => $this->faker->word(),
             'starts_at' => $this->faker->dateTime(),
             'ends_at' => $this->faker->dateTime(),

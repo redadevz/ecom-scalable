@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Store;
 use App\Models\TaxType;
 
@@ -14,8 +16,8 @@ class TaxTypeFactory extends Factory
     {
         return [
             'store_id' => Store::factory(),
-            'name' => $this->faker->name(),
-            'code' => $this->faker->word(),
+            'name' => $this->faker->unique()->name(),
+            'code' => $this->faker->unique()->bothify('C-########'),
             'description' => $this->faker->text(),
             'is_percentage' => $this->faker->boolean(),
             'value' => $this->faker->randomFloat(0, 0, 9999999999.),

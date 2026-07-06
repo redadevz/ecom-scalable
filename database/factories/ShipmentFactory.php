@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\Order;
-use App\Models\PickedUpBy;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+use App\Models\OrderHeader;
 use App\Models\Shipment;
-use App\Models\ShipmentCity;
+use App\Models\City;
 use App\Models\Store;
 
 class ShipmentFactory extends Factory
@@ -17,9 +18,9 @@ class ShipmentFactory extends Factory
     {
         return [
             'store_id' => Store::factory(),
-            'order_id' => Order::factory(),
-            'shipment_city_id' => ShipmentCity::factory(),
-            'picked_up_by' => PickedUpBy::factory(),
+            'order_id' => OrderHeader::factory(),
+            'shipment_city_id' => City::factory(),
+            'picked_up_by' => null,
             'shipment_address' => $this->faker->word(),
             'gps_location' => $this->faker->word(),
             'postal_code' => $this->faker->postcode(),

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\DocumentCategory;
 use App\Models\DocumentType;
 
@@ -14,7 +16,7 @@ class DocumentTypeFactory extends Factory
     {
         return [
             'document_category_id' => DocumentCategory::factory(),
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
             'description' => $this->faker->text(),
             'is_active' => $this->faker->boolean(),
             'comments' => $this->faker->word(),

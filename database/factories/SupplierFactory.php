@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\City;
-use App\Models\CreatedBy;
 use App\Models\Store;
 use App\Models\Supplier;
 
@@ -17,8 +18,8 @@ class SupplierFactory extends Factory
         return [
             'store_id' => Store::factory(),
             'city_id' => City::factory(),
-            'created_by' => CreatedBy::factory(),
-            'code' => $this->faker->word(),
+            'created_by' => null,
+            'code' => $this->faker->unique()->bothify('C-########'),
             'phone' => $this->faker->phoneNumber(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
@@ -28,7 +29,7 @@ class SupplierFactory extends Factory
             'is_tax_exempted' => $this->faker->boolean(),
             'billing_address' => $this->faker->word(),
             'postal_code' => $this->faker->postcode(),
-            'email' => $this->faker->safeEmail(),
+            'email' => $this->faker->unique()->safeEmail(),
             'is_active' => $this->faker->boolean(),
             'comments' => $this->faker->word(),
         ];

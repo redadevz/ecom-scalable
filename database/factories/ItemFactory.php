@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\MeasureUnit;
@@ -20,8 +22,8 @@ class ItemFactory extends Factory
             'item_category_id' => ItemCategory::factory(),
             'supplier_id' => Supplier::factory(),
             'measure_unit_id' => MeasureUnit::factory(),
-            'sku_code' => $this->faker->word(),
-            'name' => $this->faker->name(),
+            'sku_code' => $this->faker->unique()->bothify('SKU-########'),
+            'name' => $this->faker->unique()->name(),
             'description' => $this->faker->text(),
             'is_service' => $this->faker->boolean(),
             'in_stock' => $this->faker->boolean(),

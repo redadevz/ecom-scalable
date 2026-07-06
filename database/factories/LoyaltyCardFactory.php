@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Customer;
 use App\Models\LoyaltyCard;
 use App\Models\LoyaltyCardType;
@@ -16,7 +18,7 @@ class LoyaltyCardFactory extends Factory
         return [
             'loyalty_card_type_id' => LoyaltyCardType::factory(),
             'customer_id' => Customer::factory(),
-            'code' => $this->faker->word(),
+            'code' => $this->faker->unique()->bothify('C-########'),
             'is_active' => $this->faker->boolean(),
         ];
     }

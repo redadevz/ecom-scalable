@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\BarCode;
 use App\Models\Item;
 
@@ -14,7 +16,7 @@ class BarCodeFactory extends Factory
     {
         return [
             'item_id' => Item::factory(),
-            'bar_code' => $this->faker->word(),
+            'bar_code' => $this->faker->unique()->numerify('#############'),
             'is_active' => $this->faker->boolean(),
             'description' => $this->faker->text(),
         ];

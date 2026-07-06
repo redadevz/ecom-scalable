@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\InventoryCount;
 use App\Models\InventoryCountItem;
 use App\Models\Item;

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Invoice;
 use App\Models\Payment;
 use App\Models\PaymentMethod;

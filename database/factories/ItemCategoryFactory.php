@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\ItemCategory;
-use App\Models\ParentCategory;
 
 class ItemCategoryFactory extends Factory
 {
@@ -13,8 +14,8 @@ class ItemCategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'parent_category_id' => ParentCategory::factory(),
-            'name' => $this->faker->name(),
+            'parent_category_id' => null,
+            'name' => $this->faker->unique()->name(),
             'description' => $this->faker->text(),
             'is_active' => $this->faker->boolean(),
         ];

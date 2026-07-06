@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Invoice;
-use App\Models\Order;
+use App\Models\OrderHeader;
 
 class InvoiceFactory extends Factory
 {
@@ -13,11 +15,10 @@ class InvoiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => Order::factory(),
+            'order_id' => OrderHeader::factory(),
             'invoice_no' => $this->faker->word(),
             'is_paid' => $this->faker->boolean(),
             'payment_time' => $this->faker->dateTime(),
-            'comments' => $this->faker->word(),
         ];
     }
 }

@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Discount;
-use App\Models\Order;
+use App\Models\OrderHeader;
 use App\Models\OrderDiscount;
 
 class OrderDiscountFactory extends Factory
@@ -15,7 +17,7 @@ class OrderDiscountFactory extends Factory
     {
         return [
             'discount_id' => Discount::factory(),
-            'order_id' => Order::factory(),
+            'order_id' => OrderHeader::factory(),
             'value' => $this->faker->randomFloat(0, 0, 9999999999.),
             'comments' => $this->faker->word(),
         ];

@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\DiscountType;
 use App\Models\LoyaltyCardType;
 use App\Models\Store;
@@ -16,7 +18,7 @@ class DiscountTypeFactory extends Factory
         return [
             'store_id' => Store::factory(),
             'loyalty_card_type_id' => LoyaltyCardType::factory(),
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
             'description' => $this->faker->text(),
             'is_percentage' => $this->faker->boolean(),
             'value' => $this->faker->randomFloat(0, 0, 9999999999.),

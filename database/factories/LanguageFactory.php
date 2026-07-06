@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Language;
 
 class LanguageFactory extends Factory
@@ -12,8 +14,8 @@ class LanguageFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'short_name' => $this->faker->word(),
+            'name' => $this->faker->unique()->name(),
+            'short_name' => $this->faker->unique()->word(),
             'description' => $this->faker->text(),
         ];
     }

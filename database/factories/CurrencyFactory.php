@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Currency;
 
 class CurrencyFactory extends Factory
@@ -12,9 +14,9 @@ class CurrencyFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
-            'short_name' => $this->faker->word(),
-            'symbol' => $this->faker->word(),
+            'name' => $this->faker->unique()->name(),
+            'short_name' => $this->faker->unique()->word(),
+            'symbol' => $this->faker->unique()->currencyCode(),
             'description' => $this->faker->text(),
         ];
     }

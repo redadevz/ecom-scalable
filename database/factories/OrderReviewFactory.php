@@ -2,10 +2,11 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Customer;
-use App\Models\Order;
+use App\Models\OrderHeader;
 use App\Models\OrderReview;
-use App\Models\RepliedBy;
 
 class OrderReviewFactory extends Factory
 {
@@ -15,9 +16,9 @@ class OrderReviewFactory extends Factory
     public function definition(): array
     {
         return [
-            'order_id' => Order::factory(),
+            'order_id' => OrderHeader::factory(),
             'customer_id' => Customer::factory(),
-            'replied_by' => RepliedBy::factory(),
+            'replied_by' => null,
             'rating' => $this->faker->boolean(),
             'review' => $this->faker->word(),
             'review_time' => $this->faker->dateTime(),

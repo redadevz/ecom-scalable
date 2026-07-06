@@ -2,9 +2,11 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\City;
 use App\Models\Region;
-use App\Models\Timezone;
+use App\Models\TimeZone;
 
 class CityFactory extends Factory
 {
@@ -14,9 +16,9 @@ class CityFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name(),
+            'name' => $this->faker->unique()->name(),
             'region_id' => Region::factory(),
-            'timezone_id' => Timezone::factory(),
+            'timezone_id' => TimeZone::factory(),
             'zipcode' => $this->faker->numberBetween(-10000, 10000),
         ];
     }

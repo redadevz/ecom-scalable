@@ -2,12 +2,11 @@
 
 namespace Database\Factories;
 
-use App\Models\ApprovedBy;
-use App\Models\CreatedBy;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Customer;
 use App\Models\DeliveryType;
 use App\Models\LoyaltyCard;
-use App\Models\ManagedBy;
 use App\Models\OrderHeader;
 use App\Models\PaymentMethod;
 use App\Models\PaymentTime;
@@ -29,9 +28,9 @@ class OrderHeaderFactory extends Factory
             'payment_time_id' => PaymentTime::factory(),
             'customer_id' => Customer::factory(),
             'loyalty_card_id' => LoyaltyCard::factory(),
-            'created_by' => CreatedBy::factory(),
-            'approved_by' => ApprovedBy::factory(),
-            'managed_by' => ManagedBy::factory(),
+            'created_by' => null,
+            'approved_by' => null,
+            'managed_by' => null,
             'order_no' => $this->faker->word(),
             'customer_notes' => $this->faker->word(),
             'price_before_tax' => $this->faker->randomFloat(0, 0, 9999999999.),

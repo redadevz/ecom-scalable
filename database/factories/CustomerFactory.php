@@ -2,9 +2,10 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\City;
-use App\Models\CreatedAtStore;
-use App\Models\CreatedBy;
+use App\Models\Store;
 use App\Models\Customer;
 
 class CustomerFactory extends Factory
@@ -16,9 +17,9 @@ class CustomerFactory extends Factory
     {
         return [
             'city_id' => City::factory(),
-            'created_at_store_id' => CreatedAtStore::factory(),
-            'created_by' => CreatedBy::factory(),
-            'code' => $this->faker->word(),
+            'created_at_store_id' => Store::factory(),
+            'created_by' => null,
+            'code' => $this->faker->unique()->bothify('C-########'),
             'phone' => $this->faker->phoneNumber(),
             'first_name' => $this->faker->firstName(),
             'last_name' => $this->faker->lastName(),
@@ -29,7 +30,7 @@ class CustomerFactory extends Factory
             'billing_address' => $this->faker->word(),
             'postal_code' => $this->faker->postcode(),
             'is_registered_online' => $this->faker->boolean(),
-            'email' => $this->faker->safeEmail(),
+            'email' => $this->faker->unique()->safeEmail(),
             'username' => $this->faker->userName(),
             'password' => $this->faker->password(),
             'credit' => $this->faker->randomFloat(0, 0, 9999999999.),

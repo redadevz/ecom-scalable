@@ -2,8 +2,10 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\Item;
-use App\Models\Order;
+use App\Models\OrderHeader;
 use App\Models\OrderLine;
 use App\Models\Store;
 
@@ -16,7 +18,7 @@ class OrderLineFactory extends Factory
     {
         return [
             'store_id' => Store::factory(),
-            'order_id' => Order::factory(),
+            'order_id' => OrderHeader::factory(),
             'item_id' => Item::factory(),
             'line_no' => $this->faker->word(),
             'description' => $this->faker->text(),

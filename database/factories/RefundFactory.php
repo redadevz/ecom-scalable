@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Factory;
+
 use App\Models\PaymentMethod;
 use App\Models\Refund;
 use App\Models\SaleReturn;

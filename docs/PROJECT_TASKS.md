@@ -121,19 +121,41 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 ### Step 18b — Product images (Spatie Media Library) ✅
 - Switched Item images from a simple `image` column to **Craftable's Spatie Media Library** (multiple images, thumbnails, managed in the Media module)
 - `Item` implements `HasMedia` + Craftable media traits; `images` collection (≤5 MB), auto `preview` conversion; `images` / `images_url` accessors; `$appends`
-- Form uses Craftable **`Dropzone`** (`form.images`); grid + list show `images_url` (fallba k to old `image` column for seed data); `media` eager-loaded
+- Form uses Craftable **`Dropzone`** (`form.images`); grid + list show `images_url` (fallback to old `image` column for seed data); `media` eager-loaded
 - Verified end-to-end via tinker (upload → conversion → preview URL)
 
-### Step 19 — Settings ⬜
-- Store settings screen (currency, tax defaults, **negative-stock policy**)
-- Wire `StockService::negativeStockAllowed()` to the real setting
+### Step 19 — Settings ✅
+- **Shop Settings** via Spatie `laravel-settings` (already shipped w/ Craftable): `app/Settings/ShopSettings.php` + settings migration `2026_07_06_120000_create_shop_settings.php` (currency_code/symbol, default_tax_rate, negative_stock_allowed, low_stock_threshold)
+- `ShopSettingsController@edit/update` + routes `settings/shop` (edit + put) + sidebar link (System group)
+- `Pages/Settings/Shop.vue` — Larkon-style settings page (emoji section headers, currency preview card, Yes/No radios, sticky save bar)
+- Wired `StockService::negativeStockAllowed()` → reads the real setting (flip toggle = sales can go below zero)
+- Verified via tinker: settings resolve `MAD / DH / 20% / neg=false / low=5`
+- Note: Craftable also ships its own **Settings** page (locales, default route, 2FA) — kept separate; Shop Settings is the business/POS layer
 
-### Step 20 — Hardening ⬜
-- Validation rules in every `Store*Request` / `Update*Request`
-- Authorization: permissions for confirm/receive/cancel/etc. + role assignment
-- Extend `stockIn` to record cost (`initial_item_cost`/`current_item_cost`)
-- Automated tests (Pest) per service
-- Remaining table curation + empty states + detail pages
+### Step 19b — Full front-end premium pass ✅
+- **Larkon design system across the whole project** (all 55 modules)
+- Global CSS refinement (`resources/css/craftable-pro.css`): premium cards, uppercase quiet table headers, hairline dividers, pill pagination, dark multiselects, rounded modals, badges
+- **Every list table** curated to meaningful columns (no horizontal overflow): avatar/identity cell, status pills/toggles, rounded view/edit/delete action buttons — controllers gained eager-loads where needed (no N+1)
+- **Every form** rebuilt as premium two-column: icon-headed sections + Flags (booleans as toggles) + Relations side cards; several with live-preview cards (Store/Supplier/Customer/Refund…)
+- **Store logo** = real file upload (`StoreController@uploadLogo` + `stores/upload-logo` route + Dropzone in Store form)
+- Reference templates: `Pages/Store/Index.vue` (table) + `Pages/Supplier/Form.vue` (form)
+- ⚠️ Built + PHP-lint clean + 454 routes load, but not every screen browser-click-tested — spot-check create/edit saves
+
+### Step 20 — Hardening 🔨  ← in progress
+- ✅ **Automated service tests** (PHPUnit + `RefreshDatabase`, `tests/Feature/Services/`) — **19 tests green**:
+  - `StockServiceTest` (5): in/out, history row, insufficient-stock guard, negative-stock setting, `isStockable`
+  - `PurchaseServiceTest` (3): receive adds stock + stamps time, idempotent, skips services
+  - `OrderServiceTest` (3): confirm (price→stock-out→approve→totals), cancel (stock back), double-cancel guard
+  - `PaymentServiceTest` (5): settle marks paid, partial payments, already-paid guard, non-positive guard, refund flags return
+- ✅ **`AdminSmokeTest`** — GETs every admin index+create route as admin (no 5xx across all 55 modules)
+- ✅ **Fixed the factory suite** (was fatally broken project-wide): missing `Factory` import on all 55; alias/user-FK class-name bugs (`Timezone`→`TimeZone`, `Order`→`OrderHeader`, `CreatedBy`/etc.→null); unique-field collisions (`code`/`name`/`symbol` → `unique()`); `sequence_no` range; removed nonexistent `comments` from Invoice/SaleReturn factories
+- ✅ **Schema-drift fix** — migration `2026_07_06_150000_add_comments_to_payments_and_refunds.php` (dev DB had `comments` on payments/refunds but the create-migrations didn't → fresh migrate broke `PaymentService`; guarded/idempotent)
+- ✅ Deleted 55 dead auto-generated **API** CRUD tests (targeted a stripped REST API — 0 `api/` routes)
+- ⬜ More service tests (Invoice, SaleReturn, StockReturn, InventoryCount, LossAndDamage)
+- ⬜ Validation rules in every `Store*Request` / `Update*Request`
+- ⬜ Authorization: permissions for confirm/receive/cancel/etc. + role assignment
+- ⬜ Extend `stockIn` to record cost (`initial_item_cost`/`current_item_cost`)
+- ⬜ Detail pages + empty states (tables already curated in Step 19b)
 
 ---
 
