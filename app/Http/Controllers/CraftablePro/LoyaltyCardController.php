@@ -49,7 +49,10 @@ class LoyaltyCardController extends Controller
         }
 
         $loyaltyCards = $loyaltyCardsQuery
-            ->with([])
+            ->with([
+                'customer:id,first_name,last_name,company_name,is_company',
+                'loyaltyCardType:id,name',
+            ])
             ->select('id', 'loyalty_card_type_id', 'customer_id', 'code', 'is_active', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

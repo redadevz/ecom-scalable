@@ -1,5 +1,7 @@
 
 
+type RelationRef = { id: string | number; name: string } | null;
+
 export type PaymentTerm = {
     id: string | number;
     sale_channel_id: string | number;
@@ -9,7 +11,11 @@ export type PaymentTerm = {
     is_allowed: boolean;
     is_active: boolean;
     comments: string;
-    
+    created_at?: string;
+    saleChannel?: RelationRef;
+    deliveryType?: RelationRef;
+    paymentMethod?: RelationRef;
+    paymentTime?: RelationRef;
 };
 
 export type PaymentTermForm = {

@@ -49,7 +49,7 @@ class CityController extends Controller
         }
 
         $cities = $citiesQuery
-            ->with([])
+            ->with(['region:id,name'])
             ->select('id', 'name', 'region_id', 'timezone_id', 'zipcode', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

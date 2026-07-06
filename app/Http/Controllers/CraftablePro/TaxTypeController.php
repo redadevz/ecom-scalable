@@ -49,7 +49,7 @@ class TaxTypeController extends Controller
         }
 
         $taxTypes = $taxTypesQuery
-            ->with([])
+            ->with(['store:id,name'])
             ->select('id', 'store_id', 'name', 'code', 'description', 'is_percentage', 'value', 'start_time', 'end_time', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

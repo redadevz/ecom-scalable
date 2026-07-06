@@ -8,7 +8,6 @@
         >
             {{ $t("craftable-pro", "New Discount Type") }}
         </Button>
-        
     </PageHeader>
 
     <PageContent>
@@ -69,105 +68,46 @@
                     </template>
                 </Modal>
             </template>
+
             <template #tableHead>
-                <ListingHeaderCell sortBy='name'>
-                    {{ $t("craftable-pro", "Name") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='description'>
-                    {{ $t("craftable-pro", "Description") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_percentage'>
-                    {{ $t("craftable-pro", "Is Percentage") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='value'>
-                    {{ $t("craftable-pro", "Value") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='coupon_code'>
-                    {{ $t("craftable-pro", "Coupon Code") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='min_order_value'>
-                    {{ $t("craftable-pro", "Min Order Value") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='min_item_quantity'>
-                    {{ $t("craftable-pro", "Min Item Quantity") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='apply_to_all'>
-                    {{ $t("craftable-pro", "Apply To All") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='apply_to_next'>
-                    {{ $t("craftable-pro", "Apply To Next") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='max_discount_value'>
-                    {{ $t("craftable-pro", "Max Discount Value") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='start_time'>
-                    {{ $t("craftable-pro", "Start Time") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='end_time'>
-                    {{ $t("craftable-pro", "End Time") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_active'>
-                    {{ $t("craftable-pro", "Is Active") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='comments'>
-                    {{ $t("craftable-pro", "Comments") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>
-                    {{ $t("craftable-pro", "Created At") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell>
-                    <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
-                </ListingHeaderCell>
+                <ListingHeaderCell sortBy='name'>{{ $t("craftable-pro", "Discount Type") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='value'>{{ $t("craftable-pro", "Value") }}</ListingHeaderCell>
+                <ListingHeaderCell>{{ $t("craftable-pro", "Store") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_active'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
             </template>
+
             <template #tableRow="{ item, action }: any">
+                <!-- Discount Type: initials + name + coupon code -->
                 <ListingDataCell>
-                    <span class="font-medium text-gray-900 dark:text-white">{{ item.name }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary-500/10 text-sm font-bold uppercase text-primary-600 dark:text-primary-400">
+                            {{ (item.name || '?').slice(0, 2) }}
+                        </span>
+                        <div class="flex flex-col">
+                            <span class="font-medium text-gray-900 dark:text-white">{{ item.name }}</span>
+                            <span class="text-xs text-gray-400">{{ item.coupon_code || '—' }}</span>
+                        </div>
+                    </div>
                 </ListingDataCell>
+
+                <!-- Value + percentage/fixed indicator -->
                 <ListingDataCell>
-                     {{ item.description }}
+                    <div class="flex flex-col leading-tight">
+                        <span class="font-medium text-gray-900 dark:text-white">{{ item.is_percentage ? item.value + '%' : item.value }}</span>
+                        <span class="inline-flex w-fit items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium"
+                            :class="item.is_percentage ? 'bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400' : 'bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-gray-400'">
+                            {{ item.is_percentage ? $t("craftable-pro", "Percentage") : $t("craftable-pro", "Fixed") }}
+                        </span>
+                    </div>
                 </ListingDataCell>
+
+                <!-- Store relation -->
                 <ListingDataCell>
-                    <ListingToggle
-                        name="is_percentage"
-                        v-model="item.is_percentage"
-                        :updateUrl="route('craftable-pro.discount-types.update', item.id)"
-                    />
+                    <span class="text-sm text-gray-700 dark:text-gray-200">{{ item.store?.name || '—' }}</span>
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.value }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.coupon_code }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.min_order_value }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.min_item_quantity }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <ListingToggle
-                        name="apply_to_all"
-                        v-model="item.apply_to_all"
-                        :updateUrl="route('craftable-pro.discount-types.update', item.id)"
-                    />
-                </ListingDataCell>
-                <ListingDataCell>
-                    <ListingToggle
-                        name="apply_to_next"
-                        v-model="item.apply_to_next"
-                        :updateUrl="route('craftable-pro.discount-types.update', item.id)"
-                    />
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.max_discount_value }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.start_time && dayjs(item.start_time).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.end_time && dayjs(item.end_time).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
+
+                <!-- Status toggle -->
                 <ListingDataCell>
                     <ListingToggle
                         name="is_active"
@@ -175,68 +115,34 @@
                         :updateUrl="route('craftable-pro.discount-types.update', item.id)"
                     />
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.comments }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
-                <ListingDataCell>
-                    <div class="flex items-center justify-end gap-3">
-                        <IconButton
-                            :as="Link"
-                            :href="route('craftable-pro.discount-types.edit', item)"
-                            variant="ghost"
-                            color="gray"
-                            :icon="PencilSquareIcon"
-                            v-can="'craftable-pro.discount-types.edit'"
-                        />
 
+                <!-- Actions: rounded icon buttons (Larkon) -->
+                <ListingDataCell>
+                    <div class="flex items-center justify-center gap-2">
+                        <Link :href="route('craftable-pro.discount-types.edit', item)" title="View"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10">
+                            <EyeIcon class="h-4 w-4" />
+                        </Link>
+                        <Link :href="route('craftable-pro.discount-types.edit', item)" title="Edit" v-can="'craftable-pro.discount-types.edit'"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600 transition-colors hover:bg-primary-100 dark:bg-primary-500/10 dark:text-primary-400 dark:hover:bg-primary-500/20">
+                            <PencilSquareIcon class="h-4 w-4" />
+                        </Link>
                         <Modal type="danger">
                             <template #trigger="{ setIsOpen }">
-                                <IconButton
-                                    @click="() => setIsOpen(true)"
-                                    color="gray"
-                                    variant="ghost"
-                                    :icon="TrashIcon"
-                                    v-can="'craftable-pro.discount-types.destroy'"
-                                />
+                                <button @click="() => setIsOpen(true)" title="Delete" v-can="'craftable-pro.discount-types.destroy'"
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-500 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20">
+                                    <TrashIcon class="h-4 w-4" />
+                                </button>
                             </template>
-
-                            <template #title>
-                                {{ $t("craftable-pro", "Delete Discount Type") }}
-                            </template>
-
+                            <template #title>{{ $t("craftable-pro", "Delete Discount Type") }}</template>
                             <template #content>
-                                {{
-                                    $t(
-                                        "craftable-pro",
-                                        "Are you sure you want to delete selected Discount Type? All data will be permanently removed from our servers forever. This action cannot be undone."
-                                    )
-                                }}
+                                {{ $t("craftable-pro", "Are you sure you want to delete selected Discount Type? All data will be permanently removed from our servers forever. This action cannot be undone.") }}
                             </template>
-
                             <template #buttons="{ setIsOpen }">
-                                <Button
-                                    @click.prevent="
-                                        () => {
-                                            action('delete', route('craftable-pro.discount-types.destroy', item), {
-                                                onFinish: () => setIsOpen(false),
-                                            });
-                                        }
-                                    "
-                                    color="danger"
-                                    v-can="'craftable-pro.discount-types.destroy'"
-                                >
+                                <Button @click.prevent="() => { action('delete', route('craftable-pro.discount-types.destroy', item), { onFinish: () => setIsOpen(false) }); }" color="danger" v-can="'craftable-pro.discount-types.destroy'">
                                     {{ $t("craftable-pro", "Delete") }}
                                 </Button>
-                                <Button
-                                    @click.prevent="() => setIsOpen()"
-                                    color="gray"
-                                    variant="outline"
-                                >
-                                    {{ $t("craftable-pro", "Cancel") }}
-                                </Button>
+                                <Button @click.prevent="() => setIsOpen()" color="gray" variant="outline">{{ $t("craftable-pro", "Cancel") }}</Button>
                             </template>
                         </Modal>
                     </div>
@@ -247,41 +153,32 @@
 </template>
 
 <script setup lang="ts">
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import {
     PlusIcon,
     TrashIcon,
     PencilSquareIcon,
-    ArrowDownTrayIcon,
+    EyeIcon,
 } from "@heroicons/vue/24/outline";
 import {
     PageHeader,
     PageContent,
     Button,
     Listing,
-    Avatar,
     ListingHeaderCell,
     ListingDataCell,
     Modal,
-    Multiselect,
-    IconButton,
-    FiltersDropdown,
-    Publish,
     ListingToggle,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { DiscountType } from "./types";
-import type { PageProps } from "craftable-pro/types/page";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat)
 
-
-
 interface Props {
     discountTypes: PaginatedCollection<DiscountType>;
 }
 defineProps<Props>();
-
 </script>

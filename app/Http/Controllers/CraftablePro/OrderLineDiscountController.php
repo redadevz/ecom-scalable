@@ -49,7 +49,11 @@ class OrderLineDiscountController extends Controller
         }
 
         $orderLineDiscounts = $orderLineDiscountsQuery
-            ->with([])
+            ->with([
+                'discount:id,description,discount_type_id',
+                'discount.discountType:id,name,is_percentage',
+                'orderLine:id,line_no,description',
+            ])
             ->select('id', 'discount_id', 'order_line_id', 'value', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

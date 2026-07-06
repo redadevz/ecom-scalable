@@ -49,7 +49,7 @@ class ItemCategoryController extends Controller
         }
 
         $itemCategories = $itemCategoriesQuery
-            ->with([])
+            ->with(['parent:id,name'])
             ->select('id', 'parent_category_id', 'name', 'description', 'is_active', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

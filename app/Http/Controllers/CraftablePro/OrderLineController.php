@@ -49,7 +49,7 @@ class OrderLineController extends Controller
         }
 
         $orderLines = $orderLinesQuery
-            ->with([])
+            ->with(['item:id,name', 'order:id,order_no'])
             ->select('id', 'store_id', 'order_id', 'item_id', 'line_no', 'description', 'customer_notes', 'quantity', 'current_item_cost', 'markup_percentage', 'price_before_tax', 'tax_value', 'price_after_tax', 'price_before_discount', 'discount_value', 'price_after_discount', 'price_adjustment', 'price_adjustment_reason', 'price', 'is_canceled', 'canceled_time', 'cancel_reason', 'return_required', 'return_quantity', 'return_time', 'customer_review', 'customer_like', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

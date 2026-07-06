@@ -18,7 +18,7 @@ export type DiscountType = {
     end_time: string;
     is_active: boolean;
     comments: string;
-    
+    store?: { id: string | number; name: string };
 };
 
 export type DiscountTypeForm = {

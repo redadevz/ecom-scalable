@@ -49,7 +49,7 @@ class ItemTaxTypeController extends Controller
         }
 
         $itemTaxTypes = $itemTaxTypesQuery
-            ->with([])
+            ->with(['item:id,name', 'taxType:id,name'])
             ->select('id', 'item_id', 'tax_type_id', 'start_time', 'end_time', 'description', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

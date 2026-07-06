@@ -8,7 +8,8 @@ export type Holiday = {
     starts_at: string;
     ends_at: string;
     comments: string;
-    
+    created_at?: string;
+    store?: { id: string | number; name: string };
 };
 
 export type HolidayForm = {

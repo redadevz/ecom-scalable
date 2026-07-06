@@ -49,7 +49,7 @@ class HolidayController extends Controller
         }
 
         $holidays = $holidaysQuery
-            ->with([])
+            ->with(['store:id,name'])
             ->select('id', 'store_id', 'name', 'reason', 'starts_at', 'ends_at', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

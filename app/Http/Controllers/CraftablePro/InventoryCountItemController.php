@@ -49,7 +49,7 @@ class InventoryCountItemController extends Controller
         }
 
         $inventoryCountItems = $inventoryCountItemsQuery
-            ->with([])
+            ->with(['item:id,name', 'inventoryCount:id'])
             ->select('id', 'inventory_count_id', 'item_id', 'quantity_counted', 'quantity_expected', 'quantity_change', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

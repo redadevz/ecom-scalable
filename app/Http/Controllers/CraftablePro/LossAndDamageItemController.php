@@ -49,7 +49,7 @@ class LossAndDamageItemController extends Controller
         }
 
         $lossAndDamageItems = $lossAndDamageItemsQuery
-            ->with([])
+            ->with(['item:id,name', 'lossAndDamage:id'])
             ->select('id', 'loss_and_damage_id', 'item_id', 'quantity', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

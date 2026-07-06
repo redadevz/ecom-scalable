@@ -49,7 +49,7 @@ class ShipmentController extends Controller
         }
 
         $shipments = $shipmentsQuery
-            ->with([])
+            ->with(['order:id,order_no', 'store:id,name', 'shipmentCity:id,name'])
             ->select('id', 'store_id', 'order_id', 'shipment_city_id', 'picked_up_by', 'shipment_address', 'gps_location', 'postal_code', 'shipment_notes', 'picked_up_time', 'shipped_time', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

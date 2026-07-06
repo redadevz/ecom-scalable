@@ -7,7 +7,7 @@ export type DocumentType = {
     description: string;
     is_active: boolean;
     comments: string;
-    
+    document_category?: { id: string | number; name: string } | null;
 };
 
 export type DocumentTypeForm = {

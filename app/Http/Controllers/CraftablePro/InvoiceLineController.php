@@ -49,7 +49,7 @@ class InvoiceLineController extends Controller
         }
 
         $invoiceLines = $invoiceLinesQuery
-            ->with([])
+            ->with(['invoice:id,invoice_no', 'orderLine:id,line_no'])
             ->select('id', 'invoice_id', 'order_line_id', 'line_no', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

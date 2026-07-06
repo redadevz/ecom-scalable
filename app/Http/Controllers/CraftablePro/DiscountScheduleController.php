@@ -49,7 +49,7 @@ class DiscountScheduleController extends Controller
         }
 
         $discountSchedules = $discountSchedulesQuery
-            ->with([])
+            ->with(['discountType:id,name'])
             ->select('id', 'discount_type_id', 'day_of_week', 'start_time', 'end_time', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

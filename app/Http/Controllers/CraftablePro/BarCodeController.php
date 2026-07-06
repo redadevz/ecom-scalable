@@ -49,7 +49,7 @@ class BarCodeController extends Controller
         }
 
         $barCodes = $barCodesQuery
-            ->with([])
+            ->with(['item:id,name'])
             ->select('id', 'item_id', 'bar_code', 'is_active', 'description', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

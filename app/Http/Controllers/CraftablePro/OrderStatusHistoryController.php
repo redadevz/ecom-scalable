@@ -49,7 +49,7 @@ class OrderStatusHistoryController extends Controller
         }
 
         $orderStatusHistories = $orderStatusHistoriesQuery
-            ->with([])
+            ->with(['order:id,order_no', 'orderStatus:id,name'])
             ->select('id', 'order_id', 'order_status_id', 'start_time', 'end_time', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

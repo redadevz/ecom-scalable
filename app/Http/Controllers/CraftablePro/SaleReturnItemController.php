@@ -49,7 +49,7 @@ class SaleReturnItemController extends Controller
         }
 
         $saleReturnItems = $saleReturnItemsQuery
-            ->with([])
+            ->with(['item:id,name', 'saleReturn:id'])
             ->select('id', 'sale_return_id', 'order_line_id', 'item_id', 'line_no', 'quantity', 'return_quantity', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

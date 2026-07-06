@@ -13,7 +13,10 @@ export type Shipment = {
     picked_up_time: string;
     shipped_time: string;
     comments: string;
-    
+    created_at?: string;
+    order?: { id: string | number; order_no: string } | null;
+    store?: { id: string | number; name: string } | null;
+    shipment_city?: { id: string | number; name: string } | null;
 };
 
 export type ShipmentForm = {

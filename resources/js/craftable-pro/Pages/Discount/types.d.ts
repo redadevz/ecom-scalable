@@ -7,7 +7,10 @@ export type Discount = {
     item_id: string | number;
     description: string;
     comments: string;
-    
+    created_at?: string;
+    discount_type?: { id: string | number; name: string } | null;
+    item_category?: { id: string | number; name: string } | null;
+    item?: { id: string | number; name: string } | null;
 };
 
 export type DiscountForm = {

@@ -49,7 +49,7 @@ class DocumentTypeController extends Controller
         }
 
         $documentTypes = $documentTypesQuery
-            ->with([])
+            ->with(['documentCategory:id,name'])
             ->select('id', 'document_category_id', 'name', 'description', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

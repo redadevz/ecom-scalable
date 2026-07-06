@@ -7,7 +7,9 @@ export type LossAndDamageItem = {
     quantity: integer;
     description: string;
     comments: string;
-    
+    created_at?: string;
+    item?: { id: string | number; name: string } | null;
+    loss_and_damage?: { id: string | number } | null;
 };
 
 export type LossAndDamageItemForm = {

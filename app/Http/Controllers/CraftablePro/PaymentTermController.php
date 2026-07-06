@@ -49,7 +49,12 @@ class PaymentTermController extends Controller
         }
 
         $paymentTerms = $paymentTermsQuery
-            ->with([])
+            ->with([
+                'saleChannel:id,name',
+                'deliveryType:id,name',
+                'paymentMethod:id,name',
+                'paymentTime:id,name',
+            ])
             ->select('id', 'sale_channel_id', 'delivery_type_id', 'payment_method_id', 'payment_time_id', 'is_allowed', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

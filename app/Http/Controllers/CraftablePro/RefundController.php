@@ -49,7 +49,7 @@ class RefundController extends Controller
         }
 
         $refunds = $refundsQuery
-            ->with([])
+            ->with(['saleReturn:id,description', 'paymentMethod:id,name'])
             ->select('id', 'sale_return_id', 'payment_method_id', 'refund_no', 'amount', 'cash_paid', 'cash_change', 'refund_time', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

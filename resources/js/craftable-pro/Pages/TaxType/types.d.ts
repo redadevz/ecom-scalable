@@ -12,7 +12,7 @@ export type TaxType = {
     end_time: string;
     is_active: boolean;
     comments: string;
-    
+    store?: { id: string | number; name: string } | null;
 };
 
 export type TaxTypeForm = {

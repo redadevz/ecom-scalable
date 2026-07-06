@@ -9,7 +9,9 @@ export type InventoryCountItem = {
     quantity_change: integer;
     description: string;
     comments: string;
-    
+    created_at?: string;
+    item?: { id: string | number; name: string } | null;
+    inventory_count?: { id: string | number } | null;
 };
 
 export type InventoryCountItemForm = {

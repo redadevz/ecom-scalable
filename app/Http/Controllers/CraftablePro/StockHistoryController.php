@@ -49,7 +49,7 @@ class StockHistoryController extends Controller
         }
 
         $stockHistories = $stockHistoriesQuery
-            ->with([])
+            ->with(['item:id,name', 'store:id,name'])
             ->select('id', 'store_id', 'item_id', 'document_id', 'initial_stock_quantity', 'initial_item_cost', 'is_stock_entry', 'quantity', 'current_stock_quantity', 'current_item_cost', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

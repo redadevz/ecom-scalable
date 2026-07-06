@@ -49,7 +49,7 @@ class PurchaseItemController extends Controller
         }
 
         $purchaseItems = $purchaseItemsQuery
-            ->with([])
+            ->with(['item:id,name'])
             ->select('id', 'purchase_id', 'item_id', 'supplier_price_before_tax', 'supplier_tax_value', 'supplier_price_after_tax', 'supplier_discount_value', 'quantity', 'return_amount', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

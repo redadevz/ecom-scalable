@@ -6,7 +6,8 @@ export type City = {
     region_id: string | number;
     timezone_id: string | number;
     zipcode: integer;
-    
+    region?: { id: string | number; name: string } | null;
+    created_at?: string;
 };
 
 export type CityForm = {

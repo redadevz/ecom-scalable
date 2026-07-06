@@ -49,7 +49,7 @@ class DiscountTypeController extends Controller
         }
 
         $discountTypes = $discountTypesQuery
-            ->with([])
+            ->with(['store:id,name'])
             ->select('id', 'store_id', 'loyalty_card_type_id', 'name', 'description', 'is_percentage', 'value', 'coupon_code', 'min_order_value', 'min_item_quantity', 'apply_to_all', 'apply_to_next', 'max_discount_value', 'start_time', 'end_time', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

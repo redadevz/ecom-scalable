@@ -49,7 +49,7 @@ class SupplierTaxTypeController extends Controller
         }
 
         $supplierTaxTypes = $supplierTaxTypesQuery
-            ->with([])
+            ->with(['supplier:id,code,company_name'])
             ->select('id', 'supplier_id', 'name', 'code', 'description', 'is_percentage', 'value', 'start_time', 'end_time', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

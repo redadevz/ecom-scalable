@@ -8,7 +8,6 @@
         >
             {{ $t("craftable-pro", "New Order Review") }}
         </Button>
-        
     </PageHeader>
 
     <PageContent>
@@ -69,64 +68,56 @@
                     </template>
                 </Modal>
             </template>
+
             <template #tableHead>
-                <ListingHeaderCell sortBy='replied_by'>
-                    {{ $t("craftable-pro", "Replied By") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='rating'>
-                    {{ $t("craftable-pro", "Rating") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='review'>
-                    {{ $t("craftable-pro", "Review") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='review_time'>
-                    {{ $t("craftable-pro", "Review Time") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='reply'>
-                    {{ $t("craftable-pro", "Reply") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='reply_time'>
-                    {{ $t("craftable-pro", "Reply Time") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_compensated'>
-                    {{ $t("craftable-pro", "Is Compensated") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='compensation_value'>
-                    {{ $t("craftable-pro", "Compensation Value") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='comments'>
-                    {{ $t("craftable-pro", "Comments") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>
-                    {{ $t("craftable-pro", "Created At") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell>
-                    <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
-                </ListingHeaderCell>
+                <ListingHeaderCell sortBy='order_id'>{{ $t("craftable-pro", "Order / Customer") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='rating'>{{ $t("craftable-pro", "Rating") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='review'>{{ $t("craftable-pro", "Review") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='review_time'>{{ $t("craftable-pro", "Reviewed") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_compensated'>{{ $t("craftable-pro", "Compensated") }}</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
             </template>
+
             <template #tableRow="{ item, action }: any">
+                <!-- Order / Customer: initials avatar + order_no + customer code -->
                 <ListingDataCell>
-                    <span class="font-medium text-gray-900 dark:text-white">{{ item.replied_by }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary-500/10 text-sm font-bold uppercase text-primary-600 dark:text-primary-400">
+                            {{ initials(item) }}
+                        </span>
+                        <div class="flex flex-col leading-tight">
+                            <span class="font-medium text-gray-900 dark:text-white">{{ item.order?.order_no ? '#' + item.order.order_no : ('#' + item.order_id) }}</span>
+                            <span class="text-xs text-gray-400">{{ item.customer?.code || ('Customer ' + item.customer_id) }}</span>
+                        </div>
+                    </div>
                 </ListingDataCell>
+
+                <!-- Rating: stars -->
                 <ListingDataCell>
-                    <ListingToggle
-                        name="rating"
-                        v-model="item.rating"
-                        :updateUrl="route('craftable-pro.order-reviews.update', item.id)"
-                    />
+                    <div class="flex items-center gap-1.5">
+                        <div class="flex items-center gap-0.5">
+                            <StarIcon
+                                v-for="n in 5"
+                                :key="n"
+                                class="h-4 w-4"
+                                :class="n <= Number(item.rating) ? 'text-amber-400' : 'text-gray-200 dark:text-white/10'"
+                            />
+                        </div>
+                        <span class="text-xs font-medium text-gray-500">{{ Number(item.rating) }}/5</span>
+                    </div>
                 </ListingDataCell>
+
+                <!-- Review text truncated -->
                 <ListingDataCell>
-                     {{ item.review }}
+                    <span class="block max-w-[280px] truncate text-sm text-gray-600 dark:text-gray-300" :title="item.review">{{ item.review || '—' }}</span>
                 </ListingDataCell>
+
+                <!-- Reviewed date -->
                 <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.review_time && dayjs(item.review_time).format('DD MMM YYYY') }}</span>
+                    <span class="text-sm text-gray-500">{{ item.review_time ? dayjs(item.review_time).format('DD MMM YYYY') : '—' }}</span>
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.reply }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.reply_time && dayjs(item.reply_time).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
+
+                <!-- Compensated toggle -->
                 <ListingDataCell>
                     <ListingToggle
                         name="is_compensated"
@@ -134,71 +125,34 @@
                         :updateUrl="route('craftable-pro.order-reviews.update', item.id)"
                     />
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.compensation_value }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.comments }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
-                <ListingDataCell>
-                    <div class="flex items-center justify-end gap-3">
-                        <IconButton
-                            :as="Link"
-                            :href="route('craftable-pro.order-reviews.edit', item)"
-                            variant="ghost"
-                            color="gray"
-                            :icon="PencilSquareIcon"
-                            v-can="'craftable-pro.order-reviews.edit'"
-                        />
 
+                <!-- Actions: rounded icon buttons (Larkon) -->
+                <ListingDataCell>
+                    <div class="flex items-center justify-center gap-2">
+                        <Link :href="route('craftable-pro.order-reviews.edit', item)" title="View"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10">
+                            <EyeIcon class="h-4 w-4" />
+                        </Link>
+                        <Link :href="route('craftable-pro.order-reviews.edit', item)" title="Edit" v-can="'craftable-pro.order-reviews.edit'"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600 transition-colors hover:bg-primary-100 dark:bg-primary-500/10 dark:text-primary-400 dark:hover:bg-primary-500/20">
+                            <PencilSquareIcon class="h-4 w-4" />
+                        </Link>
                         <Modal type="danger">
                             <template #trigger="{ setIsOpen }">
-                                <IconButton
-                                    @click="() => setIsOpen(true)"
-                                    color="gray"
-                                    variant="ghost"
-                                    :icon="TrashIcon"
-                                    v-can="'craftable-pro.order-reviews.destroy'"
-                                />
+                                <button @click="() => setIsOpen(true)" title="Delete" v-can="'craftable-pro.order-reviews.destroy'"
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-500 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20">
+                                    <TrashIcon class="h-4 w-4" />
+                                </button>
                             </template>
-
-                            <template #title>
-                                {{ $t("craftable-pro", "Delete Order Review") }}
-                            </template>
-
+                            <template #title>{{ $t("craftable-pro", "Delete Order Review") }}</template>
                             <template #content>
-                                {{
-                                    $t(
-                                        "craftable-pro",
-                                        "Are you sure you want to delete selected Order Review? All data will be permanently removed from our servers forever. This action cannot be undone."
-                                    )
-                                }}
+                                {{ $t("craftable-pro", "Are you sure you want to delete selected Order Review? All data will be permanently removed from our servers forever. This action cannot be undone.") }}
                             </template>
-
                             <template #buttons="{ setIsOpen }">
-                                <Button
-                                    @click.prevent="
-                                        () => {
-                                            action('delete', route('craftable-pro.order-reviews.destroy', item), {
-                                                onFinish: () => setIsOpen(false),
-                                            });
-                                        }
-                                    "
-                                    color="danger"
-                                    v-can="'craftable-pro.order-reviews.destroy'"
-                                >
+                                <Button @click.prevent="() => { action('delete', route('craftable-pro.order-reviews.destroy', item), { onFinish: () => setIsOpen(false) }); }" color="danger" v-can="'craftable-pro.order-reviews.destroy'">
                                     {{ $t("craftable-pro", "Delete") }}
                                 </Button>
-                                <Button
-                                    @click.prevent="() => setIsOpen()"
-                                    color="gray"
-                                    variant="outline"
-                                >
-                                    {{ $t("craftable-pro", "Cancel") }}
-                                </Button>
+                                <Button @click.prevent="() => setIsOpen()" color="gray" variant="outline">{{ $t("craftable-pro", "Cancel") }}</Button>
                             </template>
                         </Modal>
                     </div>
@@ -209,41 +163,38 @@
 </template>
 
 <script setup lang="ts">
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import {
     PlusIcon,
     TrashIcon,
     PencilSquareIcon,
-    ArrowDownTrayIcon,
+    EyeIcon,
 } from "@heroicons/vue/24/outline";
+import { StarIcon } from "@heroicons/vue/24/solid";
 import {
     PageHeader,
     PageContent,
     Button,
     Listing,
-    Avatar,
     ListingHeaderCell,
     ListingDataCell,
     Modal,
-    Multiselect,
-    IconButton,
-    FiltersDropdown,
-    Publish,
     ListingToggle,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { OrderReview } from "./types";
-import type { PageProps } from "craftable-pro/types/page";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
 dayjs.extend(customParseFormat)
-
-
 
 interface Props {
     orderReviews: PaginatedCollection<OrderReview>;
 }
 defineProps<Props>();
 
+const initials = (item: any) => {
+    const base = (item.customer?.code || item.order?.order_no || "OR").toString().trim();
+    return base.slice(0, 2).toUpperCase();
+};
 </script>

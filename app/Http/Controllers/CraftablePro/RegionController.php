@@ -49,7 +49,7 @@ class RegionController extends Controller
         }
 
         $regions = $regionsQuery
-            ->with([])
+            ->with(['country:id,name'])
             ->select('id', 'name', 'country_id', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

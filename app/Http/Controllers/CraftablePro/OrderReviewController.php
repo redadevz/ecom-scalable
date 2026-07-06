@@ -49,7 +49,7 @@ class OrderReviewController extends Controller
         }
 
         $orderReviews = $orderReviewsQuery
-            ->with([])
+            ->with(['order:id,order_no', 'customer:id,code'])
             ->select('id', 'order_id', 'customer_id', 'replied_by', 'rating', 'review', 'review_time', 'reply', 'reply_time', 'is_compensated', 'compensation_value', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

@@ -49,7 +49,7 @@ class DocumentController extends Controller
         }
 
         $documents = $documentsQuery
-            ->with([])
+            ->with(['documentType:id,name'])
             ->select('id', 'store_id', 'document_type_id', 'sale_order_id', 'purchase_id', 'stock_return_id', 'inventory_count_id', 'loss_and_damage_id', 'created_by', 'number', 'external_number', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

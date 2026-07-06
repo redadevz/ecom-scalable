@@ -49,7 +49,11 @@ class DiscountController extends Controller
         }
 
         $discounts = $discountsQuery
-            ->with([])
+            ->with([
+                'discountType:id,name',
+                'itemCategory:id,name',
+                'item:id,name',
+            ])
             ->select('id', 'discount_type_id', 'item_category_id', 'item_id', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

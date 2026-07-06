@@ -49,7 +49,7 @@ class StockReturnItemController extends Controller
         }
 
         $stockReturnItems = $stockReturnItemsQuery
-            ->with([])
+            ->with(['item:id,name', 'stockReturn:id,description'])
             ->select('id', 'stock_return_id', 'item_id', 'quantity', 'supplier_price_before_tax', 'supplier_tax_value', 'supplier_price_after_tax', 'supplier_discount_value', 'return_amount', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 
