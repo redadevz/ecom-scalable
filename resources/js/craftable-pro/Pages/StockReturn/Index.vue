@@ -35,38 +35,53 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>{{ $t("craftable-pro", "Reference") }}</ListingHeaderCell>
-                <ListingHeaderCell>{{ $t("craftable-pro", "Supplier") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='id'>{{ $t("craftable-pro", "Return") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='created_at'>{{ $t("craftable-pro", "Date") }}</ListingHeaderCell>
                 <ListingHeaderCell sortBy='description'>{{ $t("craftable-pro", "Description") }}</ListingHeaderCell>
                 <ListingHeaderCell sortBy='exit_stock_time'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
                 <ListingHeaderCell sortBy='is_paid'>{{ $t("craftable-pro", "Paid") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>{{ $t("craftable-pro", "Created") }}</ListingHeaderCell>
                 <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">
+                <!-- Return: initials avatar + reference + supplier -->
                 <ListingDataCell>
-                    <span class="font-medium text-gray-900 dark:text-white">#{{ item.id }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary-500/10 text-sm font-bold uppercase text-primary-600 dark:text-primary-400">
+                            {{ ('SR' + item.id).slice(0, 2) }}
+                        </span>
+                        <div class="flex flex-col leading-tight">
+                            <span class="font-medium text-gray-900 dark:text-white">#{{ item.id }}</span>
+                            <span class="text-xs text-gray-400">{{ item.purchase?.supplier?.company_name ?? item.purchase?.supplier?.code ?? '—' }}</span>
+                        </div>
+                    </div>
                 </ListingDataCell>
+
+                <!-- Date -->
                 <ListingDataCell>
-                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ item.purchase?.supplier?.company_name ?? item.purchase?.supplier?.code ?? '—' }}</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ item.created_at ? dayjs(item.created_at).format('DD MMM YYYY') : '—' }}</span>
                 </ListingDataCell>
+
+                <!-- Description -->
                 <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.description || '—' }}</span>
+                    <span class="block max-w-[240px] truncate text-sm text-gray-500" :title="item.description">{{ item.description || '—' }}</span>
                 </ListingDataCell>
+
+                <!-- Status: Processed vs Pending -->
                 <ListingDataCell>
                     <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium" :class="item.exit_stock_time ? doneClass : pendingClass">
                         {{ item.exit_stock_time ? $t("craftable-pro", "Processed") : $t("craftable-pro", "Pending") }}
                     </span>
                 </ListingDataCell>
+
+                <!-- Paid -->
                 <ListingDataCell>
                     <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium" :class="item.is_paid ? doneClass : pendingClass">
                         {{ item.is_paid ? $t("craftable-pro", "Paid") : $t("craftable-pro", "Unpaid") }}
                     </span>
                 </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
+
+                <!-- Actions -->
                 <ListingDataCell>
                     <div class="flex items-center justify-center gap-2">
                         <Link :href="route('craftable-pro.stock-returns.edit', item)" title="View"
@@ -105,11 +120,14 @@ import { Link } from "@inertiajs/vue3";
 import { PlusIcon, TrashIcon, PencilSquareIcon, EyeIcon } from "@heroicons/vue/24/outline";
 import {
     PageHeader, PageContent, Button, Listing,
-    ListingHeaderCell, ListingDataCell, Modal, IconButton,
+    ListingHeaderCell, ListingDataCell, Modal,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { StockReturn } from "./types";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 const doneClass = "bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400";
 const pendingClass = "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400";

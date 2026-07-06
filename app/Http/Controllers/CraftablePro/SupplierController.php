@@ -49,7 +49,7 @@ class SupplierController extends Controller
         }
 
         $suppliers = $suppliersQuery
-            ->with([])
+            ->with(['city:id,name'])
             ->select('id', 'store_id', 'city_id', 'created_by', 'code', 'phone', 'first_name', 'last_name', 'is_company', 'company_name', 'tax_number', 'is_tax_exempted', 'billing_address', 'postal_code', 'email', 'is_active', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

@@ -36,10 +36,10 @@
 
             <template #tableHead>
                 <ListingHeaderCell sortBy='first_name'>{{ $t("craftable-pro", "Customer") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='phone'>{{ $t("craftable-pro", "Phone") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='email'>{{ $t("craftable-pro", "Email") }}</ListingHeaderCell>
+                <ListingHeaderCell>{{ $t("craftable-pro", "Contact") }}</ListingHeaderCell>
                 <ListingHeaderCell sortBy='credit'>{{ $t("craftable-pro", "Credit") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_active'>{{ $t("craftable-pro", "Active") }}</ListingHeaderCell>
+                <ListingHeaderCell>{{ $t("craftable-pro", "City") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_active'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
                 <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
             </template>
 
@@ -59,15 +59,18 @@
                     </div>
                 </ListingDataCell>
                 <ListingDataCell>
-                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ item.phone || '—' }}</span>
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.email || '—' }}</span>
+                    <div class="flex flex-col leading-tight">
+                        <span class="text-sm text-gray-700 dark:text-gray-200">{{ item.phone || '—' }}</span>
+                        <span class="text-xs text-gray-400">{{ item.email }}</span>
+                    </div>
                 </ListingDataCell>
                 <ListingDataCell>
                     <span class="tabular-nums font-medium" :class="Number(item.credit) > 0 ? 'text-success-600 dark:text-success-400' : 'text-gray-500'">
                         {{ money(item.credit) }}
                     </span>
+                </ListingDataCell>
+                <ListingDataCell>
+                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ item.city?.name || '—' }}</span>
                 </ListingDataCell>
                 <ListingDataCell>
                     <ListingToggle name="is_active" v-model="item.is_active" :updateUrl="route('craftable-pro.customers.update', item.id)" />
@@ -110,10 +113,14 @@ import { Link } from "@inertiajs/vue3";
 import { PlusIcon, TrashIcon, PencilSquareIcon, EyeIcon } from "@heroicons/vue/24/outline";
 import {
     PageHeader, PageContent, Button, Listing,
-    ListingHeaderCell, ListingDataCell, Modal, IconButton, ListingToggle,
+    ListingHeaderCell, ListingDataCell, Modal, ListingToggle,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { Customer } from "./types";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 const money = (v: any) =>
     Number(v ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " DH";

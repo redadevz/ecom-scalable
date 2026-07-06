@@ -50,7 +50,7 @@ class LossAndDamageController extends Controller
         }
 
         $lossAndDamages = $lossAndDamagesQuery
-            ->with([])
+            ->with(['store:id,name'])
             ->select('id', 'store_id', 'exit_stock_time', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

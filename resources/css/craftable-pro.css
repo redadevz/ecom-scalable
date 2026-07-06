@@ -106,3 +106,61 @@
   [role="menu"] { border-radius: 0.8rem !important; }
   .dark [role="menu"] { background-color: #212330; border: 1px solid #2c2f3d; }
 }
+
+/* ===========================================================================
+   GLOBAL REFINEMENT PASS  ·  lifts every generated table & form
+   =========================================================================== */
+@layer components {
+  /* Page title — larger, tighter, premium */
+  main h2, .page-header h2 { letter-spacing: -0.025em; font-weight: 700; }
+
+  /* Cards: crisp white in light, lifted navy in dark; roomier radius */
+  .rounded-md.shadow { background-color: #ffffff; border-radius: 1rem !important; }
+  .rounded-md.shadow > header,
+  .rounded-md.shadow > div > header { letter-spacing: -0.01em; }
+
+  /* Card section headers get a touch more presence */
+  .rounded-md.shadow > header { padding-top: 1.05rem; padding-bottom: 1.05rem; }
+
+  /* Tables: quiet uppercase header, hairline dividers, roomy rows */
+  table { border-collapse: separate; border-spacing: 0; }
+  table thead th {
+    text-transform: uppercase; font-size: 0.68rem; letter-spacing: 0.04em;
+    color: #9aa2b1; background: transparent;
+  }
+  .dark table thead th { color: #7c8494; }
+  table tbody tr { border-top: 1px solid #eef0f3; }
+  .dark table tbody tr { border-top: 1px solid #262935 !important; }
+  table tbody tr:first-child { border-top: 0; }
+  table tbody td { font-size: 0.86rem; color: #374151; vertical-align: middle; }
+  .dark table tbody td { color: #cbd2dc; }
+
+  /* Pagination + page-size controls: pill buttons, orange active */
+  nav[role="navigation"] a, nav[role="navigation"] button,
+  .pagination a, .pagination button { border-radius: 0.6rem !important; }
+  nav[role="navigation"] a[aria-current="page"],
+  .pagination [aria-current="page"] {
+    background-color: #f97316 !important; color: #fff !important; border-color: #f97316 !important;
+  }
+
+  /* Multiselect (relations) — match dark fields */
+  .multiselect { border-radius: 0.55rem !important; }
+  .dark .multiselect { background-color: #1a1c27 !important; border-color: #2c2f3d !important; }
+  .dark .multiselect-dropdown { background-color: #1e2029 !important; border-color: #2c2f3d !important; }
+  .dark .multiselect-option.is-pointed { background-color: rgb(249 115 22 / 0.12) !important; }
+  .multiselect-option.is-selected { background-color: #f97316 !important; }
+  .multiselect-tag { background-color: #f97316 !important; }
+
+  /* Primary buttons — consistent radius + weight everywhere */
+  .bg-primary-600, button.bg-primary-600 { border-radius: 0.6rem !important; font-weight: 600; }
+
+  /* Modals — lifted, rounded */
+  [role="dialog"] > div, .modal-panel { border-radius: 1rem !important; }
+  .dark [role="dialog"] .bg-white { background-color: #212330 !important; }
+
+  /* Status pills / badges — soft, rounded, medium weight */
+  span[class*="rounded-full"][class*="bg-"] { font-weight: 600; font-size: 0.72rem; }
+
+  /* Empty-state text a touch softer */
+  td[colspan] { color: #9aa2b1; }
+}

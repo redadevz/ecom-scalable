@@ -52,6 +52,7 @@ class PurchaseController extends Controller
 
         $purchases = $purchasesQuery
             ->with(['supplier:id,code,company_name'])
+            ->withCount('purchaseItems')
             ->select('id', 'store_id', 'supplier_id', 'entry_stock_time', 'description', 'is_paid', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

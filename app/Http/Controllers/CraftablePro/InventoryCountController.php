@@ -51,7 +51,8 @@ class InventoryCountController extends Controller
         }
 
         $inventoryCounts = $inventoryCountsQuery
-            ->with([])
+            ->with(['store:id,name'])
+            ->withCount('inventoryCountItems')
             ->select('id', 'store_id', 'physical_count_time', 'change_stock_time', 'description', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

@@ -35,43 +35,45 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='order_no'>{{ $t("craftable-pro", "Order No") }}</ListingHeaderCell>
-                <ListingHeaderCell>{{ $t("craftable-pro", "Customer") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='latest_status'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='price'>{{ $t("craftable-pro", "Total") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_paid'>{{ $t("craftable-pro", "Paid") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='order_no'>{{ $t("craftable-pro", "Order") }}</ListingHeaderCell>
                 <ListingHeaderCell sortBy='created_at'>{{ $t("craftable-pro", "Date") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='price'>{{ $t("craftable-pro", "Total") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='latest_status'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
                 <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">
+                <!-- Order: initials avatar + order no + customer -->
                 <ListingDataCell>
                     <div class="flex items-center gap-3">
-                        <span class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-lg bg-gray-100 text-gray-500 dark:bg-white/5 dark:text-gray-300">
-                            <ShoppingCartIcon class="h-5 w-5" />
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary-500/10 text-sm font-bold uppercase text-primary-600 dark:text-primary-400">
+                            {{ (item.order_no || '?').slice(0, 2) }}
                         </span>
-                        <span class="font-medium text-gray-900 dark:text-white">{{ item.order_no }}</span>
+                        <div class="flex flex-col">
+                            <span class="font-medium text-gray-900 dark:text-white">{{ item.order_no }}</span>
+                            <span class="text-xs text-gray-400">{{ customerName(item.customer) }}</span>
+                        </div>
                     </div>
                 </ListingDataCell>
+
+                <!-- Date -->
                 <ListingDataCell>
-                    <span class="text-sm text-gray-600 dark:text-gray-300">{{ customerName(item.customer) }}</span>
+                    <span class="text-sm text-gray-500">{{ item.created_at ? dayjs(item.created_at).format('DD MMM YYYY') : '—' }}</span>
                 </ListingDataCell>
+
+                <!-- Total -->
+                <ListingDataCell>
+                    <span class="font-medium tabular-nums text-gray-900 dark:text-white">{{ money(item.price) }}</span>
+                </ListingDataCell>
+
+                <!-- Status pill -->
                 <ListingDataCell>
                     <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium" :class="statusClass(item.latest_status)">
                         {{ item.latest_status || '—' }}
                     </span>
                 </ListingDataCell>
-                <ListingDataCell>
-                    <span class="font-medium tabular-nums text-gray-900 dark:text-white">{{ money(item.price) }}</span>
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium" :class="item.is_paid ? paidClass : unpaidClass">
-                        {{ item.is_paid ? $t("craftable-pro", "Paid") : $t("craftable-pro", "Unpaid") }}
-                    </span>
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
+
+                <!-- Actions: rounded icon buttons (Larkon) -->
                 <ListingDataCell>
                     <div class="flex items-center justify-center gap-2">
                         <Link :href="route('craftable-pro.order-headers.edit', item)" title="View"
@@ -107,14 +109,17 @@
 
 <script setup lang="ts">
 import { Link } from "@inertiajs/vue3";
-import { PlusIcon, TrashIcon, PencilSquareIcon, EyeIcon, ShoppingCartIcon } from "@heroicons/vue/24/outline";
+import { PlusIcon, TrashIcon, PencilSquareIcon, EyeIcon } from "@heroicons/vue/24/outline";
 import {
     PageHeader, PageContent, Button, Listing,
-    ListingHeaderCell, ListingDataCell, Modal, IconButton,
+    ListingHeaderCell, ListingDataCell, Modal,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { OrderHeader } from "./types";
 import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat";
+
+dayjs.extend(customParseFormat);
 
 const money = (v: any) =>
     Number(v ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " DH";
@@ -122,21 +127,15 @@ const money = (v: any) =>
 const customerName = (c: any) =>
     !c ? "—" : (c.is_company ? c.company_name : `${c.first_name ?? ""} ${c.last_name ?? ""}`).trim() || "—";
 
-const paidClass = "bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400";
-const unpaidClass = "bg-gray-100 text-gray-500 dark:bg-gray-800 dark:text-gray-400";
-
 const statusClass = (s: string) => {
-    const map: Record<string, string> = {
-        Draft: "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300",
-        Submitted: "bg-info-50 text-info-700 dark:bg-info-500/10 dark:text-info-400",
-        Approved: "bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400",
-        Scheduled: "bg-secondary-50 text-secondary-700 dark:bg-secondary-500/10 dark:text-secondary-400",
-        Ready: "bg-info-50 text-info-700 dark:bg-info-500/10 dark:text-info-400",
-        Delivered: "bg-primary-50 text-primary-700 dark:bg-primary-500/10 dark:text-primary-400",
-        Completed: "bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400",
-        Cancelled: "bg-danger-50 text-danger-700 dark:bg-danger-500/10 dark:text-danger-400",
-    };
-    return map[s] ?? "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300";
+    const status = (s ?? "").toLowerCase();
+    if (status.includes("cancel")) {
+        return "bg-danger-50 text-danger-700 dark:bg-danger-500/10 dark:text-danger-400";
+    }
+    if (status.includes("approv") || status.includes("invoic")) {
+        return "bg-success-50 text-success-700 dark:bg-success-500/10 dark:text-success-400";
+    }
+    return "bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-300";
 };
 
 interface Props {

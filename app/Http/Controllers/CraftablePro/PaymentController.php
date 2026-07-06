@@ -49,7 +49,7 @@ class PaymentController extends Controller
         }
 
         $payments = $paymentsQuery
-            ->with([])
+            ->with(['invoice:id,invoice_no', 'paymentMethod:id,name'])
             ->select('id', 'invoice_id', 'payment_method_id', 'payment_no', 'amount', 'cash_paid', 'cash_change', 'payment_time', 'comments', 'created_at')
             ->paginate($request->get('per_page'))->withQueryString();
 

@@ -8,7 +8,6 @@
         >
             {{ $t("craftable-pro", "New Payment") }}
         </Button>
-        
     </PageHeader>
 
     <PageContent>
@@ -69,110 +68,71 @@
                     </template>
                 </Modal>
             </template>
+
             <template #tableHead>
-                <ListingHeaderCell sortBy='payment_no'>
-                    {{ $t("craftable-pro", "Payment No") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='amount'>
-                    {{ $t("craftable-pro", "Amount") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='cash_paid'>
-                    {{ $t("craftable-pro", "Cash Paid") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='cash_change'>
-                    {{ $t("craftable-pro", "Cash Change") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='payment_time'>
-                    {{ $t("craftable-pro", "Payment Time") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='comments'>
-                    {{ $t("craftable-pro", "Comments") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>
-                    {{ $t("craftable-pro", "Created At") }}
-                </ListingHeaderCell>
-                <ListingHeaderCell>
-                    <span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span>
-                </ListingHeaderCell>
+                <ListingHeaderCell sortBy='payment_no'>{{ $t("craftable-pro", "Payment") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='created_at'>{{ $t("craftable-pro", "Date") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='amount'>{{ $t("craftable-pro", "Amount") }}</ListingHeaderCell>
+                <ListingHeaderCell sortBy='payment_method_id'>{{ $t("craftable-pro", "Method") }}</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
             </template>
+
             <template #tableRow="{ item, action }: any">
+                <!-- Payment: initials + payment no + invoice -->
                 <ListingDataCell>
-                    <span class="font-medium text-gray-900 dark:text-white">{{ item.payment_no }}</span>
+                    <div class="flex items-center gap-3">
+                        <span class="flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary-500/10 text-sm font-bold uppercase text-primary-600 dark:text-primary-400">
+                            {{ initials(item) }}
+                        </span>
+                        <div class="flex flex-col leading-tight">
+                            <span class="font-medium text-gray-900 dark:text-white">{{ item.payment_no || ('#' + item.id) }}</span>
+                            <span class="text-xs text-gray-400">{{ item.invoice ? 'Invoice ' + item.invoice.invoice_no : '' }}</span>
+                        </div>
+                    </div>
                 </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.amount }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.cash_paid }}
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.cash_change }}
-                </ListingDataCell>
-                <ListingDataCell>
-                    <span class="text-sm text-gray-500">{{ item.payment_time && dayjs(item.payment_time).format('DD MMM YYYY') }}</span>
-                </ListingDataCell>
-                <ListingDataCell>
-                     {{ item.comments }}
-                </ListingDataCell>
+
+                <!-- Date -->
                 <ListingDataCell>
                     <span class="text-sm text-gray-500">{{ item.created_at && dayjs(item.created_at).format('DD MMM YYYY') }}</span>
                 </ListingDataCell>
-                <ListingDataCell>
-                    <div class="flex items-center justify-end gap-3">
-                        <IconButton
-                            :as="Link"
-                            :href="route('craftable-pro.payments.edit', item)"
-                            variant="ghost"
-                            color="gray"
-                            :icon="PencilSquareIcon"
-                            v-can="'craftable-pro.payments.edit'"
-                        />
 
+                <!-- Amount -->
+                <ListingDataCell>
+                    <span class="font-medium text-gray-900 dark:text-white">{{ money(item.amount) }}</span>
+                </ListingDataCell>
+
+                <!-- Method -->
+                <ListingDataCell>
+                    <span class="text-sm text-gray-700 dark:text-gray-200">{{ item.payment_method ? item.payment_method.name : '—' }}</span>
+                </ListingDataCell>
+
+                <!-- Actions: rounded icon buttons (Larkon) -->
+                <ListingDataCell>
+                    <div class="flex items-center justify-center gap-2">
+                        <Link :href="route('craftable-pro.payments.edit', item)" title="View"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10">
+                            <EyeIcon class="h-4 w-4" />
+                        </Link>
+                        <Link :href="route('craftable-pro.payments.edit', item)" title="Edit" v-can="'craftable-pro.payments.edit'"
+                            class="flex h-8 w-8 items-center justify-center rounded-lg bg-primary-50 text-primary-600 transition-colors hover:bg-primary-100 dark:bg-primary-500/10 dark:text-primary-400 dark:hover:bg-primary-500/20">
+                            <PencilSquareIcon class="h-4 w-4" />
+                        </Link>
                         <Modal type="danger">
                             <template #trigger="{ setIsOpen }">
-                                <IconButton
-                                    @click="() => setIsOpen(true)"
-                                    color="gray"
-                                    variant="ghost"
-                                    :icon="TrashIcon"
-                                    v-can="'craftable-pro.payments.destroy'"
-                                />
+                                <button @click="() => setIsOpen(true)" title="Delete" v-can="'craftable-pro.payments.destroy'"
+                                    class="flex h-8 w-8 items-center justify-center rounded-lg bg-red-50 text-red-500 transition-colors hover:bg-red-100 dark:bg-red-500/10 dark:text-red-400 dark:hover:bg-red-500/20">
+                                    <TrashIcon class="h-4 w-4" />
+                                </button>
                             </template>
-
-                            <template #title>
-                                {{ $t("craftable-pro", "Delete Payment") }}
-                            </template>
-
+                            <template #title>{{ $t("craftable-pro", "Delete Payment") }}</template>
                             <template #content>
-                                {{
-                                    $t(
-                                        "craftable-pro",
-                                        "Are you sure you want to delete selected Payment? All data will be permanently removed from our servers forever. This action cannot be undone."
-                                    )
-                                }}
+                                {{ $t("craftable-pro", "Are you sure you want to delete selected Payment? All data will be permanently removed from our servers forever. This action cannot be undone.") }}
                             </template>
-
                             <template #buttons="{ setIsOpen }">
-                                <Button
-                                    @click.prevent="
-                                        () => {
-                                            action('delete', route('craftable-pro.payments.destroy', item), {
-                                                onFinish: () => setIsOpen(false),
-                                            });
-                                        }
-                                    "
-                                    color="danger"
-                                    v-can="'craftable-pro.payments.destroy'"
-                                >
+                                <Button @click.prevent="() => { action('delete', route('craftable-pro.payments.destroy', item), { onFinish: () => setIsOpen(false) }); }" color="danger" v-can="'craftable-pro.payments.destroy'">
                                     {{ $t("craftable-pro", "Delete") }}
                                 </Button>
-                                <Button
-                                    @click.prevent="() => setIsOpen()"
-                                    color="gray"
-                                    variant="outline"
-                                >
-                                    {{ $t("craftable-pro", "Cancel") }}
-                                </Button>
+                                <Button @click.prevent="() => setIsOpen()" color="gray" variant="outline">{{ $t("craftable-pro", "Cancel") }}</Button>
                             </template>
                         </Modal>
                     </div>
@@ -183,41 +143,43 @@
 </template>
 
 <script setup lang="ts">
-import { Link, usePage } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import {
     PlusIcon,
     TrashIcon,
     PencilSquareIcon,
-    ArrowDownTrayIcon,
+    EyeIcon,
 } from "@heroicons/vue/24/outline";
 import {
     PageHeader,
     PageContent,
     Button,
     Listing,
-    Avatar,
     ListingHeaderCell,
     ListingDataCell,
     Modal,
-    Multiselect,
-    IconButton,
-    FiltersDropdown,
-    Publish,
-    ListingToggle,
 } from "craftable-pro/Components";
 import { PaginatedCollection } from "craftable-pro/types/pagination";
 import type { Payment } from "./types";
-import type { PageProps } from "craftable-pro/types/page";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 
-dayjs.extend(customParseFormat)
+dayjs.extend(customParseFormat);
 
+const money = (v: unknown): string =>
+    Number(v ?? 0).toLocaleString("en-US", {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    }) + " DH";
 
+const initials = (item: any): string => {
+    const source = String(item.payment_no ?? item.id ?? "?");
+    const digits = source.replace(/\D/g, "");
+    return (digits || source).slice(-2).padStart(2, "0").toUpperCase();
+};
 
 interface Props {
     payments: PaginatedCollection<Payment>;
 }
 defineProps<Props>();
-
 </script>
