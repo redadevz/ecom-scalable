@@ -21,10 +21,10 @@ class UpdateLossAndDamageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
             'exit_stock_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

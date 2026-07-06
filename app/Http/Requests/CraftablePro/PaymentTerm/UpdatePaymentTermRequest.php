@@ -21,13 +21,13 @@ class UpdatePaymentTermRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sale_channel_id' => ['sometimes'],
-            'delivery_type_id' => ['sometimes'],
-            'payment_method_id' => ['sometimes'],
-            'payment_time_id' => ['sometimes'],
+            'sale_channel_id' => ['sometimes', 'integer', 'exists:sale_channels,id'],
+            'delivery_type_id' => ['sometimes', 'integer', 'exists:delivery_types,id'],
+            'payment_method_id' => ['sometimes', 'integer', 'exists:payment_methods,id'],
+            'payment_time_id' => ['sometimes', 'integer', 'exists:payment_times,id'],
             'is_allowed' => ['sometimes', 'boolean'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

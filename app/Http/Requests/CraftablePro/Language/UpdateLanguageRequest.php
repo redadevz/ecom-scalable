@@ -21,8 +21,8 @@ class UpdateLanguageRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'short_name' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'short_name' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable'],
             
         ];

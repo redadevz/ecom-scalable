@@ -21,11 +21,11 @@ class StoreDiscountScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_type_id' => ['required'],
+            'discount_type_id' => ['required', 'integer', 'exists:discount_types,id'],
             'day_of_week' => ['nullable', 'boolean'],
             'start_time' => ['required'],
             'end_time' => ['required'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

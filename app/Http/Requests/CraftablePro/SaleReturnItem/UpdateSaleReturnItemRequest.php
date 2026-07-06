@@ -21,14 +21,14 @@ class UpdateSaleReturnItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sale_return_id' => ['sometimes'],
-            'order_line_id' => ['sometimes'],
-            'item_id' => ['nullable'],
-            'line_no' => ['nullable', 'string'],
-            'quantity' => ['sometimes'],
-            'return_quantity' => ['sometimes'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'sale_return_id' => ['sometimes', 'integer', 'exists:sale_returns,id'],
+            'order_line_id' => ['sometimes', 'integer', 'exists:order_lines,id'],
+            'item_id' => ['nullable', 'integer', 'exists:items,id'],
+            'line_no' => ['nullable', 'string', 'max:50'],
+            'quantity' => ['sometimes', 'integer'],
+            'return_quantity' => ['sometimes', 'integer'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

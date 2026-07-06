@@ -21,9 +21,9 @@ class UpdatePaymentMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'code' => ['sometimes', 'string'],
-            'sequence_no' => ['nullable'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'code' => ['sometimes', 'string', 'max:255'],
+            'sequence_no' => ['nullable', 'integer'],
             'is_active' => ['sometimes', 'boolean'],
             'is_customer_required' => ['sometimes', 'boolean'],
             'description' => ['nullable'],

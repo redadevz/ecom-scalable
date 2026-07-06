@@ -21,10 +21,10 @@ class StoreBarCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => ['required'],
-            'bar_code' => ['required', 'string'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'bar_code' => ['required', 'string', 'max:255', 'unique:bar_codes,bar_code'],
             'is_active' => ['required', 'boolean'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
             
         ];
     }

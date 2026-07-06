@@ -21,22 +21,22 @@ class StoreDiscountTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['required'],
-            'loyalty_card_type_id' => ['nullable'],
-            'name' => ['required', 'string'],
-            'description' => ['nullable', 'string'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
+            'loyalty_card_type_id' => ['nullable', 'integer', 'exists:loyalty_card_types,id'],
+            'name' => ['required', 'string', 'max:50'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_percentage' => ['required', 'boolean'],
-            'value' => ['required'],
-            'coupon_code' => ['nullable', 'string'],
-            'min_order_value' => ['required'],
-            'min_item_quantity' => ['required'],
+            'value' => ['required', 'numeric'],
+            'coupon_code' => ['nullable', 'string', 'max:50'],
+            'min_order_value' => ['required', 'numeric'],
+            'min_item_quantity' => ['required', 'integer'],
             'apply_to_all' => ['required', 'boolean'],
             'apply_to_next' => ['required', 'boolean'],
-            'max_discount_value' => ['required'],
+            'max_discount_value' => ['required', 'numeric'],
             'start_time' => ['required'],
             'end_time' => ['nullable'],
             'is_active' => ['required', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

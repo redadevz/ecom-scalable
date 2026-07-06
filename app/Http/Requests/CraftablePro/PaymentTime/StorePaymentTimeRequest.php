@@ -21,7 +21,7 @@ class StorePaymentTimeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255', 'unique:payment_times,name'],
             'description' => ['nullable'],
             'is_active' => ['required', 'boolean'],
             

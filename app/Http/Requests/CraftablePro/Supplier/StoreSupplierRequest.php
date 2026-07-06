@@ -21,22 +21,22 @@ class StoreSupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['required'],
-            'city_id' => ['required'],
-            'created_by' => ['nullable'],
-            'code' => ['required', 'string'],
-            'phone' => ['required', 'string'],
-            'first_name' => ['required', 'string'],
-            'last_name' => ['required', 'string'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
+            'city_id' => ['required', 'integer', 'exists:cities,id'],
+            'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
+            'code' => ['required', 'string', 'max:10', 'unique:suppliers,code'],
+            'phone' => ['required', 'string', 'max:50'],
+            'first_name' => ['required', 'string', 'max:50'],
+            'last_name' => ['required', 'string', 'max:50'],
             'is_company' => ['required', 'boolean'],
-            'company_name' => ['nullable', 'string'],
-            'tax_number' => ['nullable', 'string'],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'tax_number' => ['nullable', 'string', 'max:50'],
             'is_tax_exempted' => ['required', 'boolean'],
-            'billing_address' => ['required', 'string'],
-            'postal_code' => ['nullable', 'string'],
-            'email' => ['required', 'string'],
+            'billing_address' => ['required', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:50'],
+            'email' => ['required', 'string', 'email', 'max:50'],
             'is_active' => ['required', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

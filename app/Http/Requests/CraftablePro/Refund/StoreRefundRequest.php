@@ -21,14 +21,14 @@ class StoreRefundRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sale_return_id' => ['required'],
-            'payment_method_id' => ['required'],
-            'refund_no' => ['nullable', 'string'],
-            'amount' => ['required'],
-            'cash_paid' => ['nullable'],
-            'cash_change' => ['nullable'],
+            'sale_return_id' => ['required', 'integer', 'exists:sale_returns,id'],
+            'payment_method_id' => ['required', 'integer', 'exists:payment_methods,id'],
+            'refund_no' => ['nullable', 'string', 'max:50'],
+            'amount' => ['required', 'numeric'],
+            'cash_paid' => ['nullable', 'numeric'],
+            'cash_change' => ['nullable', 'numeric'],
             'refund_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

@@ -21,8 +21,8 @@ class StoreMeasureUnitRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'symbol' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255', 'unique:measure_units,name'],
+            'symbol' => ['required', 'string', 'max:255', 'unique:measure_units,symbol'],
             'description' => ['nullable'],
             
         ];

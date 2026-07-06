@@ -21,10 +21,10 @@ class UpdateDocumentCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'description' => ['nullable', 'string'],
+            'name' => ['sometimes', 'string', 'max:50'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

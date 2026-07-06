@@ -21,21 +21,21 @@ class StorePriceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => ['required'],
-            'store_id' => ['required'],
-            'created_by' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'current_item_cost' => ['required'],
-            'markup_percentage' => ['required'],
-            'price_before_tax' => ['required'],
-            'tax_value' => ['required'],
-            'price_after_tax' => ['required'],
-            'sale_price' => ['required'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
+            'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'current_item_cost' => ['required', 'numeric'],
+            'markup_percentage' => ['required', 'integer'],
+            'price_before_tax' => ['required', 'numeric'],
+            'tax_value' => ['required', 'numeric'],
+            'price_after_tax' => ['required', 'numeric'],
+            'sale_price' => ['required', 'numeric'],
             'price_change_allowed' => ['required', 'boolean'],
             'start_time' => ['required'],
             'end_time' => ['nullable'],
             'is_active' => ['required', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

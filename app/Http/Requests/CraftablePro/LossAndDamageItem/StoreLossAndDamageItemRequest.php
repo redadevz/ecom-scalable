@@ -21,11 +21,11 @@ class StoreLossAndDamageItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loss_and_damage_id' => ['required'],
-            'item_id' => ['required'],
-            'quantity' => ['required'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'loss_and_damage_id' => ['required', 'integer', 'exists:loss_and_damages,id'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'quantity' => ['required', 'integer'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

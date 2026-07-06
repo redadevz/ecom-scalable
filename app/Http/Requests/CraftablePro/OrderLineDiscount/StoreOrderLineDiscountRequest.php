@@ -21,10 +21,10 @@ class StoreOrderLineDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_id' => ['required'],
-            'order_line_id' => ['required'],
-            'value' => ['required'],
-            'comments' => ['nullable', 'string'],
+            'discount_id' => ['required', 'integer', 'exists:discounts,id'],
+            'order_line_id' => ['required', 'integer', 'exists:order_lines,id'],
+            'value' => ['required', 'numeric'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

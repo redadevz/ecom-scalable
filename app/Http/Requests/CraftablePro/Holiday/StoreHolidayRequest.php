@@ -21,12 +21,12 @@ class StoreHolidayRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['required'],
-            'name' => ['required', 'string'],
-            'reason' => ['nullable', 'string'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
+            'name' => ['required', 'string', 'max:255'],
+            'reason' => ['nullable', 'string', 'max:255'],
             'starts_at' => ['required'],
             'ends_at' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

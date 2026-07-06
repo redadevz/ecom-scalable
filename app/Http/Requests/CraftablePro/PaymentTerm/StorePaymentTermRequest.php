@@ -21,13 +21,13 @@ class StorePaymentTermRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sale_channel_id' => ['required'],
-            'delivery_type_id' => ['required'],
-            'payment_method_id' => ['required'],
-            'payment_time_id' => ['required'],
+            'sale_channel_id' => ['required', 'integer', 'exists:sale_channels,id'],
+            'delivery_type_id' => ['required', 'integer', 'exists:delivery_types,id'],
+            'payment_method_id' => ['required', 'integer', 'exists:payment_methods,id'],
+            'payment_time_id' => ['required', 'integer', 'exists:payment_times,id'],
             'is_allowed' => ['required', 'boolean'],
             'is_active' => ['required', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

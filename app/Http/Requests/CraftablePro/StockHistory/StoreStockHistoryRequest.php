@@ -21,17 +21,17 @@ class StoreStockHistoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['required'],
-            'item_id' => ['required'],
-            'document_id' => ['nullable'],
-            'initial_stock_quantity' => ['required'],
-            'initial_item_cost' => ['required'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'document_id' => ['nullable', 'integer', 'exists:documents,id'],
+            'initial_stock_quantity' => ['required', 'integer'],
+            'initial_item_cost' => ['required', 'numeric'],
             'is_stock_entry' => ['required', 'boolean'],
-            'quantity' => ['required'],
-            'current_stock_quantity' => ['required'],
-            'current_item_cost' => ['required'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'quantity' => ['required', 'integer'],
+            'current_stock_quantity' => ['required', 'integer'],
+            'current_item_cost' => ['required', 'numeric'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

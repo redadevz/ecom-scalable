@@ -142,17 +142,21 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - ⚠️ Built + PHP-lint clean + 454 routes load, but not every screen browser-click-tested — spot-check create/edit saves
 
 ### Step 20 — Hardening 🔨  ← in progress
-- ✅ **Automated service tests** (PHPUnit + `RefreshDatabase`, `tests/Feature/Services/`) — **19 tests green**:
+- ✅ **Automated service tests** (PHPUnit + `RefreshDatabase`, `tests/Feature/Services/`, shared `ServiceTestCase` graph helpers) — **all 9 services covered, 30 tests green**:
   - `StockServiceTest` (5): in/out, history row, insufficient-stock guard, negative-stock setting, `isStockable`
   - `PurchaseServiceTest` (3): receive adds stock + stamps time, idempotent, skips services
   - `OrderServiceTest` (3): confirm (price→stock-out→approve→totals), cancel (stock back), double-cancel guard
   - `PaymentServiceTest` (5): settle marks paid, partial payments, already-paid guard, non-positive guard, refund flags return
+  - `InvoiceServiceTest` (3): one line per non-canceled order line, requires approved, no double-invoice
+  - `SaleReturnServiceTest` (2): restock + mark order line returned, idempotent
+  - `StockReturnServiceTest` (2): stock out + stamp exit time, idempotent
+  - `InventoryCountServiceTest` (2): adjust up & down to counted qty, idempotent
+  - `LossAndDamageServiceTest` (2): write-off stock, idempotent
 - ✅ **`AdminSmokeTest`** — GETs every admin index+create route as admin (no 5xx across all 55 modules)
 - ✅ **Fixed the factory suite** (was fatally broken project-wide): missing `Factory` import on all 55; alias/user-FK class-name bugs (`Timezone`→`TimeZone`, `Order`→`OrderHeader`, `CreatedBy`/etc.→null); unique-field collisions (`code`/`name`/`symbol` → `unique()`); `sequence_no` range; removed nonexistent `comments` from Invoice/SaleReturn factories
 - ✅ **Schema-drift fix** — migration `2026_07_06_150000_add_comments_to_payments_and_refunds.php` (dev DB had `comments` on payments/refunds but the create-migrations didn't → fresh migrate broke `PaymentService`; guarded/idempotent)
 - ✅ Deleted 55 dead auto-generated **API** CRUD tests (targeted a stripped REST API — 0 `api/` routes)
-- ⬜ More service tests (Invoice, SaleReturn, StockReturn, InventoryCount, LossAndDamage)
-- ⬜ Validation rules in every `Store*Request` / `Update*Request`
+- ✅ **Validation rules hardened** across all 108 `Store*/Update*Request` files (schema-driven from live DB): FK fields → `integer` + `exists:<table>,id`; number columns → `numeric`/`integer`; email → `email`; strings → real `max:<len>`; unique columns → `unique:` (Store only, so edits don't self-collide). Existing required/nullable kept. All lint-clean, 30 tests still green.
 - ⬜ Authorization: permissions for confirm/receive/cancel/etc. + role assignment
 - ⬜ Extend `stockIn` to record cost (`initial_item_cost`/`current_item_cost`)
 - ⬜ Detail pages + empty states (tables already curated in Step 19b)

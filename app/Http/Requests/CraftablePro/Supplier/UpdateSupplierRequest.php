@@ -21,22 +21,22 @@ class UpdateSupplierRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'city_id' => ['sometimes'],
-            'created_by' => ['nullable'],
-            'code' => ['sometimes', 'string'],
-            'phone' => ['sometimes', 'string'],
-            'first_name' => ['sometimes', 'string'],
-            'last_name' => ['sometimes', 'string'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'city_id' => ['sometimes', 'integer', 'exists:cities,id'],
+            'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
+            'code' => ['sometimes', 'string', 'max:10'],
+            'phone' => ['sometimes', 'string', 'max:50'],
+            'first_name' => ['sometimes', 'string', 'max:50'],
+            'last_name' => ['sometimes', 'string', 'max:50'],
             'is_company' => ['sometimes', 'boolean'],
-            'company_name' => ['nullable', 'string'],
-            'tax_number' => ['nullable', 'string'],
+            'company_name' => ['nullable', 'string', 'max:255'],
+            'tax_number' => ['nullable', 'string', 'max:50'],
             'is_tax_exempted' => ['sometimes', 'boolean'],
-            'billing_address' => ['sometimes', 'string'],
-            'postal_code' => ['nullable', 'string'],
-            'email' => ['sometimes', 'string'],
+            'billing_address' => ['sometimes', 'string', 'max:255'],
+            'postal_code' => ['nullable', 'string', 'max:50'],
+            'email' => ['sometimes', 'string', 'email', 'max:50'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

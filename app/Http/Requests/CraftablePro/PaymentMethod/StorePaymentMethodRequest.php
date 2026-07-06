@@ -21,9 +21,9 @@ class StorePaymentMethodRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'code' => ['required', 'string'],
-            'sequence_no' => ['nullable'],
+            'name' => ['required', 'string', 'max:255', 'unique:payment_methods,name'],
+            'code' => ['required', 'string', 'max:255', 'unique:payment_methods,code'],
+            'sequence_no' => ['nullable', 'integer'],
             'is_active' => ['required', 'boolean'],
             'is_customer_required' => ['required', 'boolean'],
             'description' => ['nullable'],

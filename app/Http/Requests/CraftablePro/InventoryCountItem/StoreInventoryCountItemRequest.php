@@ -21,13 +21,13 @@ class StoreInventoryCountItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'inventory_count_id' => ['required'],
-            'item_id' => ['required'],
-            'quantity_counted' => ['required'],
-            'quantity_expected' => ['required'],
-            'quantity_change' => ['required'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'inventory_count_id' => ['required', 'integer', 'exists:inventory_counts,id'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'quantity_counted' => ['required', 'integer'],
+            'quantity_expected' => ['required', 'integer'],
+            'quantity_change' => ['required', 'integer'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

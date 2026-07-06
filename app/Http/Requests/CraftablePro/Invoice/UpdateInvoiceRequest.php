@@ -21,11 +21,11 @@ class UpdateInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['sometimes'],
-            'invoice_no' => ['sometimes', 'string'],
+            'order_id' => ['sometimes', 'integer', 'exists:order_headers,id'],
+            'invoice_no' => ['sometimes', 'string', 'max:50'],
             'is_paid' => ['sometimes', 'boolean'],
             'payment_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

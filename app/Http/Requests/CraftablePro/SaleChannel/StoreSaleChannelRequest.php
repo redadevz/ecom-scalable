@@ -21,7 +21,7 @@ class StoreSaleChannelRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255', 'unique:sale_channels,name'],
             'description' => ['nullable'],
             'is_active' => ['required', 'boolean'],
             

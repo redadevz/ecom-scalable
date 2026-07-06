@@ -21,16 +21,16 @@ class UpdateTaxTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'name' => ['sometimes', 'string'],
-            'code' => ['sometimes', 'string'],
-            'description' => ['nullable', 'string'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'name' => ['sometimes', 'string', 'max:50'],
+            'code' => ['sometimes', 'string', 'max:25'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_percentage' => ['sometimes', 'boolean'],
-            'value' => ['sometimes'],
+            'value' => ['sometimes', 'numeric'],
             'start_time' => ['sometimes'],
             'end_time' => ['nullable'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

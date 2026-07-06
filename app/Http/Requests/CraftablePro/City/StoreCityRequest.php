@@ -21,10 +21,10 @@ class StoreCityRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'region_id' => ['required'],
-            'timezone_id' => ['required'],
-            'zipcode' => ['nullable'],
+            'name' => ['required', 'string', 'max:255'],
+            'region_id' => ['required', 'integer', 'exists:regions,id'],
+            'timezone_id' => ['required', 'integer', 'exists:time_zones,id'],
+            'zipcode' => ['nullable', 'integer'],
             
         ];
     }

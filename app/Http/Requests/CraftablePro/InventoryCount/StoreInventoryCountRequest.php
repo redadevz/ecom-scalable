@@ -21,11 +21,11 @@ class StoreInventoryCountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['required'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
             'physical_count_time' => ['nullable'],
             'change_stock_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

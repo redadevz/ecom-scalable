@@ -21,8 +21,8 @@ class UpdateRegionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'country_id' => ['sometimes'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'country_id' => ['sometimes', 'integer', 'exists:countries,id'],
             
         ];
     }

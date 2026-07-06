@@ -21,12 +21,12 @@ class UpdateStockReturnRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'purchase_id' => ['nullable'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'purchase_id' => ['nullable', 'integer', 'exists:purchases,id'],
             'exit_stock_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_paid' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

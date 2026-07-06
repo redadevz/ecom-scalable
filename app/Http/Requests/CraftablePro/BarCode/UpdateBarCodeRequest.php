@@ -21,10 +21,10 @@ class UpdateBarCodeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => ['sometimes'],
-            'bar_code' => ['sometimes', 'string'],
+            'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+            'bar_code' => ['sometimes', 'string', 'max:255'],
             'is_active' => ['sometimes', 'boolean'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
             
         ];
     }

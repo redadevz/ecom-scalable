@@ -21,11 +21,11 @@ class StoreSupplierItemTaxTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => ['required'],
-            'supplier_tax_type_id' => ['required'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'supplier_tax_type_id' => ['required', 'integer', 'exists:supplier_tax_types,id'],
             'start_time' => ['required'],
             'end_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
             
         ];
     }

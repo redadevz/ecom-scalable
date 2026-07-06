@@ -24,7 +24,6 @@ class SaleReturnItemFactory extends Factory
             'quantity' => $this->faker->numberBetween(-10000, 10000),
             'return_quantity' => $this->faker->numberBetween(-10000, 10000),
             'description' => $this->faker->text(),
-            'comments' => $this->faker->word(),
         ];
     }
 }

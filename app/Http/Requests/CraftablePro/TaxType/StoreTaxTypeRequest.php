@@ -21,16 +21,16 @@ class StoreTaxTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['required'],
-            'name' => ['required', 'string'],
-            'code' => ['required', 'string'],
-            'description' => ['nullable', 'string'],
+            'store_id' => ['required', 'integer', 'exists:stores,id'],
+            'name' => ['required', 'string', 'max:50'],
+            'code' => ['required', 'string', 'max:25'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_percentage' => ['required', 'boolean'],
-            'value' => ['required'],
+            'value' => ['required', 'numeric'],
             'start_time' => ['required'],
             'end_time' => ['nullable'],
             'is_active' => ['required', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

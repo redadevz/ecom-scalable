@@ -21,14 +21,14 @@ class UpdatePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_id' => ['sometimes'],
-            'payment_method_id' => ['sometimes'],
-            'payment_no' => ['nullable', 'string'],
-            'amount' => ['sometimes'],
-            'cash_paid' => ['nullable'],
-            'cash_change' => ['nullable'],
+            'invoice_id' => ['sometimes', 'integer', 'exists:invoices,id'],
+            'payment_method_id' => ['sometimes', 'integer', 'exists:payment_methods,id'],
+            'payment_no' => ['nullable', 'string', 'max:50'],
+            'amount' => ['sometimes', 'numeric'],
+            'cash_paid' => ['nullable', 'numeric'],
+            'cash_change' => ['nullable', 'numeric'],
             'payment_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

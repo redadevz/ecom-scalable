@@ -21,11 +21,11 @@ class UpdateItemTaxTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => ['sometimes'],
-            'tax_type_id' => ['sometimes'],
+            'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+            'tax_type_id' => ['sometimes', 'integer', 'exists:tax_types,id'],
             'start_time' => ['nullable'],
             'end_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
             
         ];
     }

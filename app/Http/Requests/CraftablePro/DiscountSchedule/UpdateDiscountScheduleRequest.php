@@ -21,11 +21,11 @@ class UpdateDiscountScheduleRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_type_id' => ['sometimes'],
+            'discount_type_id' => ['sometimes', 'integer', 'exists:discount_types,id'],
             'day_of_week' => ['nullable', 'boolean'],
             'start_time' => ['sometimes'],
             'end_time' => ['sometimes'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

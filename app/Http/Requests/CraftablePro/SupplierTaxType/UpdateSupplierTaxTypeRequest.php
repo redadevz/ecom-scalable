@@ -21,16 +21,16 @@ class UpdateSupplierTaxTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'supplier_id' => ['sometimes'],
-            'name' => ['sometimes', 'string'],
-            'code' => ['sometimes', 'string'],
-            'description' => ['nullable', 'string'],
+            'supplier_id' => ['sometimes', 'integer', 'exists:suppliers,id'],
+            'name' => ['sometimes', 'string', 'max:50'],
+            'code' => ['sometimes', 'string', 'max:25'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_percentage' => ['sometimes', 'boolean'],
-            'value' => ['sometimes'],
+            'value' => ['sometimes', 'numeric'],
             'start_time' => ['sometimes'],
             'end_time' => ['nullable'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

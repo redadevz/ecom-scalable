@@ -21,17 +21,17 @@ class StoreOrderReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['required'],
-            'customer_id' => ['nullable'],
-            'replied_by' => ['nullable'],
+            'order_id' => ['required', 'integer', 'exists:order_headers,id'],
+            'customer_id' => ['nullable', 'integer', 'exists:customers,id'],
+            'replied_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
             'rating' => ['nullable', 'boolean'],
-            'review' => ['nullable', 'string'],
+            'review' => ['nullable', 'string', 'max:255'],
             'review_time' => ['nullable'],
-            'reply' => ['nullable', 'string'],
+            'reply' => ['nullable', 'string', 'max:255'],
             'reply_time' => ['nullable'],
             'is_compensated' => ['required', 'boolean'],
-            'compensation_value' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'compensation_value' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

@@ -21,8 +21,8 @@ class UpdateItemCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'parent_category_id' => ['nullable'],
-            'name' => ['sometimes', 'string'],
+            'parent_category_id' => ['nullable', 'integer', 'exists:item_categories,id'],
+            'name' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable'],
             'is_active' => ['sometimes', 'boolean'],
             

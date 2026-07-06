@@ -21,10 +21,10 @@ class StoreDocumentCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'description' => ['nullable', 'string'],
+            'name' => ['required', 'string', 'max:50', 'unique:document_categories,name'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['required', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

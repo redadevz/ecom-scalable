@@ -21,22 +21,22 @@ class UpdateDiscountTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'loyalty_card_type_id' => ['nullable'],
-            'name' => ['sometimes', 'string'],
-            'description' => ['nullable', 'string'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'loyalty_card_type_id' => ['nullable', 'integer', 'exists:loyalty_card_types,id'],
+            'name' => ['sometimes', 'string', 'max:50'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_percentage' => ['sometimes', 'boolean'],
-            'value' => ['sometimes'],
-            'coupon_code' => ['nullable', 'string'],
-            'min_order_value' => ['sometimes'],
-            'min_item_quantity' => ['sometimes'],
+            'value' => ['sometimes', 'numeric'],
+            'coupon_code' => ['nullable', 'string', 'max:50'],
+            'min_order_value' => ['sometimes', 'numeric'],
+            'min_item_quantity' => ['sometimes', 'integer'],
             'apply_to_all' => ['sometimes', 'boolean'],
             'apply_to_next' => ['sometimes', 'boolean'],
-            'max_discount_value' => ['sometimes'],
+            'max_discount_value' => ['sometimes', 'numeric'],
             'start_time' => ['sometimes'],
             'end_time' => ['nullable'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

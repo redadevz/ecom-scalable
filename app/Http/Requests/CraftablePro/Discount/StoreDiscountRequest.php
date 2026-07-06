@@ -21,11 +21,11 @@ class StoreDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_type_id' => ['required'],
-            'item_category_id' => ['nullable'],
-            'item_id' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'discount_type_id' => ['required', 'integer', 'exists:discount_types,id'],
+            'item_category_id' => ['nullable', 'integer', 'exists:item_categories,id'],
+            'item_id' => ['nullable', 'integer', 'exists:items,id'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

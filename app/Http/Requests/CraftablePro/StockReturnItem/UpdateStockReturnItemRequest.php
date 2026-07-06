@@ -21,16 +21,16 @@ class UpdateStockReturnItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'stock_return_id' => ['sometimes'],
-            'item_id' => ['sometimes'],
-            'quantity' => ['sometimes'],
-            'supplier_price_before_tax' => ['sometimes'],
-            'supplier_tax_value' => ['sometimes'],
-            'supplier_price_after_tax' => ['sometimes'],
-            'supplier_discount_value' => ['sometimes'],
-            'return_amount' => ['sometimes'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'stock_return_id' => ['sometimes', 'integer', 'exists:stock_returns,id'],
+            'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+            'quantity' => ['sometimes', 'integer'],
+            'supplier_price_before_tax' => ['sometimes', 'numeric'],
+            'supplier_tax_value' => ['sometimes', 'numeric'],
+            'supplier_price_after_tax' => ['sometimes', 'numeric'],
+            'supplier_discount_value' => ['sometimes', 'numeric'],
+            'return_amount' => ['sometimes', 'numeric'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

@@ -21,14 +21,14 @@ class StorePaymentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_id' => ['required'],
-            'payment_method_id' => ['required'],
-            'payment_no' => ['nullable', 'string'],
-            'amount' => ['required'],
-            'cash_paid' => ['nullable'],
-            'cash_change' => ['nullable'],
+            'invoice_id' => ['required', 'integer', 'exists:invoices,id'],
+            'payment_method_id' => ['required', 'integer', 'exists:payment_methods,id'],
+            'payment_no' => ['nullable', 'string', 'max:50'],
+            'amount' => ['required', 'numeric'],
+            'cash_paid' => ['nullable', 'numeric'],
+            'cash_change' => ['nullable', 'numeric'],
             'payment_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

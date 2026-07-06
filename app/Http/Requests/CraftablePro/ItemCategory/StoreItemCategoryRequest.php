@@ -21,8 +21,8 @@ class StoreItemCategoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'parent_category_id' => ['nullable'],
-            'name' => ['required', 'string'],
+            'parent_category_id' => ['nullable', 'integer', 'exists:item_categories,id'],
+            'name' => ['required', 'string', 'max:255', 'unique:item_categories,name'],
             'description' => ['nullable'],
             'is_active' => ['required', 'boolean'],
             

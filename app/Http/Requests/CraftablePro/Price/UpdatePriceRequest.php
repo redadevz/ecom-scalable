@@ -21,21 +21,21 @@ class UpdatePriceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'item_id' => ['sometimes'],
-            'store_id' => ['sometimes'],
-            'created_by' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'current_item_cost' => ['sometimes'],
-            'markup_percentage' => ['sometimes'],
-            'price_before_tax' => ['sometimes'],
-            'tax_value' => ['sometimes'],
-            'price_after_tax' => ['sometimes'],
-            'sale_price' => ['sometimes'],
+            'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'current_item_cost' => ['sometimes', 'numeric'],
+            'markup_percentage' => ['sometimes', 'integer'],
+            'price_before_tax' => ['sometimes', 'numeric'],
+            'tax_value' => ['sometimes', 'numeric'],
+            'price_after_tax' => ['sometimes', 'numeric'],
+            'sale_price' => ['sometimes', 'numeric'],
             'price_change_allowed' => ['sometimes', 'boolean'],
             'start_time' => ['sometimes'],
             'end_time' => ['nullable'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

@@ -21,13 +21,13 @@ class UpdateInventoryCountItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'inventory_count_id' => ['sometimes'],
-            'item_id' => ['sometimes'],
-            'quantity_counted' => ['sometimes'],
-            'quantity_expected' => ['sometimes'],
-            'quantity_change' => ['sometimes'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'inventory_count_id' => ['sometimes', 'integer', 'exists:inventory_counts,id'],
+            'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+            'quantity_counted' => ['sometimes', 'integer'],
+            'quantity_expected' => ['sometimes', 'integer'],
+            'quantity_change' => ['sometimes', 'integer'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

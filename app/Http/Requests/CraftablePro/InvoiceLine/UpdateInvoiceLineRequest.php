@@ -21,10 +21,10 @@ class UpdateInvoiceLineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_id' => ['sometimes'],
-            'order_line_id' => ['sometimes'],
-            'line_no' => ['sometimes', 'string'],
-            'comments' => ['nullable', 'string'],
+            'invoice_id' => ['sometimes', 'integer', 'exists:invoices,id'],
+            'order_line_id' => ['sometimes', 'integer', 'exists:order_lines,id'],
+            'line_no' => ['sometimes', 'string', 'max:50'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

@@ -21,11 +21,11 @@ class StoreInvoiceRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['required'],
-            'invoice_no' => ['required', 'string'],
+            'order_id' => ['required', 'integer', 'exists:order_headers,id'],
+            'invoice_no' => ['required', 'string', 'max:50', 'unique:invoices,invoice_no'],
             'is_paid' => ['required', 'boolean'],
             'payment_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

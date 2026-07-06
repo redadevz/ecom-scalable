@@ -21,12 +21,12 @@ class UpdateHolidayRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'name' => ['sometimes', 'string'],
-            'reason' => ['nullable', 'string'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'reason' => ['nullable', 'string', 'max:255'],
             'starts_at' => ['sometimes'],
             'ends_at' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

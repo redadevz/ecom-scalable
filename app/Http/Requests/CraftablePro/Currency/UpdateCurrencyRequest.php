@@ -21,9 +21,9 @@ class UpdateCurrencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['sometimes', 'string'],
-            'short_name' => ['sometimes', 'string'],
-            'symbol' => ['sometimes', 'string'],
+            'name' => ['sometimes', 'string', 'max:255'],
+            'short_name' => ['sometimes', 'string', 'max:255'],
+            'symbol' => ['sometimes', 'string', 'max:255'],
             'description' => ['nullable'],
             
         ];

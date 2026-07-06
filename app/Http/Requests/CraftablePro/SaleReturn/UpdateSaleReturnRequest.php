@@ -21,15 +21,15 @@ class UpdateSaleReturnRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'order_id' => ['sometimes'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'order_id' => ['sometimes', 'integer', 'exists:order_headers,id'],
             'entry_stock_time' => ['nullable'],
             'is_refund_required' => ['sometimes', 'boolean'],
-            'refund_amount' => ['sometimes'],
+            'refund_amount' => ['sometimes', 'numeric'],
             'is_refunded' => ['sometimes', 'boolean'],
             'refund_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

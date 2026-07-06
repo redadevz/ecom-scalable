@@ -21,8 +21,8 @@ class UpdateOrderStatusHistoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['sometimes'],
-            'order_status_id' => ['sometimes'],
+            'order_id' => ['sometimes', 'integer', 'exists:order_headers,id'],
+            'order_status_id' => ['sometimes', 'integer', 'exists:order_statuses,id'],
             'start_time' => ['sometimes'],
             'end_time' => ['nullable'],
             

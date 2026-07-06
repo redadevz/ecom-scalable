@@ -21,14 +21,14 @@ class UpdateRefundRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sale_return_id' => ['sometimes'],
-            'payment_method_id' => ['sometimes'],
-            'refund_no' => ['nullable', 'string'],
-            'amount' => ['sometimes'],
-            'cash_paid' => ['nullable'],
-            'cash_change' => ['nullable'],
+            'sale_return_id' => ['sometimes', 'integer', 'exists:sale_returns,id'],
+            'payment_method_id' => ['sometimes', 'integer', 'exists:payment_methods,id'],
+            'refund_no' => ['nullable', 'string', 'max:50'],
+            'amount' => ['sometimes', 'numeric'],
+            'cash_paid' => ['nullable', 'numeric'],
+            'cash_change' => ['nullable', 'numeric'],
             'refund_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

@@ -21,16 +21,16 @@ class StorePurchaseItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'purchase_id' => ['required'],
-            'item_id' => ['required'],
-            'supplier_price_before_tax' => ['required'],
-            'supplier_tax_value' => ['required'],
-            'supplier_price_after_tax' => ['required'],
-            'supplier_discount_value' => ['required'],
-            'quantity' => ['required'],
-            'return_amount' => ['required'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'purchase_id' => ['required', 'integer', 'exists:purchases,id'],
+            'item_id' => ['required', 'integer', 'exists:items,id'],
+            'supplier_price_before_tax' => ['required', 'numeric'],
+            'supplier_tax_value' => ['required', 'numeric'],
+            'supplier_price_after_tax' => ['required', 'numeric'],
+            'supplier_discount_value' => ['required', 'numeric'],
+            'quantity' => ['required', 'integer'],
+            'return_amount' => ['required', 'numeric'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

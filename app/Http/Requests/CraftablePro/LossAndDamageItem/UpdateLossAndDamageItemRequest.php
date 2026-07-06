@@ -21,11 +21,11 @@ class UpdateLossAndDamageItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loss_and_damage_id' => ['sometimes'],
-            'item_id' => ['sometimes'],
-            'quantity' => ['sometimes'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'loss_and_damage_id' => ['sometimes', 'integer', 'exists:loss_and_damages,id'],
+            'item_id' => ['sometimes', 'integer', 'exists:items,id'],
+            'quantity' => ['sometimes', 'integer'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

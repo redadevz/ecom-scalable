@@ -21,10 +21,10 @@ class StoreInvoiceLineRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'invoice_id' => ['required'],
-            'order_line_id' => ['required'],
-            'line_no' => ['required', 'string'],
-            'comments' => ['nullable', 'string'],
+            'invoice_id' => ['required', 'integer', 'exists:invoices,id'],
+            'order_line_id' => ['required', 'integer', 'exists:order_lines,id'],
+            'line_no' => ['required', 'string', 'max:50'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

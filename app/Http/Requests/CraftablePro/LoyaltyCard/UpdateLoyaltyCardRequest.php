@@ -21,9 +21,9 @@ class UpdateLoyaltyCardRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'loyalty_card_type_id' => ['sometimes'],
-            'customer_id' => ['nullable'],
-            'code' => ['sometimes', 'string'],
+            'loyalty_card_type_id' => ['sometimes', 'integer', 'exists:loyalty_card_types,id'],
+            'customer_id' => ['nullable', 'integer', 'exists:customers,id'],
+            'code' => ['sometimes', 'string', 'max:50'],
             'is_active' => ['sometimes', 'boolean'],
             
         ];

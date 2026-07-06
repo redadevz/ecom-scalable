@@ -21,8 +21,8 @@ class StoreRegionRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
-            'country_id' => ['required'],
+            'name' => ['required', 'string', 'max:255'],
+            'country_id' => ['required', 'integer', 'exists:countries,id'],
             
         ];
     }

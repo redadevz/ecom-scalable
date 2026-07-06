@@ -21,8 +21,8 @@ class StoreOrderStatusHistoryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'order_id' => ['required'],
-            'order_status_id' => ['required'],
+            'order_id' => ['required', 'integer', 'exists:order_headers,id'],
+            'order_status_id' => ['required', 'integer', 'exists:order_statuses,id'],
             'start_time' => ['required'],
             'end_time' => ['nullable'],
             

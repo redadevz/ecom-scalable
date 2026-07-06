@@ -21,11 +21,11 @@ class UpdateDocumentTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'document_category_id' => ['sometimes'],
-            'name' => ['sometimes', 'string'],
-            'description' => ['nullable', 'string'],
+            'document_category_id' => ['sometimes', 'integer', 'exists:document_categories,id'],
+            'name' => ['sometimes', 'string', 'max:50'],
+            'description' => ['nullable', 'string', 'max:255'],
             'is_active' => ['sometimes', 'boolean'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

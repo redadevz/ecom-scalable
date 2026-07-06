@@ -21,11 +21,11 @@ class UpdateInventoryCountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
             'physical_count_time' => ['nullable'],
             'change_stock_time' => ['nullable'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

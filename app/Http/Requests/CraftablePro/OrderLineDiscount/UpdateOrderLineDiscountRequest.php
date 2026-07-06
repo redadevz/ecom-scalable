@@ -21,10 +21,10 @@ class UpdateOrderLineDiscountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'discount_id' => ['sometimes'],
-            'order_line_id' => ['sometimes'],
-            'value' => ['sometimes'],
-            'comments' => ['nullable', 'string'],
+            'discount_id' => ['sometimes', 'integer', 'exists:discounts,id'],
+            'order_line_id' => ['sometimes', 'integer', 'exists:order_lines,id'],
+            'value' => ['sometimes', 'numeric'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

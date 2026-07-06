@@ -21,14 +21,14 @@ class StoreSaleReturnItemRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'sale_return_id' => ['required'],
-            'order_line_id' => ['required'],
-            'item_id' => ['nullable'],
-            'line_no' => ['nullable', 'string'],
-            'quantity' => ['required'],
-            'return_quantity' => ['required'],
-            'description' => ['nullable', 'string'],
-            'comments' => ['nullable', 'string'],
+            'sale_return_id' => ['required', 'integer', 'exists:sale_returns,id'],
+            'order_line_id' => ['required', 'integer', 'exists:order_lines,id'],
+            'item_id' => ['nullable', 'integer', 'exists:items,id'],
+            'line_no' => ['nullable', 'string', 'max:50'],
+            'quantity' => ['required', 'integer'],
+            'return_quantity' => ['required', 'integer'],
+            'description' => ['nullable', 'string', 'max:255'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

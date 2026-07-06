@@ -21,17 +21,17 @@ class UpdateShipmentRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'store_id' => ['sometimes'],
-            'order_id' => ['sometimes'],
-            'shipment_city_id' => ['nullable'],
-            'picked_up_by' => ['nullable'],
-            'shipment_address' => ['sometimes', 'string'],
-            'gps_location' => ['nullable', 'string'],
-            'postal_code' => ['nullable', 'string'],
-            'shipment_notes' => ['nullable', 'string'],
+            'store_id' => ['sometimes', 'integer', 'exists:stores,id'],
+            'order_id' => ['sometimes', 'integer', 'exists:order_headers,id'],
+            'shipment_city_id' => ['nullable', 'integer', 'exists:cities,id'],
+            'picked_up_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
+            'shipment_address' => ['sometimes', 'string', 'max:255'],
+            'gps_location' => ['nullable', 'string', 'max:50'],
+            'postal_code' => ['nullable', 'string', 'max:50'],
+            'shipment_notes' => ['nullable', 'string', 'max:255'],
             'picked_up_time' => ['nullable'],
             'shipped_time' => ['nullable'],
-            'comments' => ['nullable', 'string'],
+            'comments' => ['nullable', 'string', 'max:1000'],
             
         ];
     }

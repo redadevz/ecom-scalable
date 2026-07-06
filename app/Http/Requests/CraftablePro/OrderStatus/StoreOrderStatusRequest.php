@@ -21,7 +21,7 @@ class StoreOrderStatusRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255', 'unique:order_statuses,name'],
             'description' => ['nullable'],
             'is_default' => ['required', 'boolean'],
             
