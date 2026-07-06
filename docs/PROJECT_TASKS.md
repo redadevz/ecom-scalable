@@ -121,7 +121,7 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 ### Step 18b — Product images (Spatie Media Library) ✅
 - Switched Item images from a simple `image` column to **Craftable's Spatie Media Library** (multiple images, thumbnails, managed in the Media module)
 - `Item` implements `HasMedia` + Craftable media traits; `images` collection (≤5 MB), auto `preview` conversion; `images` / `images_url` accessors; `$appends`
-- Form uses Craftable **`Dropzone`** (`form.images`); grid + list show `images_url` (fallback to old `image` column for seed data); `media` eager-loaded
+- Form uses Craftable **`Dropzone`** (`form.images`); grid + list show `images_url` (fallba k to old `image` column for seed data); `media` eager-loaded
 - Verified end-to-end via tinker (upload → conversion → preview URL)
 
 ### Step 19 — Settings ⬜

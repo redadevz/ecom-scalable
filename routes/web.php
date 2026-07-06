@@ -20,6 +20,13 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::get('reports/stock/export', [App\Http\Controllers\CraftablePro\ReportController::class, 'stockExport'])->name('reports.stock.export');
     Route::get('reports/purchases', [App\Http\Controllers\CraftablePro\ReportController::class, 'purchases'])->name('reports.purchases');
     Route::get('reports/purchases/export', [App\Http\Controllers\CraftablePro\ReportController::class, 'purchasesExport'])->name('reports.purchases.export');
+
+    /* Store logo upload */
+    Route::post('stores/upload-logo', [App\Http\Controllers\CraftablePro\StoreController::class, 'uploadLogo'])->name('stores.upload-logo');
+
+    /* Shop settings (currency, tax, negative-stock policy) */
+    Route::get('settings/shop', [App\Http\Controllers\CraftablePro\ShopSettingsController::class, 'edit'])->name('settings.shop.edit');
+    Route::match(['put', 'patch'], 'settings/shop', [App\Http\Controllers\CraftablePro\ShopSettingsController::class, 'update'])->name('settings.shop.update');
 });
 
 

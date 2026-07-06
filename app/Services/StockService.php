@@ -30,7 +30,7 @@ class StockService{
             $newQty = $initialQty + $delta;
 
             
-            if (! $isIn && $newQty < 0) {
+            if (! $isIn && $newQty < 0 && ! $this->negativeStockAllowed()) {
                 throw new InsufficientStockException(
                     "Not enough stock for {$item->name}. Have {$initialQty}, need {$quantity}."
                 );
@@ -54,8 +54,13 @@ class StockService{
     }
 
     public function isStockable(?Item $item){
-        
+
         return $item !== null && ! $item->is_service;
+    }
+
+    protected function negativeStockAllowed(): bool
+    {
+        return app(\App\Settings\ShopSettings::class)->negative_stock_allowed;
     }
 
 }

@@ -25,6 +25,20 @@ use Spatie\QueryBuilder\QueryBuilder;
 class StoreController extends Controller
 {
     /**
+     * Upload a store logo; returns its public URL.
+     */
+    public function uploadLogo(Request $request): JsonResponse
+    {
+        $request->validate([
+            'logo' => ['required', 'image', 'max:5120'], // 5 MB
+        ]);
+
+        $path = $request->file('logo')->store('store-logos', 'public');
+
+        return response()->json(['url' => \Illuminate\Support\Facades\Storage::url($path)]);
+    }
+
+    /**
      * Display a listing of the resource.
      */
     public function index(IndexStoreRequest $request): Response | JsonResponse | RedirectResponse

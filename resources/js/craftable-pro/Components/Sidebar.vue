@@ -246,6 +246,9 @@
         <SidebarItem :href="route('craftable-pro.settings.index')" :icon="Cog8ToothIcon" v-can="'craftable-pro.settings.edit'">
           {{ $t("craftable-pro", "Settings") }}
         </SidebarItem>
+        <SidebarItem :href="route('craftable-pro.settings.shop.edit')" :icon="AdjustmentsHorizontalIcon" v-can="'craftable-pro.settings.edit'">
+          {{ $t("craftable-pro", "Shop Settings") }}
+        </SidebarItem>
       </SidebarGroup>
     </nav>
   </div>
@@ -295,6 +298,7 @@ import {
   MapIcon,
   MapPinIcon,
   CurrencyDollarIcon,
+  AdjustmentsHorizontalIcon,
 } from "@heroicons/vue/24/outline";
 import { SidebarItem, SidebarGroup } from "craftable-pro/Components";
 </script>
