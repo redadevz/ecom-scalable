@@ -52,7 +52,7 @@ class ReportController extends Controller
     }
 
     /**
-     * Stock report — current levels, low-stock flags, inventory valuation.
+     * Stock report —    levels, low-stock flags, inventory valuation.
      */
     public function stock(): Response
     {
@@ -69,7 +69,7 @@ class ReportController extends Controller
                     'name'      => $it->name,
                     'sku'       => $it->sku_code,
                     'category'  => $it->itemCategory?->name ?? '—',
-                    'stock'     => $qty,
+                    'stock'     => $qty,    
                     'low_stock' => (float) $it->low_stock_quantity,
                     'is_low'    => $qty <= (float) $it->low_stock_quantity,
                     'cost'      => $cost,
