@@ -6,11 +6,11 @@ use Spatie\LaravelSettings\Settings;
 
 class ShopSettings extends Settings
 {
-    public string $currency_code;       // e.g. "MAD"
+    public string $currency_code;       
 
-    public string $currency_symbol;     // e.g. "DH"
+    public string $currency_symbol;     
 
-    public float $default_tax_rate;     // percent, e.g. 20
+    public float $default_tax_rate;     
 
     public bool $negative_stock_allowed;
 
