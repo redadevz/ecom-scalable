@@ -5,7 +5,7 @@ Each step lists the **files** and the **goal** so you can build it yourself.
 
 Legend: ✅ done · 🔨 in progress · ⬜ to do
 
-**Current position:** Steps 0–20 ✅ complete (admin app fully built + hardened) · Steps 21+ (customer storefront) not started. Test suite: **35 green**.
+**Current position:** Steps 0–20b ✅ complete (admin app fully built + hardened + business roles) · Steps 21+ (customer storefront) not started. Test suite: **35 green**.
 
 > Tech: Laravel 12 · Craftable PRO (Inertia + Vue 3 + Tailwind) · MySQL · Sail
 > Rebuild front-end after any `.vue` change: `./vendor/bin/sail npm run craftable-pro:build`
@@ -168,6 +168,20 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
   - Both gated by the module `.index` permission; table "view" (eye) buttons now link to `.show`; verified rendering via `AdminSmokeTest`
 
 > ✅ **Step 20 complete** — service tests (35 green), schema-driven validation, cost tracking, domain-action authorization, empty states, and detail pages all done.
+
+---
+
+### Step 20b — Business roles 👥 ✅
+- **`database/seeders/RolesSeeder.php`** — idempotent seeder (re-runnable; re-syncs each role's permission set). Builds 4 scoped roles on the `craftable-pro` guard, alongside the existing all-powerful **Administrator** (255):
+  - **Store Manager** (232) — every operational module; excluded from system config (`role`, `permission`, `settings`, `languages`, `translation`, `craftable-pro-user`)
+  - **Inventory Manager** (99) — items, prices, stock, suppliers, purchases (+receive), inventory counts, loss & damage, stock returns, discounts
+  - **Cashier** (58) — POS/counter: view items & customers, build/confirm orders, take payments, invoice, sale returns, loyalty. No purchasing/config/deletes
+  - **Accountant** (57) — invoices (+pay), payments, refunds, financial documents; read-only orders/customers/purchases
+- Spec-driven mapping (`'module'` = all actions · `'module:index,create'` = subset · exact name for the `craftable-pro` panel-access permission); expansion intersects with live permissions so it stays correct as modules change
+- Wired into `DatabaseSeeder` (after `RetailDataSeeder`) so a fresh `migrate --seed` provisions them; or run standalone: `artisan db:seed --class=RolesSeeder`
+- Assign via **Access** (users) → edit user → pick role
+- **`database/seeders/UsersSeeder.php`** — one demo user per role (idempotent, matches on email; all passwords `password`; wired into `DatabaseSeeder` after `RolesSeeder`). **Change passwords before any real deployment.**
+  - `manager@shop.test` → Store Manager · `inventory@shop.test` → Inventory Manager · `cashier@shop.test` → Cashier · `accountant@shop.test` → Accountant
 
 ---
 
