@@ -1,7 +1,8 @@
 import { createApp, h } from "vue";
 import { Link, createInertiaApp } from "@inertiajs/vue3";
 import { Notification } from "craftable-pro/Components";
-import { AuthenticatedLayout, GuestLayout } from "craftable-pro/Layouts";
+import { AuthenticatedLayout } from "craftable-pro/Layouts";
+import GuestLayout from "./Layouts/Guest.vue";
 import { can } from "craftable-pro/plugins/can";
 import {
   i18nVue,

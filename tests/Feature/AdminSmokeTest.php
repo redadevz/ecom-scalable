@@ -62,6 +62,14 @@ class AdminSmokeTest extends TestCase
         $this->assertSame([], $failures, "Pages returning 5xx:\n" . implode("\n", $failures));
     }
 
+    public function test_guest_auth_pages_load(): void
+    {
+        foreach (['craftable-pro.login', 'craftable-pro.password.request'] as $name) {
+            $res = $this->get(route($name));
+            $this->assertLessThan(500, $res->getStatusCode(), "$name -> {$res->getStatusCode()}");
+        }
+    }
+
     public function test_order_and_invoice_detail_pages_render(): void
     {
         $admin = CraftableProUser::query()->orderBy('id')->first();
@@ -81,5 +89,9 @@ class AdminSmokeTest extends TestCase
             $res = $this->actingAs($admin, 'craftable-pro')->get(route($route, $id));
             $this->assertLessThan(500, $res->getStatusCode(), "$route returned {$res->getStatusCode()}");
         }
+
+        // Profile / account page
+        $res = $this->actingAs($admin, 'craftable-pro')->get(route('craftable-pro.craftable-pro-users.profile'));
+        $this->assertLessThan(500, $res->getStatusCode(), "profile returned {$res->getStatusCode()}");
     }
 }
