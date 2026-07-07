@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\SaleReturn\BulkDestroySaleReturnRequest;
 use App\Http\Requests\CraftablePro\SaleReturn\CreateSaleReturnRequest;
@@ -145,6 +147,7 @@ class SaleReturnController extends Controller
     }
 
     public function process(SaleReturn $saleReturn, SaleReturnService $saleReturns){
+        Gate::authorize('craftable-pro.sale-returns.process');
         try{
             $saleReturns->process($saleReturn);
 
@@ -159,6 +162,7 @@ class SaleReturnController extends Controller
      */
     public function refund(SaleReturn $saleReturn, \App\Services\PaymentService $payments): RedirectResponse
     {
+        Gate::authorize('craftable-pro.sale-returns.refund');
         if ($saleReturn->is_refunded) {
             return redirect()->back()->with(['error' => ___('craftable-pro', 'This return has already been refunded')]);
         }

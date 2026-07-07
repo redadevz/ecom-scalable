@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\InventoryCount\BulkDestroyInventoryCountRequest;
 use App\Http\Requests\CraftablePro\InventoryCount\CreateInventoryCountRequest;
@@ -145,6 +147,7 @@ class InventoryCountController extends Controller
     }
 
     public function apply(InventoryCount $inventoryCount, InventoryCountService $counts){
+        Gate::authorize('craftable-pro.inventory-counts.apply');
         try{
             $counts->apply($inventoryCount);
             return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);

@@ -22,7 +22,7 @@
                 @click="receiveStock"
                 :loading="receiving"
                 :disabled="!!purchase.entry_stock_time"
-                v-can="'craftable-pro.purchases.edit'"
+                v-can="'craftable-pro.purchases.receive'"
             >
                 {{ purchase.entry_stock_time ? $t("craftable-pro", "Received") : $t("craftable-pro", "Receive Stock") }}
             </Button>

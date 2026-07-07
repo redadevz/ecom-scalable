@@ -61,4 +61,25 @@ class AdminSmokeTest extends TestCase
 
         $this->assertSame([], $failures, "Pages returning 5xx:\n" . implode("\n", $failures));
     }
+
+    public function test_order_and_invoice_detail_pages_render(): void
+    {
+        $admin = CraftableProUser::query()->orderBy('id')->first();
+        if (! $admin) {
+            $this->markTestSkipped('No admin user in the target database.');
+        }
+
+        $checks = [
+            'craftable-pro.order-headers.show' => \App\Models\OrderHeader::query()->value('id'),
+            'craftable-pro.invoices.show' => \App\Models\Invoice::query()->value('id'),
+        ];
+
+        foreach ($checks as $route => $id) {
+            if (! $id) {
+                continue;
+            }
+            $res = $this->actingAs($admin, 'craftable-pro')->get(route($route, $id));
+            $this->assertLessThan(500, $res->getStatusCode(), "$route returned {$res->getStatusCode()}");
+        }
+    }
 }

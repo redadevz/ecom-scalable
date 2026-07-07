@@ -22,7 +22,7 @@
                 @click="applyCount"
                 :loading="applying"
                 :disabled="!!inventoryCount.change_stock_time"
-                v-can="'craftable-pro.inventory-counts.edit'"
+                v-can="'craftable-pro.inventory-counts.apply'"
             >
                 {{ inventoryCount.change_stock_time ? $t("craftable-pro", "Applied") : $t("craftable-pro", "Apply Count") }}
             </Button>

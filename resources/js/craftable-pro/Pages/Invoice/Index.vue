@@ -111,7 +111,7 @@
                 <!-- Actions: rounded icon buttons (Larkon) -->
                 <ListingDataCell>
                     <div class="flex items-center justify-center gap-2">
-                        <Link :href="route('craftable-pro.invoices.edit', item)" title="View"
+                        <Link :href="route('craftable-pro.invoices.show', item)" title="View"
                             class="flex h-8 w-8 items-center justify-center rounded-lg bg-gray-100 text-gray-500 transition-colors hover:bg-gray-200 dark:bg-white/5 dark:text-gray-300 dark:hover:bg-white/10">
                             <EyeIcon class="h-4 w-4" />
                         </Link>

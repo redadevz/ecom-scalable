@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\OrderHeader\BulkDestroyOrderHeaderRequest;
 use App\Http\Requests\CraftablePro\OrderHeader\CreateOrderHeaderRequest;
@@ -110,6 +112,28 @@ class OrderHeaderController extends Controller
     }
 
     /**
+     * Read-only detail page.
+     */
+    public function show(OrderHeader $orderHeader): Response
+    {
+        Gate::authorize('craftable-pro.order-headers.index');
+
+        $orderHeader->load([
+            'customer:id,code,first_name,last_name,company_name,is_company',
+            'store:id,name',
+            'orderLines:id,order_id,item_id,quantity,price_after_tax,price,is_canceled',
+            'orderLines.item:id,name,sku_code',
+            'orderStatusHistories:id,order_id,order_status_id,start_time,end_time',
+            'orderStatusHistories.orderStatus:id,name',
+            'invoices:id,order_id,invoice_no,is_paid,created_at',
+        ]);
+
+        return Inertia::render('OrderHeader/Show', [
+            'order' => $orderHeader,
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateOrderHeaderRequest $request, OrderHeader $orderHeader): RedirectResponse
@@ -160,6 +184,7 @@ class OrderHeaderController extends Controller
 
     public function confirm(OrderHeader $orderHeader, OrderService $orders)
 {
+    Gate::authorize('craftable-pro.order-headers.confirm');
     try {
         $orders->confirm($orderHeader);
 
@@ -171,6 +196,7 @@ class OrderHeaderController extends Controller
 
 
     public function cancel(OrderHeader $orderHeader, OrderService $orders){
+        Gate::authorize('craftable-pro.order-headers.cancel');
         try{
             $orders->cancel($orderHeader);
 
@@ -182,11 +208,12 @@ class OrderHeaderController extends Controller
     }
 
     public function invoice(OrderHeader $orderHeader, InvoiceService $invoices){
+        Gate::authorize('craftable-pro.order-headers.invoice');
         try{
             $invoices->generate($orderHeader);
             return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
         }catch(\App\Exceptions\OrderAlreadyInvoicedException | \RuntimeException $e){
-            return redirect()->back()->with(['error' => $e->getMessage]);
+            return redirect()->back()->with(['error' => $e->getMessage()]);
         }
     }
 

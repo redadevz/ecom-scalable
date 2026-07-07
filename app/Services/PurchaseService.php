@@ -27,7 +27,11 @@ class PurchaseService{
                     continue;
                 }
 
-                $this->stock->stockIn($line->item, $line->quantity);
+                $unitCost = $line->supplier_price_after_tax !== null
+                    ? (float) $line->supplier_price_after_tax
+                    : null;
+
+                $this->stock->stockIn($line->item, $line->quantity, $unitCost);
             }
 
             $purchase->update(['entry_stock_time' => now()]);

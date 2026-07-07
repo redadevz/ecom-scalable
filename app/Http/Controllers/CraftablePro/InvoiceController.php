@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\Invoice\BulkDestroyInvoiceRequest;
 use App\Http\Requests\CraftablePro\Invoice\CreateInvoiceRequest;
@@ -95,6 +97,28 @@ class InvoiceController extends Controller
     }
 
     /**
+     * Read-only detail page.
+     */
+    public function show(Invoice $invoice): Response
+    {
+        Gate::authorize('craftable-pro.invoices.index');
+
+        $invoice->load([
+            'order:id,order_no,price,customer_id',
+            'order.customer:id,code,first_name,last_name,company_name,is_company',
+            'invoiceLines:id,invoice_id,order_line_id,line_no',
+            'invoiceLines.orderLine:id,item_id,quantity,price',
+            'invoiceLines.orderLine.item:id,name,sku_code',
+            'payments:id,invoice_id,payment_method_id,payment_no,amount,payment_time',
+            'payments.paymentMethod:id,name',
+        ]);
+
+        return Inertia::render('Invoice/Show', [
+            'invoice' => $invoice,
+        ]);
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(UpdateInvoiceRequest $request, Invoice $invoice): RedirectResponse
@@ -144,6 +168,7 @@ class InvoiceController extends Controller
     }
 
     public function pay(Invoice $invoice, PaymentService $payments){
+        Gate::authorize('craftable-pro.invoices.pay');
         try{
             $payments->settle($invoice);
             return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);

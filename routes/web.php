@@ -24,6 +24,10 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     /* Store logo upload */
     Route::post('stores/upload-logo', [App\Http\Controllers\CraftablePro\StoreController::class, 'uploadLogo'])->name('stores.upload-logo');
 
+    /* Read-only detail pages */
+    Route::get('order-headers/{orderHeader}/show', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'show'])->name('order-headers.show');
+    Route::get('invoices/{invoice}/show', [App\Http\Controllers\CraftablePro\InvoiceController::class, 'show'])->name('invoices.show');
+
     /* Shop settings (currency, tax, negative-stock policy) */
     Route::get('settings/shop', [App\Http\Controllers\CraftablePro\ShopSettingsController::class, 'edit'])->name('settings.shop.edit');
     Route::match(['put', 'patch'], 'settings/shop', [App\Http\Controllers\CraftablePro\ShopSettingsController::class, 'update'])->name('settings.shop.update');

@@ -5,6 +5,8 @@ Each step lists the **files** and the **goal** so you can build it yourself.
 
 Legend: ✅ done · 🔨 in progress · ⬜ to do
 
+**Current position:** Steps 0–20 ✅ complete (admin app fully built + hardened) · Steps 21+ (customer storefront) not started. Test suite: **35 green**.
+
 > Tech: Laravel 12 · Craftable PRO (Inertia + Vue 3 + Tailwind) · MySQL · Sail
 > Rebuild front-end after any `.vue` change: `./vendor/bin/sail npm run craftable-pro:build`
 > Re-seed (idempotent): `./vendor/bin/sail artisan db:seed --class=RetailDataSeeder`
@@ -24,7 +26,7 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 
 ---
 
-## 🔨 Do next — in this exact order
+## Build steps (8–20) — ✅ all done
 
 ### Step 8 — PurchaseService (restock) ✅
 - File: `app/Services/PurchaseService.php`
@@ -156,10 +158,16 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - ✅ **Fixed the factory suite** (was fatally broken project-wide): missing `Factory` import on all 55; alias/user-FK class-name bugs (`Timezone`→`TimeZone`, `Order`→`OrderHeader`, `CreatedBy`/etc.→null); unique-field collisions (`code`/`name`/`symbol` → `unique()`); `sequence_no` range; removed nonexistent `comments` from Invoice/SaleReturn factories
 - ✅ **Schema-drift fix** — migration `2026_07_06_150000_add_comments_to_payments_and_refunds.php` (dev DB had `comments` on payments/refunds but the create-migrations didn't → fresh migrate broke `PaymentService`; guarded/idempotent)
 - ✅ Deleted 55 dead auto-generated **API** CRUD tests (targeted a stripped REST API — 0 `api/` routes)
-- ✅ **Validation rules hardened** across all 108 `Store*/Update*Request` files (schema-driven from live DB): FK fields → `integer` + `exists:<table>,id`; number columns → `numeric`/`integer`; email → `email`; strings → real `max:<len>`; unique columns → `unique:` (Store only, so edits don't self-collide). Existing required/nullable kept. All lint-clean, 30 tests still green.
-- ⬜ Authorization: permissions for confirm/receive/cancel/etc. + role assignment
-- ⬜ Extend `stockIn` to record cost (`initial_item_cost`/`current_item_cost`)
-- ⬜ Detail pages + empty states (tables already curated in Step 19b)
+- ✅ **Validation rules hardened** across all 108 `Store*/Update*Request` files (schema-driven from live DB): FK fields → `integer` + `exists:<table>,id`; number columns → `numeric`/`integer`; email → `email`; strings → real `max:<len>`; unique columns → `unique:` (Sto000001re only, so edits don't self-collide). Existing required/nullable kept. All lint-clean, 30 tests still green.
+- ✅ **Authorization on domain actions** — 10 dedicated permissions (migration `2026_07_06_160000_add_domain_action_permissions.php`, granted to Administrator): `order-headers.{confirm,cancel,invoice}`, `purchases.receive`, `sale-returns.{process,refund}`, `stock-returns.process`, `inventory-counts.apply`, `loss-and-damages.apply`, `invoices.pay`. Enforced via `Gate::authorize(...)` in each controller action; buttons gated with the matching `v-can`. Covered by `DomainActionAuthorizationTest` (admin has all · role-less user has none · endpoint returns **403** without permission)
+- ✅ **Cost tracking in stock moves** — `StockService::stockIn/stockOut($item, $qty, ?float $unitCost)` now snapshots `initial_item_cost` (prior cost from the active `Price`) + `current_item_cost` into `StockHistory`; `PurchaseService::receive` passes the line's `supplier_price_after_tax`. Covered by 2 new `StockServiceTest` cases.
+- ✅ **Empty states** — already handled by the vendor `Listing` (`<EmptyListing>` renders "No items / change filters" on an empty table across all modules)
+- ✅ **Detail pages** — read-only **show** pages for the key transactional entities:
+  - **Order** (`OrderHeader@show` + route `order-headers.show` + `Pages/OrderHeader/Show.vue`): status banner, line-items table, totals summary, status-history timeline, customer + invoices side cards
+  - **Invoice** (`Invoice@show` + route `invoices.show` + `Pages/Invoice/Show.vue`): paid status, lines, payments list, balance summary, cross-links to the order
+  - Both gated by the module `.index` permission; table "view" (eye) buttons now link to `.show`; verified rendering via `AdminSmokeTest`
+
+> ✅ **Step 20 complete** — service tests (35 green), schema-driven validation, cost tracking, domain-action authorization, empty states, and detail pages all done.
 
 ---
 

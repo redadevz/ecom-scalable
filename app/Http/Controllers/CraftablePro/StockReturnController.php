@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\StockReturn\BulkDestroyStockReturnRequest;
 use App\Http\Requests\CraftablePro\StockReturn\CreateStockReturnRequest;
@@ -87,6 +89,7 @@ class StockReturnController extends Controller
      */
     public function process(StockReturn $stockReturn, StockReturnService $stockReturns): RedirectResponse
     {
+        Gate::authorize('craftable-pro.stock-returns.process');
         try {
             $stockReturns->process($stockReturn);
 

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\LossAndDamage\BulkDestroyLossAndDamageRequest;
 use App\Http\Requests\CraftablePro\LossAndDamage\CreateLossAndDamageRequest;
@@ -143,6 +145,7 @@ class LossAndDamageController extends Controller
     }
 
     public function apply(LossAndDamage $lossAndDamage, LossAndDamageService $losses){
+        Gate::authorize('craftable-pro.loss-and-damages.apply');
         try{
 
             $losses->apply($lossAndDamage);

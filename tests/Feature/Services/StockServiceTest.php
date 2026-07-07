@@ -4,6 +4,7 @@ namespace Tests\Feature\Services;
 
 use App\Exceptions\InsufficientStockException;
 use App\Models\Item;
+use App\Models\Price;
 use App\Models\StockHistory;
 use App\Services\StockService;
 use App\Settings\ShopSettings;
@@ -67,6 +68,40 @@ class StockServiceTest extends TestCase
         app(StockService::class)->stockOut($item, 8);
 
         $this->assertSame(-3, (int) $item->fresh()->current_stock_quantity);
+    }
+
+    private function activePrice(Item $item, float $cost): void
+    {
+        Price::factory()->create([
+            'item_id' => $item->id,
+            'store_id' => $item->store_id,
+            'is_active' => true,
+            'start_time' => now()->subDay(),
+            'end_time' => now()->addYear(),
+            'current_item_cost' => $cost,
+        ]);
+    }
+
+    public function test_stock_in_records_supplied_unit_cost(): void
+    {
+        $item = $this->item(['current_stock_quantity' => 10]);
+        $this->activePrice($item, 7);
+
+        $history = app(StockService::class)->stockIn($item, 5, 9.0);
+
+        $this->assertSame(7.0, (float) $history->initial_item_cost); // prior cost from active price
+        $this->assertSame(9.0, (float) $history->current_item_cost); // cost of this movement
+    }
+
+    public function test_stock_move_without_cost_carries_prior_cost(): void
+    {
+        $item = $this->item(['current_stock_quantity' => 10]);
+        $this->activePrice($item, 6.5);
+
+        $history = app(StockService::class)->stockOut($item, 2);
+
+        $this->assertSame(6.5, (float) $history->initial_item_cost);
+        $this->assertSame(6.5, (float) $history->current_item_cost);
     }
 
     public function test_is_stockable_excludes_services_and_nulls(): void

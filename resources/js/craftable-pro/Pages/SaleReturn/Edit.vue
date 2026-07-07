@@ -22,7 +22,7 @@
                 @click="processReturn"
                 :loading="processing"
                 :disabled="!!saleReturn.entry_stock_time"
-                v-can="'craftable-pro.sale-returns.edit'"
+                v-can="'craftable-pro.sale-returns.process'"
             >
                 {{ saleReturn.entry_stock_time ? $t("craftable-pro", "Processed") : $t("craftable-pro", "Process Return") }}
             </Button>
@@ -31,7 +31,7 @@
                 @click="refund"
                 :loading="refunding"
                 :disabled="!!saleReturn.is_refunded"
-                v-can="'craftable-pro.sale-returns.edit'"
+                v-can="'craftable-pro.sale-returns.refund'"
             >
                 {{ saleReturn.is_refunded ? $t("craftable-pro", "Refunded") : $t("craftable-pro", "Refund") }}
             </Button>

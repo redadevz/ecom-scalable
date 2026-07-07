@@ -22,7 +22,7 @@
                 @click="markPaid"
                 :loading="paying"
                 :disabled="invoice.is_paid"
-                v-can="'craftable-pro.invoices.edit'"
+                v-can="'craftable-pro.invoices.pay'"
             >
                 {{ invoice.is_paid ? $t("craftable-pro", "Paid") : $t("craftable-pro", "Mark Paid") }}
             </Button>

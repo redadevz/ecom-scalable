@@ -7,12 +7,15 @@ export default { layout: null };
   <div class="flex min-h-screen bg-white dark:bg-gray-950">
     <Head :title="$t('craftable-pro', 'Login')" />
 
-    <!-- Left: branded gradient panel -->
+    <!-- Left: branded gradient panel (Larkon orange) -->
     <div
-      class="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-indigo-600 via-indigo-600 to-violet-500 p-12 text-white lg:flex"
+      class="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-gradient-to-br from-[#7c2d12] via-primary-600 to-amber-500 p-12 text-white lg:flex"
     >
+      <!-- watermark -->
+      <ShoppingBagIcon class="pointer-events-none absolute -right-20 top-1/2 h-[28rem] w-[28rem] -translate-y-1/2 text-white/10" />
+
       <div class="relative z-10 flex items-center gap-2 text-lg font-semibold tracking-tight">
-        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 backdrop-blur">
+        <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-white/15 ring-1 ring-white/20 backdrop-blur">
           <ShoppingBagIcon class="h-5 w-5" />
         </span>
         Craftable <span class="rounded-md bg-white/20 px-1.5 py-0.5 text-xs font-bold">PRO</span>
@@ -22,20 +25,21 @@ export default { layout: null };
         <h1 class="text-4xl font-semibold leading-tight tracking-tight">
           Run your store<br />with confidence.
         </h1>
-        <p class="mt-4 text-base text-white/80">
+        <p class="mt-4 text-base text-white/85">
           Inventory, sales, purchasing and billing — one clean, fast back office.
         </p>
-        <div class="mt-8 flex items-center gap-6 text-sm text-white/70">
+        <div class="mt-8 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-white/80">
           <span class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5" /> Real-time stock</span>
           <span class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5" /> Instant invoicing</span>
+          <span class="flex items-center gap-2"><CheckCircleIcon class="h-5 w-5" /> Reports &amp; KPIs</span>
         </div>
       </div>
 
-      <div class="relative z-10 text-sm text-white/60">© {{ new Date().getFullYear() }} Craftable PRO</div>
+      <div class="relative z-10 text-sm text-white/70">© {{ new Date().getFullYear() }} Craftable PRO</div>
 
       <!-- decorative glows -->
-      <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-white/10 blur-3xl" />
-      <div class="pointer-events-none absolute -bottom-32 right-16 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
+      <div class="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-amber-300/20 blur-3xl" />
+      <div class="pointer-events-none absolute -bottom-32 -left-10 h-80 w-80 rounded-full bg-white/10 blur-3xl" />
     </div>
 
     <!-- Right: sign-in form -->

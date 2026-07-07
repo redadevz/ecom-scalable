@@ -22,7 +22,7 @@
                 @click="confirmOrder"
                 :loading="confirming"
                 :disabled="orderHeader.is_canceled"
-                v-can="'craftable-pro.order-headers.edit'"
+                v-can="'craftable-pro.order-headers.confirm'"
             >
                 {{ $t("craftable-pro", "Confirm Order") }}
             </Button>
@@ -33,7 +33,7 @@
                 :disabled="!orderHeader.is_approved || orderHeader.is_canceled"
                 variant="outline"
                 color="gray"
-                v-can="'craftable-pro.order-headers.edit'"
+                v-can="'craftable-pro.order-headers.invoice'"
             >
                 {{ $t("craftable-pro", "Generate Invoice") }}
             </Button>
@@ -44,7 +44,7 @@
                 :disabled="orderHeader.is_canceled"
                 color="danger"
                 variant="outline"
-                v-can="'craftable-pro.order-headers.edit'"
+                v-can="'craftable-pro.order-headers.cancel'"
             >
                 {{ orderHeader.is_canceled ? $t("craftable-pro", "Canceled") : $t("craftable-pro", "Cancel Order") }}
             </Button>

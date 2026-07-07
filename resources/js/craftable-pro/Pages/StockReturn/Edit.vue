@@ -22,7 +22,7 @@
                 @click="processReturn"
                 :loading="processing"
                 :disabled="!!stockReturn.exit_stock_time"
-                v-can="'craftable-pro.stock-returns.edit'"
+                v-can="'craftable-pro.stock-returns.process'"
             >
                 {{ stockReturn.exit_stock_time ? $t("craftable-pro", "Processed") : $t("craftable-pro", "Process Return") }}
             </Button>

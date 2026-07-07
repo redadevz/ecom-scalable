@@ -23,7 +23,7 @@
                 :loading="writingOff"
                 :disabled="!!lossAndDamage.exit_stock_time"
                 color="danger"
-                v-can="'craftable-pro.loss-and-damages.edit'"
+                v-can="'craftable-pro.loss-and-damages.apply'"
             >
                 {{ lossAndDamage.exit_stock_time ? $t("craftable-pro", "Written Off") : $t("craftable-pro", "Write Off") }}
             </Button>

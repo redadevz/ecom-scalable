@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\CraftablePro;
 
+use Illuminate\Support\Facades\Gate;
+
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\Purchase\BulkDestroyPurchaseRequest;
 use App\Http\Requests\CraftablePro\Purchase\CreatePurchaseRequest;
@@ -147,7 +149,8 @@ class PurchaseController extends Controller
     }
 
     public function receive(Purchase $purchase, PurchaseService $purchases){
-         
+        Gate::authorize('craftable-pro.purchases.receive');
+
         try{
             $purchases->receive($purchase);
 
