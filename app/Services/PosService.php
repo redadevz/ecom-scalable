@@ -56,16 +56,30 @@ class PosService
 
             $invoice = $this->invoices->generate($order);
 
-            $total = (float) $order->price;
-            if ($payNow && $total > 0) {
+            $total    = (float) $order->price;
+            $payments = $data['payments'] ?? null;
+
+            if (! empty($payments)) {
+                // Split / partial payment: record each tender against the invoice.
+                foreach ($payments as $p) {
+                    $amount = (float) $p['amount'];
+                    if ($amount > 0) {
+                        $this->payments->record($invoice, $amount, (int) $p['payment_method_id'], 'POS sale (split)');
+                    }
+                }
+                $paid = (bool) $invoice->fresh()->is_paid;
+            } elseif ($payNow && $total > 0) {
                 $this->payments->record($invoice, $total, $lookups['payment_method_id'], 'POS sale');
+                $paid = true;
+            } else {
+                $paid = false;
             }
 
             return [
                 'order_no'   => $order->order_no,
                 'invoice_no' => $invoice->invoice_no,
                 'total'      => round($total, 2),
-                'paid'       => $payNow,
+                'paid'       => $paid,
                 'items'      => (int) collect($data['lines'])->sum('quantity'),
             ];
         });

@@ -15,10 +15,12 @@ class CheckoutPosRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        $charging = $this->boolean('pay_now') || ! empty($this->input('payments'));
+
         return Gate::allows('craftable-pro.order-headers.create')
             && Gate::allows('craftable-pro.order-headers.confirm')
             && Gate::allows('craftable-pro.order-headers.invoice')
-            && (! $this->boolean('pay_now') || Gate::allows('craftable-pro.invoices.pay'));
+            && (! $charging || Gate::allows('craftable-pro.invoices.pay'));
     }
 
     /**
@@ -36,6 +38,9 @@ class CheckoutPosRequest extends FormRequest
             'discount'          => ['nullable', 'array'],
             'discount.type'     => ['required_with:discount', 'in:amount,percent'],
             'discount.value'    => ['required_with:discount', 'numeric', 'min:0'],
+            'payments'                     => ['nullable', 'array'],
+            'payments.*.payment_method_id' => ['required_with:payments', 'integer', 'exists:payment_methods,id'],
+            'payments.*.amount'            => ['required_with:payments', 'numeric', 'min:0.01'],
         ];
     }
 }

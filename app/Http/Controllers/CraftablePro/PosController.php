@@ -5,13 +5,18 @@ namespace App\Http\Controllers\CraftablePro;
 use App\Exceptions\InsufficientStockException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CraftablePro\Pos\CheckoutPosRequest;
+use App\Http\Requests\CraftablePro\Pos\CloseTillRequest;
 use App\Http\Requests\CraftablePro\Pos\IndexPosRequest;
+use App\Http\Requests\CraftablePro\Pos\OpenTillRequest;
 use App\Http\Requests\CraftablePro\Pos\SearchPosRequest;
 use App\Models\Customer;
 use App\Models\Item;
 use App\Models\ItemCategory;
 use App\Models\PaymentMethod;
+use App\Models\Store;
+use App\Models\TillSession;
 use App\Services\PosService;
+use App\Services\TillService;
 use App\Settings\ShopSettings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -91,6 +96,45 @@ class PosController extends Controller
         }
 
         return redirect()->route('craftable-pro.pos')->with('pos_receipt', $receipt);
+    }
+
+    /** Cash register page — open a session, live X report, close (Z report). */
+    public function till(IndexPosRequest $request, TillService $till): Response
+    {
+        $session = $till->current();
+
+        return Inertia::render('Pos/Till', [
+            'session'      => $session,
+            'summary'      => $session ? $till->summary($session) : null,
+            'currency'     => app(ShopSettings::class)->currency_symbol,
+            'recent'       => TillSession::where('status', 'closed')->latest('closed_at')->take(10)->get(),
+        ]);
+    }
+
+    public function tillOpen(OpenTillRequest $request, TillService $till): RedirectResponse
+    {
+        $store = Store::orderBy('id')->first();
+
+        try {
+            $till->open($store->id, auth('craftable-pro')->id(), (float) $request->validated()['opening_float']);
+        } catch (\RuntimeException $e) {
+            throw ValidationException::withMessages(['opening_float' => $e->getMessage()]);
+        }
+
+        return redirect()->route('craftable-pro.pos.till')->with('message', ___('craftable-pro', 'Register opened'));
+    }
+
+    public function tillClose(CloseTillRequest $request, TillService $till): RedirectResponse
+    {
+        $session = $till->current();
+        if (! $session) {
+            throw ValidationException::withMessages(['counted_cash' => 'No open register session.']);
+        }
+
+        $data = $request->validated();
+        $till->close($session, (float) $data['counted_cash'], $data['notes'] ?? null);
+
+        return redirect()->route('craftable-pro.pos.till')->with('message', ___('craftable-pro', 'Register closed'));
     }
 
     private function customerName($c): string

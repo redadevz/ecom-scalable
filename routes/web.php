@@ -36,6 +36,9 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::get('pos', [App\Http\Controllers\CraftablePro\PosController::class, 'index'])->name('pos');
     Route::get('pos/search', [App\Http\Controllers\CraftablePro\PosController::class, 'search'])->name('pos.search');
     Route::post('pos/checkout', [App\Http\Controllers\CraftablePro\PosController::class, 'checkout'])->name('pos.checkout');
+    Route::get('pos/till', [App\Http\Controllers\CraftablePro\PosController::class, 'till'])->name('pos.till');
+    Route::post('pos/till/open', [App\Http\Controllers\CraftablePro\PosController::class, 'tillOpen'])->name('pos.till.open');
+    Route::post('pos/till/close', [App\Http\Controllers\CraftablePro\PosController::class, 'tillClose'])->name('pos.till.close');
 });
 
 

@@ -5,7 +5,7 @@
         {{ $t("craftable-pro", "Dashboard") }}
       </SidebarItem>
       <SidebarItem :href="route('craftable-pro.pos')" :icon="CalculatorIcon" v-can="'craftable-pro.order-headers.create'">
-        {{ $t("craftable-pro", "Point of Sale") }}
+        Point of Sale
       </SidebarItem>
       <SidebarItem :href="route('craftable-pro.reports.sales')" :icon="ChartBarIcon">
         {{ $t("craftable-pro", "Sales Report") }}

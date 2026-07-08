@@ -1,11 +1,23 @@
 <template>
-    <PageHeader sticky :title="$t('craftable-pro', 'Point of Sale')">
-        <span v-if="cartCount" class="mr-2 hidden items-center rounded-full bg-primary-500/10 px-3 py-1 text-sm font-medium text-primary-600 dark:text-primary-400 sm:inline-flex">
-            {{ cartCount }} {{ cartCount === 1 ? 'item' : 'items' }}
-        </span>
-        <Button color="gray" variant="outline" @click="resetCart" :disabled="!cart.length">
-            {{ $t("craftable-pro", "Clear") }}
-        </Button>
+    <PageHeader sticky title="Point of Sale">
+        <div class="flex items-center gap-2">
+            <span v-if="cartCount" class="hidden items-center gap-1.5 rounded-full bg-primary-500/10 px-3 py-1.5 text-sm font-semibold text-primary-600 dark:text-primary-400 sm:inline-flex">
+                <ShoppingCartIcon class="h-4 w-4" /> {{ cartCount }}
+            </span>
+            <Button color="gray" variant="outline" :leftIcon="BanknotesIcon" :as="Link" :href="route('craftable-pro.pos.till')">
+                Register
+            </Button>
+            <span class="mx-0.5 hidden h-6 w-px bg-gray-200 dark:bg-[#2c2f3d] sm:block" />
+            <Button v-if="parked.length" color="gray" variant="outline" :leftIcon="InboxStackIcon" @click="showParked = true">
+                Parked ({{ parked.length }})
+            </Button>
+            <Button color="gray" variant="outline" :leftIcon="PauseIcon" @click="holdSale" :disabled="!cart.length">
+                Hold
+            </Button>
+            <Button color="gray" variant="outline" :leftIcon="TrashIcon" @click="resetCart" :disabled="!cart.length">
+                Clear
+            </Button>
+        </div>
     </PageHeader>
 
     <PageContent>
@@ -15,8 +27,8 @@
                 <div class="relative">
                     <MagnifyingGlassIcon class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
                     <input ref="searchEl" v-model="query" type="text" @keydown.enter.prevent="onSearchEnter"
-                        :placeholder="$t('craftable-pro', 'Search or scan barcode / SKU…')"
-                        class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-gray-900 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 dark:border-[#2c2f3d] dark:bg-[#1e2029] dark:text-white" />
+                        placeholder="Search or scan barcode / SKU…"
+                        class="w-full rounded-xl border border-gray-200 bg-white py-3 pl-11 pr-4 text-sm text-gray-900 shadow-sm transition focus:border-primary-500 focus:ring-2 focus:ring-primary-500/30 dark:border-[#2c2f3d] dark:bg-[#1e2029] dark:text-white" />
                 </div>
 
                 <!-- category filter -->
@@ -29,32 +41,36 @@
                         class="rounded-full border px-3 py-1.5 text-sm font-medium transition">{{ cat.name }}</button>
                 </div>
 
-                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3">
+                <div class="mt-4 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-4">
                     <button v-for="it in results" :key="it.id" type="button" @click="addToCart(it)"
-                        class="group flex flex-col rounded-xl border border-gray-200 bg-white p-3 text-left shadow-sm transition hover:border-primary-400 hover:shadow dark:border-[#2c2f3d] dark:bg-[#1e2029]">
-                        <div class="mb-2 flex h-24 items-center justify-center overflow-hidden rounded-lg bg-gray-50 dark:bg-white/5">
-                            <img v-if="it.image_url" :src="it.image_url" :alt="it.name" class="h-full w-full object-cover" />
-                            <CubeIcon v-else class="h-8 w-8 text-gray-300 dark:text-gray-600" />
-                        </div>
-                        <div class="flex items-start justify-between gap-2">
-                            <span class="line-clamp-2 text-sm font-medium text-gray-900 dark:text-white">{{ it.name }}</span>
-                            <PlusCircleIcon class="h-5 w-5 flex-shrink-0 text-gray-300 transition group-hover:text-primary-500" />
-                        </div>
-                        <span class="mt-0.5 text-xs text-gray-400">{{ it.sku }}</span>
-                        <div class="mt-2 flex items-center justify-between">
-                            <span class="text-sm font-semibold text-primary-600 dark:text-primary-400">{{ money(it.unit_price) }}</span>
-                            <span v-if="!it.is_service" class="rounded-full px-1.5 py-0.5 text-[11px] font-medium"
-                                :class="it.stock > 0 ? 'bg-green-50 text-green-700 dark:bg-green-500/10 dark:text-green-400' : 'bg-red-50 text-red-600 dark:bg-red-500/10 dark:text-red-400'">
-                                {{ it.stock }} in stock
+                        class="group relative flex flex-col overflow-hidden rounded-2xl border border-gray-200 bg-white text-left shadow-sm transition duration-150 hover:-translate-y-0.5 hover:border-primary-400 hover:shadow-md dark:border-[#2c2f3d] dark:bg-[#1e2029]">
+                        <!-- image / initial -->
+                        <div class="relative flex h-24 items-center justify-center overflow-hidden bg-gray-50 dark:bg-white/[0.03]">
+                            <img v-if="it.image_url" :src="it.image_url" :alt="it.name" class="h-full w-full object-cover transition duration-200 group-hover:scale-105" />
+                            <span v-else class="flex h-full w-full items-center justify-center bg-gradient-to-br from-primary-500/10 to-orange-500/5 text-2xl font-bold text-primary-500/50">{{ it.name.charAt(0).toUpperCase() }}</span>
+                            <span class="absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full bg-primary-500 text-white opacity-0 shadow-lg transition duration-150 group-hover:opacity-100">
+                                <PlusIcon class="h-4 w-4" />
                             </span>
-                            <span v-else class="rounded-full bg-gray-100 px-1.5 py-0.5 text-[11px] font-medium text-gray-500 dark:bg-white/5">service</span>
+                            <span v-if="!it.is_service && it.stock <= 0" class="absolute left-2 top-2 rounded-full bg-red-500 px-2 py-0.5 text-[10px] font-semibold text-white">out</span>
+                        </div>
+                        <!-- body -->
+                        <div class="flex flex-1 flex-col p-3">
+                            <span class="line-clamp-2 text-sm font-medium leading-snug text-gray-900 dark:text-white">{{ it.name }}</span>
+                            <span class="mt-0.5 text-[11px] uppercase tracking-wide text-gray-400">{{ it.sku }}</span>
+                            <div class="mt-auto flex items-center justify-between pt-2.5">
+                                <span class="text-[15px] font-bold text-primary-600 dark:text-primary-400">{{ money(it.unit_price) }}</span>
+                                <span v-if="!it.is_service" class="text-[11px] font-medium tabular-nums"
+                                    :class="it.stock > 0 ? 'text-gray-400' : 'text-red-500'">{{ it.stock }} left</span>
+                                <span v-else class="rounded-full bg-gray-100 px-1.5 py-0.5 text-[10px] font-medium text-gray-500 dark:bg-white/5">service</span>
+                            </div>
                         </div>
                     </button>
                 </div>
 
-                <p v-if="!results.length && !searching" class="mt-8 text-center text-sm text-gray-400">
-                    {{ $t("craftable-pro", "No sellable items found.") }}
-                </p>
+                <div v-if="!results.length && !searching" class="mt-12 flex flex-col items-center text-center text-gray-400">
+                    <MagnifyingGlassIcon class="h-8 w-8 text-gray-300 dark:text-gray-600" />
+                    <p class="mt-2 text-sm">No sellable items found.</p>
+                </div>
             </section>
 
             <!-- RIGHT: cart -->
@@ -93,11 +109,36 @@
                             </select>
                         </div>
                         <div>
-                            <label class="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">Payment method</label>
-                            <div class="flex flex-wrap gap-2">
+                            <div class="mb-1 flex items-center justify-between">
+                                <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Payment method</label>
+                                <button type="button" @click="toggleSplit" class="text-xs font-medium text-primary-600 hover:underline dark:text-primary-400">
+                                    {{ splitMode ? 'Single payment' : 'Split payment' }}
+                                </button>
+                            </div>
+
+                            <!-- single method -->
+                            <div v-if="!splitMode" class="flex flex-wrap gap-2">
                                 <button v-for="pm in paymentMethods" :key="pm.id" type="button" @click="paymentMethodId = pm.id"
                                     :class="paymentMethodId === pm.id ? 'border-primary-500 bg-primary-500/10 text-primary-600 dark:text-primary-400' : 'border-gray-200 text-gray-600 dark:border-[#2c2f3d] dark:text-gray-300'"
                                     class="rounded-xl border px-3 py-1.5 text-sm font-medium transition">{{ pm.name }}</button>
+                            </div>
+
+                            <!-- split payments -->
+                            <div v-else class="space-y-2">
+                                <div v-for="(pl, i) in paymentLines" :key="i" class="flex gap-2">
+                                    <select v-model="pl.payment_method_id" class="w-1/2 rounded-xl border border-gray-200 bg-white px-3 py-2 text-sm dark:border-[#2c2f3d] dark:bg-[#151720] dark:text-white">
+                                        <option v-for="pm in paymentMethods" :key="pm.id" :value="pm.id">{{ pm.name }}</option>
+                                    </select>
+                                    <input v-model.number="pl.amount" type="number" min="0" step="0.01" placeholder="0.00"
+                                        class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-right text-sm tabular-nums dark:border-[#2c2f3d] dark:bg-[#151720] dark:text-white" />
+                                    <button type="button" @click="removePaymentLine(i)" class="text-gray-300 hover:text-red-500"><XMarkIcon class="h-4 w-4" /></button>
+                                </div>
+                                <div class="flex items-center justify-between pt-1 text-xs">
+                                    <button type="button" @click="addPaymentLine" class="font-medium text-primary-600 hover:underline dark:text-primary-400">+ Add payment</button>
+                                    <span :class="remaining > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-green-600 dark:text-green-400'">
+                                        {{ remaining > 0 ? 'Remaining ' + money(remaining) : 'Fully covered' }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         <div>
@@ -115,7 +156,7 @@
                                     class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-right text-sm tabular-nums dark:border-[#2c2f3d] dark:bg-[#151720] dark:text-white" />
                             </div>
                         </div>
-                        <div>
+                        <div v-if="!splitMode">
                             <label class="mb-1 block text-xs font-medium text-gray-500 dark:text-gray-400">Cash tendered (optional)</label>
                             <input v-model.number="tendered" type="number" min="0" step="0.01" :placeholder="grandTotal.toFixed(2)"
                                 class="w-full rounded-xl border border-gray-200 bg-white px-3 py-2 text-right text-sm tabular-nums dark:border-[#2c2f3d] dark:bg-[#151720] dark:text-white" />
@@ -134,8 +175,8 @@
                             <span class="text-2xl font-bold tabular-nums text-primary-600 dark:text-primary-400">{{ money(grandTotal) }}</span>
                         </div>
                         <p v-if="errors.lines" class="mt-2 text-xs text-red-500">{{ errors.lines }}</p>
-                        <Button class="mt-4 w-full justify-center" :leftIcon="CheckIcon" :disabled="!cart.length || processing" :loading="processing" @click="checkout">
-                            {{ $t("craftable-pro", "Charge") }} {{ money(grandTotal) }}
+                        <Button class="mt-4 w-full justify-center !py-3 text-base" :leftIcon="CheckIcon" :disabled="!cart.length || processing" :loading="processing" @click="checkout">
+                            Charge {{ money(grandTotal) }}
                         </Button>
                     </div>
                 </div>
@@ -157,8 +198,32 @@
                         <div v-if="lastChange !== null" class="flex justify-between text-gray-500 dark:text-gray-400"><span>Change given</span><span class="tabular-nums">{{ money(lastChange) }}</span></div>
                     </div>
                     <div class="mt-5 flex gap-3">
-                        <Button color="gray" variant="outline" class="flex-1 justify-center" :leftIcon="PrinterIcon" @click="printReceipt">{{ $t("craftable-pro", "Print") }}</Button>
-                        <Button class="flex-1 justify-center" @click="showReceipt = false">{{ $t("craftable-pro", "New sale") }}</Button>
+                        <Button color="gray" variant="outline" class="flex-1 justify-center" :leftIcon="PrinterIcon" @click="printReceipt">Print</Button>
+                        <Button class="flex-1 justify-center" @click="showReceipt = false">New sale</Button>
+                    </div>
+                </div>
+            </div>
+        </Transition>
+
+        <!-- parked sales overlay -->
+        <Transition enter-active-class="transition duration-150" enter-from-class="opacity-0" leave-active-class="transition duration-100" leave-to-class="opacity-0">
+            <div v-if="showParked" class="fixed inset-0 z-50 flex items-center justify-center p-4">
+                <div class="absolute inset-0 bg-black/50" @click="showParked = false"></div>
+                <div class="relative w-full max-w-md rounded-2xl border border-gray-200 bg-white shadow-xl dark:border-[#2c2f3d] dark:bg-[#1e2029]">
+                    <header class="flex items-center justify-between border-b border-gray-100 px-5 py-4 dark:border-[#2a2d38]">
+                        <h3 class="text-[15px] font-semibold text-gray-900 dark:text-white">Parked sales</h3>
+                        <button type="button" @click="showParked = false" class="text-gray-400 hover:text-gray-600"><XMarkIcon class="h-5 w-5" /></button>
+                    </header>
+                    <div class="max-h-[60vh] overflow-y-auto p-3">
+                        <p v-if="!parked.length" class="py-8 text-center text-sm text-gray-400">No parked sales.</p>
+                        <div v-for="p in parked" :key="p.id" class="flex items-center gap-3 rounded-xl px-3 py-3 transition hover:bg-gray-50 dark:hover:bg-white/5">
+                            <div class="min-w-0 flex-1">
+                                <p class="truncate text-sm font-medium text-gray-900 dark:text-white">{{ p.label }}</p>
+                                <p class="text-xs text-gray-400">Held at {{ p.at }}</p>
+                            </div>
+                            <Button size="sm" @click="resumeSale(p)">Resume</Button>
+                            <button type="button" @click="discardParked(p.id)" class="text-gray-300 hover:text-red-500"><TrashIcon class="h-4 w-4" /></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -168,15 +233,16 @@
 
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from "vue";
-import { router } from "@inertiajs/vue3";
+import { router, Link } from "@inertiajs/vue3";
 import { PageHeader, PageContent, Button } from "craftable-pro/Components";
-import { MagnifyingGlassIcon, ShoppingCartIcon, PlusIcon, MinusIcon, XMarkIcon, CubeIcon, PrinterIcon } from "@heroicons/vue/24/outline";
-import { PlusCircleIcon, CheckIcon, CheckCircleIcon } from "@heroicons/vue/24/solid";
+import { MagnifyingGlassIcon, ShoppingCartIcon, PlusIcon, MinusIcon, XMarkIcon, PrinterIcon, PauseIcon, InboxStackIcon, TrashIcon, BanknotesIcon } from "@heroicons/vue/24/outline";
+import { CheckIcon, CheckCircleIcon } from "@heroicons/vue/24/solid";
 
 interface Result { id: number; name: string; sku: string; is_service: boolean; stock: number; unit_price: number; image_url: string | null; }
 interface CartLine extends Result { quantity: number; }
 interface Receipt { order_no: string; invoice_no: string; total: number; paid: boolean; items: number; }
 interface Discount { type: "amount" | "percent"; value: number | null; }
+interface Parked { id: number; label: string; at: string; lines: CartLine[]; customerId: number | null; discount: Discount; }
 interface SaleSnapshot {
     lines: { name: string; sku: string; qty: number; unit: number; total: number }[];
     subtotal: number; discount: number; grandTotal: number;
@@ -201,6 +267,8 @@ const customerId = ref<number | null>(null);
 const paymentMethodId = ref<number | null>(props.payment_methods[0]?.id ?? null);
 const discount = ref<Discount>({ type: "amount", value: null });
 const tendered = ref<number | null>(null);
+const splitMode = ref(false);
+const paymentLines = ref<{ payment_method_id: number | null; amount: number | null }[]>([]);
 const processing = ref(false);
 const errors = ref<Record<string, string>>({});
 const searchEl = ref<HTMLInputElement | null>(null);
@@ -209,6 +277,10 @@ const showReceipt = ref(!!props.receipt);
 const receipt = ref<Receipt | null>(props.receipt);
 const lastChange = ref<number | null>(null);
 const lastSale = ref<SaleSnapshot | null>(null);
+
+const parked = ref<Parked[]>([]);
+const showParked = ref(false);
+const PARK_KEY = "pos_parked";
 
 const money = (v: number) => Number(v ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " " + props.currency;
 const subtotal = computed(() => cart.value.reduce((s, l) => s + l.unit_price * l.quantity, 0));
@@ -220,6 +292,8 @@ const discountAmount = computed(() => {
 });
 const grandTotal = computed(() => Math.max(0, subtotal.value - discountAmount.value));
 const cartCount = computed(() => cart.value.reduce((s, l) => s + l.quantity, 0));
+const paidSum = computed(() => paymentLines.value.reduce((s, l) => s + (Number(l.amount) || 0), 0));
+const remaining = computed(() => Math.max(0, +(grandTotal.value - paidSum.value).toFixed(2)));
 
 async function fetchItems() {
     searching.value = true;
@@ -268,7 +342,58 @@ function resetCart() {
     tendered.value = null;
     customerId.value = null;
     discount.value = { type: "amount", value: null };
+    splitMode.value = false;
+    paymentLines.value = [];
     errors.value = {};
+}
+
+// ---- Split / partial payment ----
+function toggleSplit() {
+    splitMode.value = !splitMode.value;
+    if (splitMode.value && !paymentLines.value.length) {
+        paymentLines.value = [{ payment_method_id: paymentMethodId.value, amount: +grandTotal.value.toFixed(2) }];
+    }
+}
+function addPaymentLine() {
+    paymentLines.value.push({ payment_method_id: props.payment_methods[0]?.id ?? null, amount: remaining.value || null });
+}
+function removePaymentLine(i: number) {
+    paymentLines.value.splice(i, 1);
+}
+
+// ---- Hold / park a sale (persisted to localStorage) ----
+function loadParked() {
+    try { parked.value = JSON.parse(localStorage.getItem(PARK_KEY) || "[]"); } catch { parked.value = []; }
+}
+function persistParked() {
+    localStorage.setItem(PARK_KEY, JSON.stringify(parked.value));
+}
+function holdSale() {
+    if (!cart.value.length) return;
+    const who = customerId.value ? " · " + (props.customers.find((c) => c.id === customerId.value)?.label ?? "") : "";
+    parked.value.unshift({
+        id: Date.now(),
+        label: `${cartCount.value} item${cartCount.value === 1 ? "" : "s"} · ${money(grandTotal.value)}${who}`,
+        at: new Date().toLocaleTimeString(),
+        lines: JSON.parse(JSON.stringify(cart.value)),
+        customerId: customerId.value,
+        discount: JSON.parse(JSON.stringify(discount.value)),
+    });
+    persistParked();
+    resetCart();
+}
+function resumeSale(p: Parked) {
+    if (cart.value.length) holdSale();       // park the current cart first so nothing is lost
+    cart.value = p.lines;
+    customerId.value = p.customerId;
+    discount.value = p.discount;
+    parked.value = parked.value.filter((x) => x.id !== p.id);
+    persistParked();
+    showParked.value = false;
+}
+function discardParked(id: number) {
+    parked.value = parked.value.filter((x) => x.id !== id);
+    persistParked();
 }
 
 function checkout() {
@@ -276,8 +401,13 @@ function checkout() {
     processing.value = true;
     errors.value = {};
 
-    const change = tendered.value !== null && tendered.value >= grandTotal.value ? tendered.value - grandTotal.value : null;
+    const change = !splitMode.value && tendered.value !== null && tendered.value >= grandTotal.value ? tendered.value - grandTotal.value : null;
     lastChange.value = change;
+
+    const splitPayments = splitMode.value ? paymentLines.value.filter((l) => Number(l.amount) > 0) : [];
+    const paymentLabel = splitMode.value
+        ? splitPayments.map((l) => props.payment_methods.find((pm) => pm.id === l.payment_method_id)?.name).filter(Boolean).join(" + ")
+        : (props.payment_methods.find((pm) => pm.id === paymentMethodId.value)?.name ?? "");
 
     // snapshot for the printable receipt (cart is cleared on success)
     lastSale.value = {
@@ -286,7 +416,7 @@ function checkout() {
         discount: discountAmount.value,
         grandTotal: grandTotal.value,
         customer: customerId.value ? (props.customers.find((c) => c.id === customerId.value)?.label ?? "") : "Walk-in",
-        payment: props.payment_methods.find((pm) => pm.id === paymentMethodId.value)?.name ?? "",
+        payment: paymentLabel,
         tendered: tendered.value,
         change,
     };
@@ -294,8 +424,9 @@ function checkout() {
     router.post(route("craftable-pro.pos.checkout"), {
         customer_id: customerId.value,
         payment_method_id: paymentMethodId.value,
-        pay_now: true,
+        pay_now: !splitMode.value,
         discount: discountAmount.value > 0 ? { type: discount.value.type, value: discount.value.value } : null,
+        payments: splitMode.value ? splitPayments : null,
         lines: cart.value.map((l) => ({ item_id: l.id, quantity: l.quantity })),
     }, {
         preserveScroll: true,
@@ -356,6 +487,7 @@ function escapeHtml(str: string): string {
 }
 
 onMounted(() => {
+    loadParked();
     fetchItems();          // show products by default
     searchEl.value?.focus();
 });
