@@ -4,6 +4,9 @@
       <SidebarItem :href="route('craftable-pro.home')" :icon="HomeIcon">
         {{ $t("craftable-pro", "Dashboard") }}
       </SidebarItem>
+      <SidebarItem :href="route('craftable-pro.pos')" :icon="CalculatorIcon" v-can="'craftable-pro.order-headers.create'">
+        {{ $t("craftable-pro", "Point of Sale") }}
+      </SidebarItem>
       <SidebarItem :href="route('craftable-pro.reports.sales')" :icon="ChartBarIcon">
         {{ $t("craftable-pro", "Sales Report") }}
       </SidebarItem>
@@ -257,6 +260,7 @@
 <script setup lang="ts">
 import {
   HomeIcon,
+  CalculatorIcon,
   ChartBarIcon,
   KeyIcon,
   LanguageIcon,

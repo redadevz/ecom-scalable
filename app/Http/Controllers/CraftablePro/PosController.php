@@ -9,6 +9,7 @@ use App\Http\Requests\CraftablePro\Pos\IndexPosRequest;
 use App\Http\Requests\CraftablePro\Pos\SearchPosRequest;
 use App\Models\Customer;
 use App\Models\Item;
+use App\Models\ItemCategory;
 use App\Models\PaymentMethod;
 use App\Services\PosService;
 use App\Settings\ShopSettings;
@@ -36,26 +37,30 @@ class PosController extends Controller
                     'id'    => $c->id,
                     'label' => $this->customerName($c) . " ({$c->code})",
                 ]),
+            'categories'      => ItemCategory::where('is_active', true)->orderBy('name')->get(['id', 'name']),
             'payment_methods' => PaymentMethod::orderBy('name')->get(['id', 'name']),
             'currency'        => $settings->currency_symbol,
             'receipt'         => session('pos_receipt'),
         ]);
     }
 
-    /** Live item search (name / SKU) — only sellable items (active price). */
+    /** Item listing / search — sellable items (active price), optional query + category filter. */
     public function search(SearchPosRequest $request): JsonResponse
     {
-        $q = trim((string) ($request->validated()['q'] ?? ''));
+        $data       = $request->validated();
+        $q          = trim((string) ($data['q'] ?? ''));
+        $categoryId = $data['category_id'] ?? null;
 
         $items = Item::query()
             ->where('is_active', true)
             ->whereHas('prices', fn ($p) => $p->active())          // only sellable items
             ->with('activePrice')                                  // one extra query, no N+1
+            ->when($categoryId, fn ($query) => $query->where('item_category_id', $categoryId))
             ->when($q !== '', fn ($query) => $query->where(fn ($w) => $w
                 ->where('name', 'like', "%{$q}%")
                 ->orWhere('sku_code', 'like', "%{$q}%")))
             ->orderBy('name')
-            ->limit(30)
+            ->limit(60)
             ->get(['id', 'name', 'sku_code', 'is_service', 'current_stock_quantity']);
 
         $results = $items->map(fn (Item $item) => [

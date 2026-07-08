@@ -143,6 +143,18 @@ class Item extends Model implements HasMedia
         return $this->hasMany(Price::class);
     }
 
+    /**
+     * The current sellable price — newest row that passes the active() window
+     * (is_active + start/end time). Used by the POS / catalog.
+     */
+    public function activePrice(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Price::class)->ofMany(
+            ['id' => 'max'],
+            fn ($query) => $query->active(),
+        );
+    }
+
     public function orderLines(): \Illuminate\Database\Eloquent\Relations\HasMany
     {
         return $this->hasMany(OrderLine::class);

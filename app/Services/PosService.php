@@ -130,7 +130,7 @@ class PosService
 
         do {
             $candidate = $base . str_pad((string) $seq++, 4, '0', STR_PAD_LEFT);
-        } while (OrderHeader::where('order_no', $candidate)->exists());
+        } while     (OrderHeader::where('order_no', $candidate)->exists());
 
         return $candidate;
     }

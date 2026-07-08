@@ -31,6 +31,11 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     /* Shop settings (currency, tax, negative-stock policy) */
     Route::get('settings/shop', [App\Http\Controllers\CraftablePro\ShopSettingsController::class, 'edit'])->name('settings.shop.edit');
     Route::match(['put', 'patch'], 'settings/shop', [App\Http\Controllers\CraftablePro\ShopSettingsController::class, 'update'])->name('settings.shop.update');
+
+    /* Point of Sale */
+    Route::get('pos', [App\Http\Controllers\CraftablePro\PosController::class, 'index'])->name('pos');
+    Route::get('pos/search', [App\Http\Controllers\CraftablePro\PosController::class, 'search'])->name('pos.search');
+    Route::post('pos/checkout', [App\Http\Controllers\CraftablePro\PosController::class, 'checkout'])->name('pos.checkout');
 });
 
 
