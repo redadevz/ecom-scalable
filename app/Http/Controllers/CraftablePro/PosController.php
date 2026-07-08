@@ -54,11 +54,12 @@ class PosController extends Controller
         $items = Item::query()
             ->where('is_active', true)
             ->whereHas('prices', fn ($p) => $p->active())          // only sellable items
-            ->with('activePrice')                                  // one extra query, no N+1
+            ->with(['activePrice', 'media'])                       // no N+1 (price + image)
             ->when($categoryId, fn ($query) => $query->where('item_category_id', $categoryId))
             ->when($q !== '', fn ($query) => $query->where(fn ($w) => $w
                 ->where('name', 'like', "%{$q}%")
-                ->orWhere('sku_code', 'like', "%{$q}%")))
+                ->orWhere('sku_code', 'like', "%{$q}%")
+                ->orWhereHas('barCodes', fn ($b) => $b->where('bar_code', 'like', "%{$q}%"))))
             ->orderBy('name')
             ->limit(60)
             ->get(['id', 'name', 'sku_code', 'is_service', 'current_stock_quantity']);
@@ -70,6 +71,7 @@ class PosController extends Controller
             'is_service' => (bool) $item->is_service,
             'stock'      => (int) $item->current_stock_quantity,
             'unit_price' => (float) $item->activePrice->price_after_tax,
+            'image_url'  => $item->images_url ?: null,
         ]);
 
         return response()->json($results);

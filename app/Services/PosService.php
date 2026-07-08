@@ -51,6 +51,9 @@ class PosService
             $this->orders->confirm($order);
             $order = $order->fresh();
 
+            $this->applyManualDiscount($order, $data['discount'] ?? null);
+            $order = $order->fresh();
+
             $invoice = $this->invoices->generate($order);
 
             $total = (float) $order->price;
@@ -66,6 +69,40 @@ class PosService
                 'items'      => (int) collect($data['lines'])->sum('quantity'),
             ];
         });
+    }
+
+    /**
+     * Apply a manual counter discount on the whole order (after auto discounts).
+     *
+     * @param  array{type:string, value:float|int}|null  $discount  type: 'amount' | 'percent'
+     */
+    private function applyManualDiscount(OrderHeader $order, ?array $discount): void
+    {
+        if (! $discount) {
+            return;
+        }
+
+        $value = (float) ($discount['value'] ?? 0);
+        if ($value <= 0) {
+            return;
+        }
+
+        $base   = (float) $order->price;
+        $amount = ($discount['type'] ?? 'amount') === 'percent'
+            ? $base * ($value / 100)
+            : $value;
+
+        $amount = round(min($amount, $base), 3); // never discount below zero
+        if ($amount <= 0) {
+            return;
+        }
+
+        $order->update([
+            'order_discount'       => round((float) $order->order_discount + $amount, 3),
+            'total_discount_value' => round((float) $order->total_discount_value + $amount, 3),
+            'price_after_discount' => round($base - $amount, 3),
+            'price'                => round($base - $amount, 3),
+        ]);
     }
 
     private function defaultLookups(?int $paymentMethodId): array

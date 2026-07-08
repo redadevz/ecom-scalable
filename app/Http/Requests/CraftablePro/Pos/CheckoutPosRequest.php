@@ -33,6 +33,9 @@ class CheckoutPosRequest extends FormRequest
             'lines'             => ['required', 'array', 'min:1'],
             'lines.*.item_id'   => ['required', 'integer', 'exists:items,id'],
             'lines.*.quantity'  => ['required', 'integer', 'min:1'],
+            'discount'          => ['nullable', 'array'],
+            'discount.type'     => ['required_with:discount', 'in:amount,percent'],
+            'discount.value'    => ['required_with:discount', 'numeric', 'min:0'],
         ];
     }
 }
