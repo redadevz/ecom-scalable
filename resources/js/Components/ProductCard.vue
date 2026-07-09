@@ -8,7 +8,7 @@
 
         <!-- quick actions -->
         <div class="pointer-events-none absolute right-3 top-3 flex flex-col gap-2 opacity-0 transition group-hover:pointer-events-auto group-hover:opacity-100">
-            <button type="button" class="flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-md transition hover:bg-brand-500 hover:text-white" title="Add to cart">
+            <button type="button" @click="addToCart" :disabled="!product.in_stock" class="flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-md transition hover:bg-brand-500 hover:text-white disabled:opacity-50" title="Add to cart">
                 <ShoppingCartIcon class="h-4 w-4" />
             </button>
             <Link :href="`/products/${product.id}`" class="flex h-9 w-9 items-center justify-center rounded-full bg-white text-gray-600 shadow-md transition hover:bg-brand-500 hover:text-white" title="View">
@@ -37,6 +37,7 @@ import { computed } from 'vue';
 import { Link } from '@inertiajs/vue3';
 import { ShoppingCartIcon, EyeIcon } from '@heroicons/vue/24/outline';
 import { StarIcon } from '@heroicons/vue/24/solid';
+import { useCart } from '@/stores/cart';
 
 const props = defineProps({
     product: { type: Object, required: true },
@@ -44,6 +45,10 @@ const props = defineProps({
 });
 
 const money = (v) => Number(v ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + props.currency;
+
+function addToCart() {
+    useCart().add(props.product.id, 1);
+}
 // Decorative, stable per-product rating (no reviews table wired yet).
 const rating = computed(() => 4 + (props.product.id % 2));
 const reviews = computed(() => 10 + ((props.product.id * 7) % 90));

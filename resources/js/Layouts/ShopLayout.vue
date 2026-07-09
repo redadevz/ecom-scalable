@@ -24,6 +24,9 @@
         <!-- main header -->
         <header class="sticky top-0 z-40 border-b border-gray-100 bg-white/95 backdrop-blur">
             <div class="mx-auto flex max-w-7xl items-center gap-4 px-4 py-4">
+                <button type="button" @click="mobileOpen = true" class="-ml-1 rounded-lg p-2 text-gray-600 transition hover:bg-gray-100 lg:hidden" aria-label="Menu">
+                    <Bars3Icon class="h-6 w-6" />
+                </button>
                 <Link href="/" class="flex items-center gap-2 text-2xl font-extrabold tracking-tight text-gray-900">
                     <span class="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-brand-500 to-orange-600 text-white shadow-sm">
                         <ShoppingBagIcon class="h-5 w-5" />
@@ -41,14 +44,14 @@
                 </form>
 
                 <div class="ml-auto flex items-center gap-2 sm:gap-5">
-                    <button type="button" class="flex items-center gap-2 text-gray-700 transition hover:text-brand-600">
+                    <button type="button" @click="cart.open()" class="flex items-center gap-2 text-gray-700 transition hover:text-brand-600">
                         <span class="relative">
                             <ShoppingCartIcon class="h-6 w-6" />
-                            <span v-if="cartCount" class="absolute -right-1.5 -top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-500 px-1 text-[10px] font-bold text-white">{{ cartCount }}</span>
+                            <span v-if="cart.state.count" class="absolute -right-1.5 -top-1.5 flex h-4 min-w-[1rem] items-center justify-center rounded-full bg-brand-500 px-1 text-[10px] font-bold text-white">{{ cart.state.count }}</span>
                         </span>
                         <span class="hidden text-left sm:block">
                             <span class="block text-[11px] text-gray-400">Cart</span>
-                            <span class="block text-sm font-semibold">{{ cartCount }} items</span>
+                            <span class="block text-sm font-semibold">{{ cart.state.count }} items</span>
                         </span>
                     </button>
                     <a href="/admin" class="flex items-center gap-2 text-gray-700 transition hover:text-brand-600">
@@ -92,13 +95,6 @@
                 </div>
             </div>
         </header>
-
-        <!-- flash -->
-        <div v-if="flash.message || flash.error" class="mx-auto mt-4 w-full max-w-7xl px-4">
-            <div class="rounded-xl px-4 py-3 text-sm font-medium" :class="flash.error ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'">
-                {{ flash.error || flash.message }}
-            </div>
-        </div>
 
         <!-- page -->
         <main class="flex-1">
@@ -164,25 +160,69 @@
                 </div>
             </div>
         </footer>
+
+        <!-- mobile menu -->
+        <Transition enter-active-class="transition-opacity duration-200" enter-from-class="opacity-0" leave-active-class="transition-opacity duration-200" leave-to-class="opacity-0">
+            <div v-if="mobileOpen" class="fixed inset-0 z-[60] lg:hidden">
+                <div class="absolute inset-0 bg-black/40" @click="mobileOpen = false"></div>
+                <Transition appear enter-active-class="transition-transform duration-300 ease-out" enter-from-class="-translate-x-full" leave-active-class="transition-transform duration-200 ease-in" leave-to-class="-translate-x-full">
+                    <aside v-if="mobileOpen" class="absolute left-0 top-0 flex h-full w-80 max-w-[85%] flex-col bg-white shadow-2xl">
+                        <div class="flex items-center justify-between border-b border-gray-100 px-5 py-4">
+                            <span class="text-lg font-extrabold text-gray-900">{{ appName }}<span class="text-brand-500">.</span></span>
+                            <button type="button" @click="mobileOpen = false" class="rounded-full p-1.5 text-gray-400 hover:bg-gray-100"><XMarkIcon class="h-5 w-5" /></button>
+                        </div>
+                        <form class="border-b border-gray-100 p-4" @submit.prevent="search">
+                            <div class="relative">
+                                <MagnifyingGlassIcon class="pointer-events-none absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-gray-400" />
+                                <input v-model="q" type="text" placeholder="Search products…" class="w-full rounded-full border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm focus:border-brand-500 focus:ring-2 focus:ring-brand-500/20" />
+                            </div>
+                        </form>
+                        <nav class="flex-1 overflow-y-auto p-2">
+                            <Link href="/products" @click="mobileOpen = false" class="block rounded-lg px-3 py-2.5 text-sm font-semibold text-gray-900 hover:bg-brand-50">All products</Link>
+                            <p class="px-3 pb-1 pt-4 text-xs font-semibold uppercase tracking-wide text-gray-400">Categories</p>
+                            <Link v-for="c in categories" :key="c.id" :href="`/products?category=${c.id}`" @click="mobileOpen = false" class="flex items-center justify-between rounded-lg px-3 py-2.5 text-sm text-gray-600 hover:bg-brand-50 hover:text-brand-600">
+                                {{ c.name }} <ChevronRightIcon class="h-4 w-4 text-gray-300" />
+                            </Link>
+                        </nav>
+                        <a href="/admin" class="border-t border-gray-100 px-5 py-4 text-sm font-medium text-gray-600 hover:text-brand-600">Staff login →</a>
+                    </aside>
+                </Transition>
+            </div>
+        </Transition>
+
+        <CartDrawer />
+        <ToastContainer />
     </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { router, usePage, Link } from '@inertiajs/vue3';
-import { ShoppingBagIcon, ShoppingCartIcon, MagnifyingGlassIcon, UserCircleIcon, MapPinIcon, PhoneIcon, EnvelopeIcon, Bars3Icon, ChevronDownIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
+import { ShoppingBagIcon, ShoppingCartIcon, MagnifyingGlassIcon, UserCircleIcon, MapPinIcon, PhoneIcon, EnvelopeIcon, Bars3Icon, ChevronDownIcon, ChevronRightIcon, XMarkIcon } from '@heroicons/vue/24/outline';
+import { useCart } from '@/stores/cart';
+import { useToast } from '@/stores/toast';
+import CartDrawer from '@/Components/CartDrawer.vue';
+import ToastContainer from '@/Components/ToastContainer.vue';
 
 const page = usePage();
 const appName = computed(() => page.props.appName ?? 'Shop');
 const categories = computed(() => page.props.categories ?? []);
-const cartCount = computed(() => page.props.cartCount ?? 0);
 const currency = computed(() => page.props.currency ?? 'USD');
-const flash = computed(() => page.props.flash ?? {});
 const year = new Date().getFullYear();
 const catOpen = ref(false);
+const mobileOpen = ref(false);
+
+const cart = useCart();
+onMounted(() => cart.init({ count: page.props.cartCount ?? 0, currency: page.props.currency ?? 'DH' }));
+// keep the badge in sync after any Inertia navigation that changed the session cart
+watch(() => page.props.cartCount, (c) => { if (c != null) cart.state.count = c; });
+// surface server flash messages (e.g. checkout) as toasts
+watch(() => page.props.flash?.message, (m) => m && useToast().show(m));
+watch(() => page.props.flash?.error, (m) => m && useToast().show(m, 'error'));
 
 const q = ref(new URLSearchParams(window.location.search).get('q') ?? '');
 function search() {
+    mobileOpen.value = false;
     router.get('/products', { q: q.value || undefined }, { preserveState: false });
 }
 </script>

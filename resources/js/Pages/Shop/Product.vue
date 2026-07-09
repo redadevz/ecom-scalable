@@ -48,9 +48,9 @@
                         <span class="w-10 text-center text-sm font-semibold tabular-nums">{{ qty }}</span>
                         <button type="button" @click="qty++" class="flex h-11 w-11 items-center justify-center text-gray-500 hover:text-brand-600"><PlusIcon class="h-4 w-4" /></button>
                     </div>
-                    <button type="button" :disabled="!product.in_stock"
+                    <button type="button" @click="addToCart" :disabled="!product.in_stock || adding"
                         class="inline-flex flex-1 items-center justify-center gap-2 rounded-full bg-brand-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-brand-500/25 transition hover:bg-brand-600 disabled:cursor-not-allowed disabled:opacity-50">
-                        <ShoppingCartIcon class="h-5 w-5" /> Add to cart
+                        <ShoppingCartIcon class="h-5 w-5" /> {{ adding ? 'Adding…' : 'Add to cart' }}
                     </button>
                 </div>
                 <!-- trust badges -->
@@ -87,6 +87,7 @@ import { Head, Link } from '@inertiajs/vue3';
 import { ChevronRightIcon, CheckCircleIcon, ShoppingCartIcon, PlusIcon, MinusIcon, TruckIcon, ShieldCheckIcon, ArrowPathIcon } from '@heroicons/vue/24/outline';
 import { StarIcon } from '@heroicons/vue/24/solid';
 import ProductCard from '@/Components/ProductCard.vue';
+import { useCart } from '@/stores/cart';
 
 const props = defineProps({
     product: { type: Object, required: true },
@@ -95,6 +96,12 @@ const props = defineProps({
 });
 
 const qty = ref(1);
+const adding = ref(false);
+async function addToCart() {
+    adding.value = true;
+    try { await useCart().add(props.product.id, qty.value); }
+    finally { adding.value = false; }
+}
 const rating = computed(() => 4 + (props.product.id % 2));
 const reviews = computed(() => 10 + ((props.product.id * 7) % 90));
 const money = (v) => Number(v ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + props.currency;

@@ -11,6 +11,18 @@ Route::middleware(\App\Http\Middleware\HandleInertiaRequests::class)->group(func
     Route::get('/', [App\Http\Controllers\Shop\CatalogController::class, 'home'])->name('shop.home');
     Route::get('/products', [App\Http\Controllers\Shop\CatalogController::class, 'index'])->name('shop.products');
     Route::get('/products/{item}', [App\Http\Controllers\Shop\CatalogController::class, 'show'])->name('shop.product');
+
+    /* Cart */
+    Route::get('/cart', [App\Http\Controllers\Shop\CartController::class, 'index'])->name('shop.cart');
+    Route::get('/cart/data', [App\Http\Controllers\Shop\CartController::class, 'data'])->name('shop.cart.data');
+    Route::post('/cart', [App\Http\Controllers\Shop\CartController::class, 'add'])->name('shop.cart.add');
+    Route::patch('/cart/{item}', [App\Http\Controllers\Shop\CartController::class, 'update'])->name('shop.cart.update');
+    Route::delete('/cart/{item}', [App\Http\Controllers\Shop\CartController::class, 'remove'])->name('shop.cart.remove');
+
+    /* Checkout */
+    Route::get('/checkout', [App\Http\Controllers\Shop\CheckoutController::class, 'show'])->name('shop.checkout');
+    Route::post('/checkout', [App\Http\Controllers\Shop\CheckoutController::class, 'store'])->name('shop.checkout.store');
+    Route::get('/checkout/success', [App\Http\Controllers\Shop\CheckoutController::class, 'success'])->name('shop.checkout.success');
 });
 
 
