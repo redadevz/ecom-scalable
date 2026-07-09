@@ -41,20 +41,38 @@ class CatalogController extends Controller
     {
         $q          = trim((string) $request->get('q', ''));
         $categoryId = $request->integer('category') ?: null;
+        $sort       = in_array($request->get('sort'), ['newest', 'name', 'price_low', 'price_high'], true)
+            ? $request->get('sort')
+            : 'newest';
+
+        // Correlated subquery: the active price of each item (for price sorting).
+        $priceSub = \App\Models\Price::query()
+            ->select('price_after_tax')
+            ->whereColumn('prices.item_id', 'items.id')
+            ->active()
+            ->orderByDesc('id')
+            ->limit(1);
 
         $products = $this->sellable()
             ->when($categoryId, fn (Builder $b) => $b->where('item_category_id', $categoryId))
             ->when($q !== '', fn (Builder $b) => $b->where(fn ($w) => $w
                 ->where('name', 'like', "%{$q}%")
                 ->orWhere('sku_code', 'like', "%{$q}%")))
-            ->orderBy('name')
+            ->when($sort === 'name', fn (Builder $b) => $b->orderBy('name'))
+            ->when($sort === 'newest', fn (Builder $b) => $b->latest('id'))
+            ->when($sort === 'price_low', fn (Builder $b) => $b->orderBy($priceSub, 'asc'))
+            ->when($sort === 'price_high', fn (Builder $b) => $b->orderByDesc($priceSub))
             ->paginate(12)
             ->withQueryString()
             ->through(fn (Item $i) => $this->card($i));
 
         return Inertia::render('Shop/Catalog', [
-            'products' => $products,
-            'filters'  => ['q' => $q, 'category' => $categoryId],
+            'products'   => $products,
+            'categories' => \App\Models\ItemCategory::where('is_active', true)
+                ->withCount(['items' => fn ($x) => $x->where('is_active', true)])
+                ->orderBy('name')
+                ->get(['id', 'name']),
+            'filters'  => ['q' => $q, 'category' => $categoryId, 'sort' => $sort],
             'currency' => $settings->currency_symbol,
         ]);
     }

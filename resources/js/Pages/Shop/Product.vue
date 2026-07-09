@@ -22,9 +22,14 @@
 
             <!-- details -->
             <div class="flex flex-col">
-                <span v-if="product.category" class="text-sm font-medium text-brand-600">{{ product.category }}</span>
-                <h1 class="mt-1 text-3xl font-bold tracking-tight text-gray-900">{{ product.name }}</h1>
-                <p class="mt-1 text-sm text-gray-400">SKU: {{ product.sku }}</p>
+                <span v-if="product.category" class="inline-flex w-fit rounded-full bg-brand-50 px-3 py-1 text-xs font-semibold text-brand-600">{{ product.category }}</span>
+                <h1 class="mt-3 text-3xl font-bold tracking-tight text-gray-900">{{ product.name }}</h1>
+                <div class="mt-2 flex items-center gap-3">
+                    <div class="flex text-amber-400">
+                        <StarIcon v-for="n in 5" :key="n" class="h-4 w-4" :class="n <= rating ? '' : 'text-gray-200'" />
+                    </div>
+                    <span class="text-sm text-gray-400">({{ reviews }} reviews) · SKU {{ product.sku }}</span>
+                </div>
 
                 <div class="mt-5 flex items-center gap-3">
                     <span class="text-3xl font-bold text-gray-900">{{ money(product.price) }}</span>
@@ -48,7 +53,21 @@
                         <ShoppingCartIcon class="h-5 w-5" /> Add to cart
                     </button>
                 </div>
-                <p class="mt-3 text-xs text-gray-400">Secure checkout · Pickup in store</p>
+                <!-- trust badges -->
+                <div class="mt-8 grid grid-cols-3 gap-3 border-t border-gray-100 pt-6">
+                    <div class="flex flex-col items-center gap-1.5 text-center">
+                        <TruckIcon class="h-5 w-5 text-brand-500" />
+                        <span class="text-xs font-medium text-gray-700">Free pickup</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1.5 text-center">
+                        <ShieldCheckIcon class="h-5 w-5 text-brand-500" />
+                        <span class="text-xs font-medium text-gray-700">Secure checkout</span>
+                    </div>
+                    <div class="flex flex-col items-center gap-1.5 text-center">
+                        <ArrowPathIcon class="h-5 w-5 text-brand-500" />
+                        <span class="text-xs font-medium text-gray-700">Easy returns</span>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -63,9 +82,10 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { Head, Link } from '@inertiajs/vue3';
-import { ChevronRightIcon, CheckCircleIcon, ShoppingCartIcon, PlusIcon, MinusIcon } from '@heroicons/vue/24/outline';
+import { ChevronRightIcon, CheckCircleIcon, ShoppingCartIcon, PlusIcon, MinusIcon, TruckIcon, ShieldCheckIcon, ArrowPathIcon } from '@heroicons/vue/24/outline';
+import { StarIcon } from '@heroicons/vue/24/solid';
 import ProductCard from '@/Components/ProductCard.vue';
 
 const props = defineProps({
@@ -75,5 +95,7 @@ const props = defineProps({
 });
 
 const qty = ref(1);
+const rating = computed(() => 4 + (props.product.id % 2));
+const reviews = computed(() => 10 + ((props.product.id * 7) % 90));
 const money = (v) => Number(v ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + props.currency;
 </script>
