@@ -2,8 +2,15 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+/*
+|--------------------------------------------------------------------------
+| Storefront (public, Inertia + Vue) — Step 22 catalog
+|--------------------------------------------------------------------------
+*/
+Route::middleware(\App\Http\Middleware\HandleInertiaRequests::class)->group(function () {
+    Route::get('/', [App\Http\Controllers\Shop\CatalogController::class, 'home'])->name('shop.home');
+    Route::get('/products', [App\Http\Controllers\Shop\CatalogController::class, 'index'])->name('shop.products');
+    Route::get('/products/{item}', [App\Http\Controllers\Shop\CatalogController::class, 'show'])->name('shop.product');
 });
 
 

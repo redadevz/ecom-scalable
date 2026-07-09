@@ -2,6 +2,8 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\ItemCategory;
+use App\Settings\ShopSettings;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -27,7 +29,7 @@ class HandleInertiaRequests extends Middleware
     }
 
     /**
-     * Define the props that are shared by default.
+     * Define the props that are shared by default (storefront).
      *
      * @see https://inertiajs.com/shared-data
      *
@@ -37,7 +39,16 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            //
+            'appName'    => config('app.name', 'Shop'),
+            'currency'   => fn () => app(ShopSettings::class)->currency_symbol,
+            'categories' => fn () => ItemCategory::where('is_active', true)
+                ->orderBy('name')
+                ->get(['id', 'name']),
+            'cartCount'  => fn () => collect($request->session()->get('cart', []))->sum('quantity'),
+            'flash'      => [
+                'message' => fn () => $request->session()->get('message'),
+                'error'   => fn () => $request->session()->get('error'),
+            ],
         ];
     }
 }
