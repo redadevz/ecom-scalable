@@ -5,7 +5,7 @@ Each step lists the **files** and the **goal** so you can build it yourself.
 
 Legend: ✅ done · 🔨 in progress · ⬜ to do
 
-**Current position:** Steps 0–20b ✅ complete (admin app fully built + hardened + business roles) · Steps 21+ (customer storefront) not started. Test suite: **35 green**.
+**Current position:** Steps 0–20c ✅ complete (admin fully built + hardened + business roles + Point of Sale) · Steps 21+ (customer storefront) not started. Test suite: **44 green**.
 
 > Tech: Laravel 12 · Craftable PRO (Inertia + Vue 3 + Tailwind) · MySQL · Sail
 > Rebuild front-end after any `.vue` change: `./vendor/bin/sail npm run craftable-pro:build`
@@ -182,6 +182,25 @@ Legend: ✅ done · 🔨 in progress · ⬜ to do
 - Assign via **Access** (users) → edit user → pick role
 - **`database/seeders/UsersSeeder.php`** — one demo user per role (idempotent, matches on email; all passwords `password`; wired into `DatabaseSeeder` after `RolesSeeder`). **Change passwords before any real deployment.**
   - `manager@shop.test` → Store Manager · `inventory@shop.test` → Inventory Manager · `cashier@shop.test` → Cashier · `accountant@shop.test` → Accountant
+
+---
+
+### Step 20c — Point of Sale (POS) 🛒 ✅
+A dedicated counter/till screen that drives the **same tested engine** as the admin (no new business logic in the checkout path). Route `craftable-pro.pos`, sidebar link (gated by `order-headers.create`), page `Pages/Pos/Index.vue`.
+
+- **Thin controller + service split** — `PosController` handles only HTTP (render, item search, map domain errors → 422); `App\Services\PosService::checkout()` orchestrates the sale in one transaction: draft `OrderHeader`/`OrderLine`s → `OrderService@confirm` (price + stock-out + totals) → `InvoiceService@generate` → `PaymentService@record`. Cashier id passed in (no `auth()` coupling).
+- **Form requests** — `Pos\{Index,Search,Checkout,OpenTill,CloseTill}Request`; `CheckoutPosRequest::authorize()` consolidates the whole gate chain (`order-headers.create/confirm/invoice` + `invoices.pay` only when charging).
+- **Item search** — `GET pos/search` returns sellable items (active price only, via `Item::activePrice()` one-of-many relation → no N+1). Default listing + **category filter** + name/SKU/**barcode** match.
+- **Barcode scanning** — search box matches `bar_codes.bar_code`; pressing **Enter** (how scanners submit) does an exact-ish lookup and auto-adds when it resolves to a single item. Reusable `pos:attach-images {dir} {--fresh}` artisan command seeds item thumbnails; test barcodes generated with `zint` (Code 128).
+- **Product images** — thumbnails in the grid (`images_url` accessor, eager-loaded `media`), branded letter placeholder when none.
+- **Counter discount** — whole-order discount (amount or %), applied in `PosService::applyManualDiscount` after confirm, clamped ≥ 0; validated. (Per-line discount intentionally deferred — would need an `OrderService` change.)
+- **Split / partial payment** — multiple method+amount tenders per sale; records each via `PaymentService::record`; invoice marked paid only when covered (partial → unpaid).
+- **Hold / park sale** — client-side, persisted to `localStorage` (survives reloads/checkouts); **Parked (N)** list to resume/discard.
+- **Receipt** — success overlay + **Print** (self-contained thermal-width receipt via `window.open`, no deps).
+- **Cash register / till (X/Z report)** — new `till_sessions` table + `TillSession` model + `App\Services\TillService` + `Pages/Pos/Till.vue`. Open with a **starting float** → live **X report** (opening float, cash vs card sales, expected drawer) → close with **counted cash** → **Z report** with over/short **variance**; recent-sessions table. (Informational — checkout does not yet require an open register.)
+- **Tests** — `tests/Feature/Services/PosServiceTest.php` (8): checkout builds→confirms→invoices→pays + removes stock, % and fixed discount, discount clamp, unpaid (no pay_now), split covers→paid, partial→unpaid, insufficient-stock blocks. **Full suite: 44 green.**
+
+> ✅ **Step 20c complete** — POS with barcode scan, images, discounts, split payment, hold, printable receipt, and cash-register reconciliation.
 
 ---
 
