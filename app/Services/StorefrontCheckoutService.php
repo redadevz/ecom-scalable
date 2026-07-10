@@ -77,6 +77,18 @@ class StorefrontCheckoutService
 
     private function customer(Store $store, array $data): Customer
     {
+        // Reuse an existing record (email/phone are unique) so a repeat guest
+        // checkout doesn't hit a duplicate-key error or spawn duplicates.
+        $existing = Customer::query()
+            ->when(! empty($data['email']), fn ($q) => $q->where('email', $data['email']))
+            ->when(empty($data['email']), fn ($q) => $q->where('phone', $data['phone']))
+            ->first()
+            ?? Customer::where('phone', $data['phone'])->first();
+
+        if ($existing) {
+            return $this->updateAccount($existing, $data);
+        }
+
         return Customer::create([
             'city_id'              => $store->city_id ?? City::orderBy('id')->value('id'),
             'created_at_store_id'  => $store->id,

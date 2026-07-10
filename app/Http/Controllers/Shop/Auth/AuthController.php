@@ -64,8 +64,11 @@ class AuthController extends Controller
             'first_name' => ['required', 'string', 'max:50'],
             'last_name'  => ['required', 'string', 'max:50'],
             'email'      => ['required', 'email', 'max:255', 'unique:customers,email'],
-            'phone'      => ['required', 'string', 'max:50'],
+            'phone'      => ['required', 'string', 'max:50', 'unique:customers,phone'],
             'password'   => ['required', 'confirmed', Password::defaults()],
+        ], [
+            'email.unique' => 'An account with this email already exists.',
+            'phone.unique' => 'An account with this phone number already exists.',
         ]);
 
         $store = Store::orderBy('id')->first();
