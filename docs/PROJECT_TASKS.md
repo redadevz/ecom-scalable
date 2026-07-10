@@ -5,7 +5,7 @@ Each step lists the **files** and the **goal** so you can build it yourself.
 
 Legend: ✅ done · 🔨 in progress · ⬜ to do
 
-**Current position:** Steps 0–20c ✅ complete (admin fully built + hardened + business roles + Point of Sale) · Steps 21+ (customer storefront) not started. Test suite: **44 green**.
+**Current position:** Steps 0–20c ✅ (admin + POS) · Steps **21, 22, 24 ✅** (storefront: catalog + cart + checkout, live at `/`) · **23 (accounts), 25 (post-purchase) not started**. Test suite: **44 green** (⚠️ storefront cart/checkout services not yet tested). Next backend priorities: storefront service tests · one-active-price guard · customer accounts · order-confirmation email.
 
 > Tech: Laravel 12 · Craftable PRO (Inertia + Vue 3 + Tailwind) · MySQL · Sail
 > Rebuild front-end after any `.vue` change: `./vendor/bin/sail npm run craftable-pro:build`
@@ -202,21 +202,37 @@ A dedicated counter/till screen that drives the **same tested engine** as the ad
 
 > ✅ **Step 20c complete** — POS with barcode scan, images, discounts, split payment, hold, printable receipt, and cash-register reconciliation.
 
+### Step 20d — Admin UX: modal CRUD 🪟 🚧 (pilot)
+- Simple lookup modules should add/edit in a **modal** instead of a routed Create/Edit page (keep full pages for rich entities — Items, Orders, Purchases, Customers, Suppliers, Prices).
+- **Pilot done: Measure Units** — Index hosts one externally-controlled modal; native Inertia `useForm` switches between `store`/`update`; errors show in-modal (inputs read `usePage().props.errors`), success toasts + closes. Non-destructive (Create/Edit pages + routes left intact).
+- **Rollout pending** (mechanical): Item Categories, Tax Types, Sale/Delivery/Payment types, Order Statuses, Discount Types, Loyalty Card Types, Countries/Regions/Cities/Time Zones, Currencies, Languages, Holidays. Decide whether to delete the now-unused Create/Edit pages as we go.
+
 ---
 
 ## After the admin is solid — Customer storefront
 
-### Step 21 — Decide approach ⬜
-- Same Laravel app (public routes + Inertia/Blade + Sanctum/Fortify) vs separate SPA — recommend same app
+### Step 21 — Decide approach ✅
+- **Chosen: same Laravel app, second Inertia + Vue root** (separate from the admin). Root `resources/views/app.blade.php` + entry `resources/js/app.js` (`createInertiaApp`, persistent `ShopLayout`). Public routes in `routes/web.php` under `App\Http\Middleware\HandleInertiaRequests` (shares `appName`, `currency`, `categories`, `cartCount`, `flash`).
+- **Build split** — storefront builds to `public/build-shop` via `buildDirectory: 'build-shop'` (its `@vite(...,'build-shop')`); admin stays `public/build`. Fixes a latent bug where the two builds clobbered each other's `manifest.json`.
+- **Tailwind** — storefront compiles with the installed **v3** (PostCSS + `tailwind.config.js`, `brand` orange palette); admin unchanged. (`npm run build` had never worked before — v3/v4 conflict.)
 
-### Step 22 — Public catalog ⬜
-- Product list, product detail, category browse + search + filters
+### Step 22 — Public catalog ✅
+- `App\Http\Controllers\Shop\CatalogController` (home / index / show); `Item::activePrice()` one-of-many relation → sellable = active + active price, **no N+1**. Storefront uses **original** media (not the `preview` conversion).
+- **Home** (`/`) — gradient hero + product collage, feature strip, featured + new products, promo banners, **Shop by Category** (live item counts), FAQ, newsletter.
+- **Catalog** (`/products`) — sticky category sidebar, **sort** (newest / name / price ↑↓ via correlated price subquery), search, pagination (12/pg).
+- **Product** (`/products/{id}`) — image, price, stock, description, qty, related items, trust badges, (decorative) rating.
+- **Premium front-end pass** — `ShopLayout` (utility bar + mega header + search + orange category nav + rich footer), reusable `ProductCard` / `SectionHeading` / `Field`.
 
 ### Step 23 — Customer accounts ⬜
-- Register/login (Fortify installed; `customers.password` exists), profile, address book, order history
+- Register/login (Fortify installed; `customers.password` exists), profile, address book, order history. **(Not started — biggest remaining storefront gap: no login yet, and guest checkout creates a fresh Customer each time.)**
 
-### Step 24 — Cart & checkout ⬜
-- Cart → checkout creates `OrderHeader` + `OrderLine`s (reuse OrderService), online channel, payment gateway, confirmation email
+### Step 24 — Cart & checkout ✅
+- **`CartService`** (session cart, guest-friendly; drops unsellable items) + **`CartController`** — content-negotiated: **JSON for XHR** (mini-cart drawer), Inertia redirect for classic posts. Routes: `/cart` (page), `/cart/data` (JSON), POST/PATCH/DELETE.
+- **`StorefrontCheckoutService`** — creates a `Customer`, then drives the SAME engine as POS: draft order (Online channel, `WEB-` no.) → `OrderService@confirm` (price + **stock-out** + totals) → `InvoiceService@generate`. Left **unpaid (pay on pickup)** — no gateway yet.
+- **`CheckoutController`** (show / store / success) — validated guest details + delivery type; empty-cart guards. Pages: `Cart.vue`, `Checkout.vue`, `Confirmation.vue`.
+- **Senior-grade UX** — client cart store (`stores/cart.js`, fetch + CSRF, instant, no page reloads), slide-over **CartDrawer**, **toast** system (`stores/toast.js` + `ToastContainer`), responsive **mobile menu**. Add-to-cart opens the drawer + toasts; badge stays synced via a `cartCount` watch.
+- Online orders land in **admin → Order Headers**, fully confirmed + invoiced, alongside POS/counter sales. Verified end-to-end (`WEB-…` order, stock decremented, customer created).
+- ⚠️ **No storefront service tests yet** (`CartService`, `StorefrontCheckoutService`) — flagged as the next backend priority.
 
 ### Step 25 — Post-purchase ⬜
 - Order tracking, customer returns (→ SaleReturnService), reviews, loyalty points

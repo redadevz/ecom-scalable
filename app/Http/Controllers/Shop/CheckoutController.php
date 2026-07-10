@@ -10,6 +10,7 @@ use App\Services\StorefrontCheckoutService;
 use App\Settings\ShopSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -21,11 +22,21 @@ class CheckoutController extends Controller
             return redirect('/products');
         }
 
+        $customer = Auth::guard('customer')->user();
+
         return Inertia::render('Shop/Checkout', [
             'lines'         => $cart->lines(),
             'summary'       => $cart->summary(),
             'deliveryTypes' => DeliveryType::orderBy('name')->get(['id', 'name']),
             'currency'      => $settings->currency_symbol,
+            'prefill'       => $customer ? [
+                'first_name'      => $customer->first_name,
+                'last_name'       => $customer->last_name,
+                'phone'           => $customer->phone,
+                'email'           => $customer->email,
+                'billing_address' => $customer->billing_address,
+                'postal_code'     => $customer->postal_code,
+            ] : null,
         ]);
     }
 
@@ -48,7 +59,7 @@ class CheckoutController extends Controller
         ]);
 
         try {
-            $order = $checkout->place($lines, $data);
+            $order = $checkout->place($lines, $data, Auth::guard('customer')->user());
         } catch (InsufficientStockException $e) {
             return back()->with('error', 'Sorry, one or more items just went out of stock.');
         } catch (\RuntimeException $e) {

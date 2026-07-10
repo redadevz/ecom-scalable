@@ -54,13 +54,28 @@
                             <span class="block text-sm font-semibold">{{ cart.state.count }} items</span>
                         </span>
                     </button>
-                    <a href="/admin" class="flex items-center gap-2 text-gray-700 transition hover:text-brand-600">
+                    <div v-if="customer" class="relative" @mouseenter="acctOpen = true" @mouseleave="acctOpen = false">
+                        <Link href="/account" class="flex items-center gap-2 text-gray-700 transition hover:text-brand-600">
+                            <UserCircleIcon class="h-6 w-6" />
+                            <span class="hidden text-left sm:block">
+                                <span class="block text-[11px] text-gray-400">Account</span>
+                                <span class="block max-w-[7rem] truncate text-sm font-semibold">{{ customer.first_name }}</span>
+                            </span>
+                        </Link>
+                        <transition enter-active-class="transition duration-100" enter-from-class="opacity-0 -translate-y-1">
+                            <div v-if="acctOpen" class="absolute right-0 top-full z-50 w-44 overflow-hidden rounded-xl bg-white py-1 shadow-xl ring-1 ring-black/5">
+                                <Link href="/account" class="block px-4 py-2.5 text-sm text-gray-700 transition hover:bg-brand-50 hover:text-brand-600">My account</Link>
+                                <button type="button" @click="logout" class="block w-full px-4 py-2.5 text-left text-sm text-red-600 transition hover:bg-red-50">Sign out</button>
+                            </div>
+                        </transition>
+                    </div>
+                    <Link v-else href="/account/login" class="flex items-center gap-2 text-gray-700 transition hover:text-brand-600">
                         <UserCircleIcon class="h-6 w-6" />
                         <span class="hidden text-left sm:block">
                             <span class="block text-[11px] text-gray-400">Account</span>
                             <span class="block text-sm font-semibold">Sign in</span>
                         </span>
-                    </a>
+                    </Link>
                 </div>
             </div>
 
@@ -184,7 +199,11 @@
                                 {{ c.name }} <ChevronRightIcon class="h-4 w-4 text-gray-300" />
                             </Link>
                         </nav>
-                        <a href="/admin" class="border-t border-gray-100 px-5 py-4 text-sm font-medium text-gray-600 hover:text-brand-600">Staff login →</a>
+                        <div class="border-t border-gray-100">
+                            <Link v-if="customer" href="/account" @click="mobileOpen = false" class="block px-5 py-3.5 text-sm font-medium text-gray-700 hover:text-brand-600">My account</Link>
+                            <Link v-else href="/account/login" @click="mobileOpen = false" class="block px-5 py-3.5 text-sm font-medium text-gray-700 hover:text-brand-600">Sign in</Link>
+                            <a href="/admin" class="block px-5 py-3.5 text-sm font-medium text-gray-500 hover:text-brand-600">Staff login →</a>
+                        </div>
                     </aside>
                 </Transition>
             </div>
@@ -208,9 +227,15 @@ const page = usePage();
 const appName = computed(() => page.props.appName ?? 'Shop');
 const categories = computed(() => page.props.categories ?? []);
 const currency = computed(() => page.props.currency ?? 'USD');
+const customer = computed(() => page.props.auth?.customer ?? null);
 const year = new Date().getFullYear();
 const catOpen = ref(false);
+const acctOpen = ref(false);
 const mobileOpen = ref(false);
+
+function logout() {
+    router.post('/account/logout');
+}
 
 const cart = useCart();
 onMounted(() => cart.init({ count: page.props.cartCount ?? 0, currency: page.props.currency ?? 'DH' }));

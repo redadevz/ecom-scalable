@@ -11,7 +11,8 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware): void {
-        //
+        // Storefront customer-guard routes redirect guests to the shop login.
+        $middleware->redirectGuestsTo(fn () => route('shop.login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

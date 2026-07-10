@@ -33,15 +33,17 @@ class StorefrontCheckoutService
      * @param  array{first_name:string,last_name:string,phone:string,email?:string,billing_address:string,delivery_type_id?:int,notes?:string}  $data
      * @return array{order_no:string,total:float,name:string,email:?string,items:int,delivery:string}
      */
-    public function place(array $lines, array $data): array
+    public function place(array $lines, array $data, ?Customer $account = null): array
     {
         $store = Store::orderBy('id')->first();
         if (! $store) {
             throw new RuntimeException('No store configured.');
         }
 
-        return DB::transaction(function () use ($lines, $data, $store) {
-            $customer = $this->customer($store, $data);
+        return DB::transaction(function () use ($lines, $data, $store, $account) {
+            $customer = $account
+                ? $this->updateAccount($account, $data)
+                : $this->customer($store, $data);
 
             $delivery = DeliveryType::find($data['delivery_type_id'] ?? null)
                 ?? DeliveryType::where('name', 'Pickup')->first()
@@ -88,6 +90,20 @@ class StorefrontCheckoutService
             'is_registered_online' => true,
             'is_active'            => true,
         ]);
+    }
+
+    /** Existing logged-in customer — keep their record, refresh contact/address. */
+    private function updateAccount(Customer $customer, array $data): Customer
+    {
+        $customer->fill([
+            'first_name'      => $data['first_name'],
+            'last_name'       => $data['last_name'],
+            'phone'           => $data['phone'],
+            'billing_address' => $data['billing_address'],
+            'postal_code'     => $data['postal_code'] ?? $customer->postal_code,
+        ])->save();
+
+        return $customer;
     }
 
     private function draftOrder(Store $store, Customer $customer, array $lookups, ?string $notes): OrderHeader

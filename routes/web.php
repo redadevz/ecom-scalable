@@ -23,6 +23,18 @@ Route::middleware(\App\Http\Middleware\HandleInertiaRequests::class)->group(func
     Route::get('/checkout', [App\Http\Controllers\Shop\CheckoutController::class, 'show'])->name('shop.checkout');
     Route::post('/checkout', [App\Http\Controllers\Shop\CheckoutController::class, 'store'])->name('shop.checkout.store');
     Route::get('/checkout/success', [App\Http\Controllers\Shop\CheckoutController::class, 'success'])->name('shop.checkout.success');
+
+    /* Customer accounts (dedicated `customer` guard, /account/* to avoid Fortify) */
+    Route::get('/account/login', [App\Http\Controllers\Shop\Auth\AuthController::class, 'showLogin'])->name('shop.login');
+    Route::post('/account/login', [App\Http\Controllers\Shop\Auth\AuthController::class, 'login'])->name('shop.login.attempt');
+    Route::get('/account/register', [App\Http\Controllers\Shop\Auth\AuthController::class, 'showRegister'])->name('shop.register');
+    Route::post('/account/register', [App\Http\Controllers\Shop\Auth\AuthController::class, 'register'])->name('shop.register.store');
+
+    Route::middleware('auth:customer')->group(function () {
+        Route::post('/account/logout', [App\Http\Controllers\Shop\Auth\AuthController::class, 'logout'])->name('shop.logout');
+        Route::get('/account', [App\Http\Controllers\Shop\AccountController::class, 'index'])->name('shop.account');
+        Route::patch('/account', [App\Http\Controllers\Shop\AccountController::class, 'updateProfile'])->name('shop.account.update');
+    });
 });
 
 

@@ -9,6 +9,11 @@
         </nav>
         <h1 class="mt-2 text-2xl font-bold tracking-tight text-gray-900">Checkout</h1>
 
+        <div v-if="!prefill" class="mt-4 flex flex-wrap items-center justify-between gap-2 rounded-xl bg-brand-50 px-4 py-3 text-sm text-brand-800">
+            <span>Have an account? Sign in for faster checkout.</span>
+            <Link href="/account/login" class="font-semibold text-brand-700 hover:underline">Sign in →</Link>
+        </div>
+
         <form @submit.prevent="submit" class="mt-6 grid gap-8 lg:grid-cols-3">
             <!-- details -->
             <div class="space-y-6 lg:col-span-2">
@@ -78,6 +83,7 @@ const props = defineProps({
     lines: { type: Array, default: () => [] },
     summary: { type: Object, default: () => ({}) },
     deliveryTypes: { type: Array, default: () => [] },
+    prefill: { type: Object, default: null },
     currency: { type: String, default: 'DH' },
 });
 
@@ -85,12 +91,12 @@ const input = 'w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 tex
 const money = (v) => Number(v ?? 0).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' ' + props.currency;
 
 const form = useForm({
-    first_name: '',
-    last_name: '',
-    phone: '',
-    email: '',
-    billing_address: '',
-    postal_code: '',
+    first_name: props.prefill?.first_name ?? '',
+    last_name: props.prefill?.last_name ?? '',
+    phone: props.prefill?.phone ?? '',
+    email: props.prefill?.email ?? '',
+    billing_address: props.prefill?.billing_address ?? '',
+    postal_code: props.prefill?.postal_code ?? '',
     delivery_type_id: props.deliveryTypes.find((d) => d.name === 'Pickup')?.id ?? props.deliveryTypes[0]?.id ?? null,
     notes: '',
 });

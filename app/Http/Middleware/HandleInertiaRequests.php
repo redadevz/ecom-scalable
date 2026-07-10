@@ -41,6 +41,16 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'appName'    => config('app.name', 'Shop'),
             'currency'   => fn () => app(ShopSettings::class)->currency_symbol,
+            'auth'       => [
+                'customer' => fn () => ($u = auth('customer')->user())
+                    ? [
+                        'id'         => $u->id,
+                        'first_name' => $u->first_name,
+                        'name'       => trim("{$u->first_name} {$u->last_name}"),
+                        'email'      => $u->email,
+                    ]
+                    : null,
+            ],
             'categories' => fn () => ItemCategory::where('is_active', true)
                 ->orderBy('name')
                 ->get(['id', 'name']),
