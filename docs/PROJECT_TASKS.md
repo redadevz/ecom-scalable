@@ -5,7 +5,7 @@ Each step lists the **files** and the **goal** so you can build it yourself.
 
 Legend: ✅ done · 🔨 in progress · ⬜ to do
 
-**Current position:** Steps 0–20c ✅ (admin + POS) · Steps **21, 22, 24 ✅** (storefront: catalog + cart + checkout, live at `/`) · **23 (accounts), 25 (post-purchase) not started**. Test suite: **44 green** (⚠️ storefront cart/checkout services not yet tested). Next backend priorities: storefront service tests · one-active-price guard · customer accounts · order-confirmation email.
+**Current position:** Steps 0–20c ✅ (admin + POS) · Steps **21, 22, 23, 24 ✅** (storefront: catalog + cart + checkout + customer accounts, live at `/`) · **25 (post-purchase) not started**. Test suite: **44 green** (⚠️ storefront cart/checkout services not yet tested). Next: order-confirmation email · storefront service tests · one-active-price guard · online payment.
 
 > Tech: Laravel 12 · Craftable PRO (Inertia + Vue 3 + Tailwind) · MySQL · Sail
 > Rebuild front-end after any `.vue` change: `./vendor/bin/sail npm run craftable-pro:build`
@@ -223,8 +223,12 @@ A dedicated counter/till screen that drives the **same tested engine** as the ad
 - **Product** (`/products/{id}`) — image, price, stock, description, qty, related items, trust badges, (decorative) rating.
 - **Premium front-end pass** — `ShopLayout` (utility bar + mega header + search + orange category nav + rich footer), reusable `ProductCard` / `SectionHeading` / `Field`.
 
-### Step 23 — Customer accounts ⬜
-- Register/login (Fortify installed; `customers.password` exists), profile, address book, order history. **(Not started — biggest remaining storefront gap: no login yet, and guest checkout creates a fresh Customer each time.)**
+### Step 23 — Customer accounts ✅
+- **Dedicated `customer` guard** (separate from admin's craftable-pro) — `config/auth.php` guard + `customers` provider; `Customer` model made authenticatable (hashed password, `remember_token` migration).
+- **Hand-rolled auth under `/account/*`** (register / login / logout) — not Fortify (Fortify owns root `POST /login|register|logout`); `bootstrap/app.php` redirects guests to `shop.login`. `Shop\Auth\AuthController` + `Shop\AccountController`.
+- **Account page** — editable profile + **order history** (their `OrderHeader`s). Header + mobile menu reflect auth state (name + dropdown / Sign in). Auth customer shared via `HandleInertiaRequests`.
+- **Checkout reuses the logged-in customer** (no duplicate record) and pre-fills the form; guests see a "sign in for faster checkout" prompt.
+- Verified end-to-end (hashing, credential checks, guest redirect); 44 tests still green. Committed `ae547c8`.
 
 ### Step 24 — Cart & checkout ✅
 - **`CartService`** (session cart, guest-friendly; drops unsellable items) + **`CartController`** — content-negotiated: **JSON for XHR** (mini-cart drawer), Inertia redirect for classic posts. Routes: `/cart` (page), `/cart/data` (JSON), POST/PATCH/DELETE.
