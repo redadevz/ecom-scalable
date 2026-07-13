@@ -17,6 +17,18 @@
             </div>
         </div>
 
+        <!-- Charts -->
+        <div class="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900 lg:col-span-2">
+                <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">Spend by supplier</h3>
+                <ReportChart type="bars" :data="bySupplier" format="money" />
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+                <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">Received vs pending</h3>
+                <ReportChart type="donut" :data="receivedSplit" :center-label="String(summary.purchases)" center-sub="orders" />
+            </div>
+        </div>
+
         <!-- By supplier -->
         <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <table class="min-w-full divide-y divide-gray-100 dark:divide-gray-800">
@@ -48,6 +60,7 @@
 import { computed } from "vue";
 import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 import { PageHeader, PageContent } from "craftable-pro/Components";
+import ReportChart from "@/craftable-pro/Components/ReportChart.vue";
 
 interface Props {
     summary: { suppliers: number; purchases: number; spend: number };
@@ -63,6 +76,19 @@ const cards = computed(() => [
     { label: "Purchases", value: String(props.summary.purchases) },
     { label: "Total spend", value: money(props.summary.spend) },
 ]);
+
+// top suppliers by spend (rows already sorted desc by spend server-side)
+const bySupplier = computed(() =>
+    props.rows.slice(0, 8).map((r) => ({ label: r.supplier, value: r.spend }))
+);
+
+const receivedSplit = computed(() => {
+    const received = props.rows.reduce((a, r) => a + r.received, 0);
+    return [
+        { label: "Received", value: received, color: "#10b981" },
+        { label: "Pending", value: Math.max(0, props.summary.purchases - received), color: "#f59e0b" },
+    ];
+});
 
 const exportUrl = computed(() => route("craftable-pro.reports.purchases.export"));
 </script>

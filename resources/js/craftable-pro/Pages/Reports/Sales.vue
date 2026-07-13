@@ -29,6 +29,18 @@
             </div>
         </div>
 
+        <!-- Charts -->
+        <div class="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900 lg:col-span-2">
+                <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">Revenue over time</h3>
+                <ReportChart type="area" :data="daily" format="money" />
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+                <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">Paid vs unpaid</h3>
+                <ReportChart type="donut" :data="paidSplit" format="money" :center-label="money(summary.total)" center-sub="total" />
+            </div>
+        </div>
+
         <!-- Orders table -->
         <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <table class="min-w-full divide-y divide-gray-100 dark:divide-gray-800">
@@ -67,6 +79,7 @@ import { ref, computed } from "vue";
 import { router } from "@inertiajs/vue3";
 import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 import { PageHeader, PageContent } from "craftable-pro/Components";
+import ReportChart from "@/craftable-pro/Components/ReportChart.vue";
 
 interface Props {
     filters: { from: string; to: string };
@@ -86,6 +99,18 @@ const cards = computed(() => [
     { label: "Orders", value: String(props.summary.count) },
     { label: "Avg order", value: money(props.summary.average) },
     { label: "Paid", value: money(props.summary.paid) },
+]);
+
+// daily revenue series (group orders by date, ascending)
+const daily = computed(() => {
+    const by: Record<string, number> = {};
+    props.orders.forEach((o) => { by[o.date] = (by[o.date] ?? 0) + o.total; });
+    return Object.keys(by).sort().map((d) => ({ label: d.slice(5), value: Math.round(by[d] * 100) / 100 }));
+});
+
+const paidSplit = computed(() => [
+    { label: "Paid", value: props.summary.paid, color: "#10b981" },
+    { label: "Unpaid", value: Math.max(0, Math.round((props.summary.total - props.summary.paid) * 100) / 100), color: "#94a3b8" },
 ]);
 
 const apply = () => {

@@ -17,6 +17,18 @@
             </div>
         </div>
 
+        <!-- Charts -->
+        <div class="mb-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+            <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900 lg:col-span-2">
+                <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">Inventory value by category</h3>
+                <ReportChart type="bars" :data="byCategory" format="money" />
+            </div>
+            <div class="rounded-xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
+                <h3 class="mb-4 text-sm font-semibold text-gray-900 dark:text-white">Stock health</h3>
+                <ReportChart type="donut" :data="stockSplit" :center-label="String(summary.items)" center-sub="items" />
+            </div>
+        </div>
+
         <!-- Items table -->
         <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <table class="min-w-full divide-y divide-gray-100 dark:divide-gray-800">
@@ -58,6 +70,7 @@
 import { computed } from "vue";
 import { ArrowDownTrayIcon } from "@heroicons/vue/24/outline";
 import { PageHeader, PageContent } from "craftable-pro/Components";
+import ReportChart from "@/craftable-pro/Components/ReportChart.vue";
 
 interface Props {
     summary: { items: number; low_stock: number; units: number; value: number };
@@ -73,6 +86,22 @@ const cards = computed(() => [
     { label: "Low stock", value: String(props.summary.low_stock), class: props.summary.low_stock ? "text-red-600" : "text-gray-900 dark:text-white" },
     { label: "Total units", value: String(props.summary.units) },
     { label: "Inventory value", value: money(props.summary.value) },
+]);
+
+// inventory value grouped by category (top 6, rest → "Other")
+const byCategory = computed(() => {
+    const by: Record<string, number> = {};
+    props.items.forEach((it) => { by[it.category] = (by[it.category] ?? 0) + it.value; });
+    const sorted = Object.entries(by).sort((a, b) => b[1] - a[1]);
+    const top = sorted.slice(0, 6).map(([label, value]) => ({ label, value: Math.round(value * 100) / 100 }));
+    const rest = sorted.slice(6).reduce((a, [, v]) => a + v, 0);
+    if (rest > 0) top.push({ label: "Other", value: Math.round(rest * 100) / 100 });
+    return top;
+});
+
+const stockSplit = computed(() => [
+    { label: "Low stock", value: props.summary.low_stock, color: "#f43f5e" },
+    { label: "Healthy", value: Math.max(0, props.summary.items - props.summary.low_stock), color: "#10b981" },
 ]);
 
 const exportUrl = computed(() => route("craftable-pro.reports.stock.export"));

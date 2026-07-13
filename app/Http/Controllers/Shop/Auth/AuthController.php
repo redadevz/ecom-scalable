@@ -34,7 +34,7 @@ class AuthController extends Controller
         $data = $request->validate([
             'email'    => ['required', 'email'],
             'password' => ['required', 'string'],
-        ]);
+        ]); 
 
         if (! Auth::guard('customer')->attempt(
             ['email' => $data['email'], 'password' => $data['password'], 'is_active' => true],
