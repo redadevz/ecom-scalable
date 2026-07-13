@@ -30,7 +30,7 @@ createInertiaApp({
 
     return title ? `${title} - ${appName}` : appName;
   },
-  progress: { color: "#4B5563" },
+  progress: { color: "#f97316" },
   resolve: async (name: string) => {
     // Getting all the pages from the craftable-pro package
     const craftableProPagesGlob = import.meta.glob(

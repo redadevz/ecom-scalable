@@ -44,13 +44,16 @@ class DashboardController extends Controller
                 'qty'  => (int) $l->qty,
             ]);
 
-        // Monthly sales for the last 12 months (Larkon-style Performance chart)
+        // Monthly sales + order count for the last 12 months (Performance chart)
         $monthly = collect(range(11, 0))->map(function ($back) {
             $month = Carbon::now()->startOfMonth()->subMonths($back);
-            $total = OrderHeader::where('is_approved', true)->where('is_canceled', false)
-                ->whereBetween('created_at', [$month->copy(), $month->copy()->endOfMonth()])
-                ->sum('price');
-            return ['label' => $month->format('M'), 'value' => round((float) $total, 2)];
+            $scope = OrderHeader::where('is_approved', true)->where('is_canceled', false)
+                ->whereBetween('created_at', [$month->copy(), $month->copy()->endOfMonth()]);
+            return [
+                'label'  => $month->format('M'),
+                'value'  => round((float) (clone $scope)->sum('price'), 2),
+                'orders' => (clone $scope)->count(),
+            ];
         })->values();
 
         // this-month vs last-month trend for sales & orders

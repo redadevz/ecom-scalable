@@ -164,3 +164,67 @@
   /* Empty-state text a touch softer */
   td[colspan] { color: #9aa2b1; }
 }
+
+/* ===========================================================================
+   GLOBAL MOTION LAYER  ·  animates every page on load (cards, tables, rows,
+   forms, buttons, sidebar). Pure CSS, fires once per Inertia page mount.
+   =========================================================================== */
+@keyframes cpFadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes cpRowIn  { from { opacity: 0; transform: translateY(6px); }  to { opacity: 1; transform: none; } }
+@keyframes cpPop    { from { opacity: 0; transform: scale(.96); }        to { opacity: 1; transform: none; } }
+@keyframes cpBarIn  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+@layer components {
+  /* Cards / panels rise in */
+  main .rounded-md.shadow,
+  main section.rounded-md,
+  main [class*="rounded-2xl"][class*="border"] {
+    animation: cpFadeUp .5s cubic-bezier(.22, 1, .36, 1) both;
+  }
+  /* Stagger stacked cards a touch so pages "assemble" */
+  main .rounded-md.shadow:nth-of-type(2) { animation-delay: .06s; }
+  main .rounded-md.shadow:nth-of-type(3) { animation-delay: .12s; }
+  main .rounded-md.shadow:nth-of-type(4) { animation-delay: .18s; }
+  main .rounded-md.shadow:nth-of-type(n+5) { animation-delay: .24s; }
+
+  /* Table rows cascade in */
+  main table tbody tr { animation: cpRowIn .38s cubic-bezier(.22, 1, .36, 1) both; }
+  main table tbody tr:nth-child(1)  { animation-delay: .02s; }
+  main table tbody tr:nth-child(2)  { animation-delay: .05s; }
+  main table tbody tr:nth-child(3)  { animation-delay: .08s; }
+  main table tbody tr:nth-child(4)  { animation-delay: .11s; }
+  main table tbody tr:nth-child(5)  { animation-delay: .14s; }
+  main table tbody tr:nth-child(6)  { animation-delay: .17s; }
+  main table tbody tr:nth-child(7)  { animation-delay: .20s; }
+  main table tbody tr:nth-child(8)  { animation-delay: .23s; }
+  main table tbody tr:nth-child(9)  { animation-delay: .26s; }
+  main table tbody tr:nth-child(10) { animation-delay: .29s; }
+  main table tbody tr:nth-child(n+11) { animation-delay: .32s; }
+
+  /* Modals pop */
+  [role="dialog"] .rounded-md.shadow,
+  [role="dialog"] [class*="rounded-2xl"],
+  [role="dialog"] .modal-panel { animation: cpPop .28s cubic-bezier(.34, 1.56, .64, 1) both; }
+
+  /* Interactive lift */
+  .bg-primary-600:hover,
+  a.bg-white:hover, button.bg-white:hover { transform: translateY(-1px); }
+  main .rounded-md.shadow { transition: box-shadow .25s ease, transform .25s ease; }
+
+  /* Sidebar links nudge on hover */
+  .cp-sidebar a { transition: background-color .16s ease, color .16s ease, transform .16s ease; }
+  .cp-sidebar a:hover { transform: translateX(3px); }
+
+  /* Inertia progress bar → brand orange, animated */
+  #nprogress .bar { background: #f97316 !important; height: 3px !important; box-shadow: 0 0 10px rgb(249 115 22 / .6); }
+  #nprogress .peg { box-shadow: 0 0 10px #f97316, 0 0 6px #f97316 !important; }
+  #nprogress .spinner-icon { border-top-color: #f97316 !important; border-left-color: #f97316 !important; }
+}
+
+/* Respect users who prefer no motion */
+@media (prefers-reduced-motion: reduce) {
+  main .rounded-md.shadow, main section.rounded-md, main [class*="rounded-2xl"][class*="border"],
+  main table tbody tr, [role="dialog"] .rounded-md.shadow, [role="dialog"] [class*="rounded-2xl"] {
+    animation: none !important;
+  }
+}
