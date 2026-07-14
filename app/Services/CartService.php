@@ -9,7 +9,7 @@ class CartService
 {
     private const KEY = 'cart';
 
-    /** Raw session cart map. */
+
     public function raw(): array
     {
         return session(self::KEY, []);
@@ -45,7 +45,7 @@ class CartService
         session()->forget(self::KEY);
     }
 
-    /** Detailed, priced cart lines (drops items that are no longer sellable). */
+
     public function lines(): array
     {
         $cart = $this->raw();
