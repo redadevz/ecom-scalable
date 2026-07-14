@@ -10,10 +10,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 
-/**
- * Public storefront catalog — home, product listing (search + category filter),
- * and product detail. Only sellable items (active + active price) are shown.
- */
+
 class CatalogController extends Controller
 {
     public function home(ShopSettings $settings): Response

@@ -4,12 +4,7 @@ namespace App\Services;
 
 use App\Models\Item;
 
-/**
- * Session-based shopping cart for the storefront (guest-friendly).
- *
- * Stored as session('cart') = [ itemId => ['quantity' => n] ] — the same shape
- * HandleInertiaRequests reads for the header cart badge.
- */
+
 class CartService
 {
     private const KEY = 'cart';
