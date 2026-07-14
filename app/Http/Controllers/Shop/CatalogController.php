@@ -42,7 +42,7 @@ class CatalogController extends Controller
             ? $request->get('sort')
             : 'newest';
 
-        // Correlated subquery: the active price of each item (for price sorting).
+
         $priceSub = \App\Models\Price::query()
             ->select('price_after_tax')
             ->whereColumn('prices.item_id', 'items.id')
@@ -104,7 +104,6 @@ class CatalogController extends Controller
         ]);
     }
 
-    /** Items a customer can actually buy: active, with an active price. */
     private function sellable(): Builder
     {
         return Item::query()
