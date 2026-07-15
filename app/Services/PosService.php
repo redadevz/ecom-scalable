@@ -12,14 +12,7 @@ use App\Models\Store;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
-/**
- * Point-of-sale checkout — orchestrates a counter sale over the existing
- * engine: draft order/lines → confirm → invoice → (optional) payment.
- *
- * All-or-nothing: the whole sale commits in a single transaction. Throws plain
- * domain exceptions (RuntimeException / InsufficientStockException from the
- * inner services); the HTTP layer decides how to present them.
- */
+
 class PosService
 {
     /** Defaults for a walk-in, over-the-counter sale. */
@@ -60,7 +53,7 @@ class PosService
             $payments = $data['payments'] ?? null;
 
             if (! empty($payments)) {
-                // Split / partial payment: record each tender against the invoice.
+                
                 foreach ($payments as $p) {
                     $amount = (float) $p['amount'];
                     if ($amount > 0) {
@@ -85,11 +78,6 @@ class PosService
         });
     }
 
-    /**
-     * Apply a manual counter discount on the whole order (after auto discounts).
-     *
-     * @param  array{type:string, value:float|int}|null  $discount  type: 'amount' | 'percent'
-     */
     private function applyManualDiscount(OrderHeader $order, ?array $discount): void
     {
         if (! $discount) {
