@@ -38,7 +38,7 @@ class DiscountService {
 
         $best = 0.0;
         foreach($types as $type){
-            // skip if the order is too small to qualify
+            
             if($type->min_order_value && $amount < $type->min_order_value){
                 continue;
             }

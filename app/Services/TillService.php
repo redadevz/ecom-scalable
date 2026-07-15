@@ -9,14 +9,7 @@ use App\Models\TillSession;
 use Illuminate\Support\Facades\DB;
 use RuntimeException;
 
-/**
- * Cash-register (till) sessions.
- *
- * A session opens with a starting float, accumulates sales, then closes with a
- * counted-cash figure. "Cash" 1is whatever payments went through the payment
- * method named "Cash"; everything else counts as non-cash and doesn't affect
- * the drawer. Single-register assumption (one open session per store).
- */
+
 class TillService
 {
     /** The currently open session for the (default) store, if any. */
@@ -45,7 +38,7 @@ class TillService
         ]);
     }
 
-    /** Live totals for an open session (the "X report"). */
+    
     public function summary(TillSession $session): array
     {
         $to = $session->closed_at ?? now();
