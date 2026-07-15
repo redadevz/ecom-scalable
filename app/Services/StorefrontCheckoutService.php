@@ -15,12 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use RuntimeException;
 
-/**
- * Places an online order from a storefront cart, driving the SAME engine as the
- * admin/POS: create customer → draft order/lines → OrderService@confirm
- * (price + stock-out + totals) → InvoiceService@generate. Payment is left open
- * (pay on pickup) — an online gateway is a later step.
- */
+
 class StorefrontCheckoutService
 {
     public function __construct(
@@ -28,11 +23,7 @@ class StorefrontCheckoutService
         protected InvoiceService $invoices,
     ) {}
 
-    /**
-     * @param  array<array{item_id:int, quantity:int}>  $lines
-     * @param  array{first_name:string,last_name:string,phone:string,email?:string,billing_address:string,delivery_type_id?:int,notes?:string}  $data
-     * @return array{order_no:string,total:float,name:string,email:?string,items:int,delivery:string}
-     */
+
     public function place(array $lines, array $data, ?Customer $account = null): array
     {
         $store = Store::orderBy('id')->first();

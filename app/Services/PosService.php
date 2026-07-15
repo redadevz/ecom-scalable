@@ -15,7 +15,7 @@ use RuntimeException;
 
 class PosService
 {
-    /** Defaults for a walk-in, over-the-counter sale. */
+    
     private const CHANNEL       = 'In-store';
     private const DELIVERY_TYPE = 'Pickup';
     private const PAYMENT_TIME  = 'Immediate';
