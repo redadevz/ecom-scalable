@@ -128,7 +128,7 @@ class PosService
             'store_id'             => $store->id,
             'customer_id'          => $customerId,
             'created_by'           => $cashierId,
-            'order_no'             => $this->nextOrderNo(),
+            'order_no'             => OrderHeader::generateOrderNo('POS-'),
             'latest_status'        => 'Draft',
             'latest_status_update' => now(),
             'is_submitted'         => false,
@@ -160,18 +160,6 @@ class PosService
                 'is_canceled' => false,
             ]));
         }
-    }
-
-    private function nextOrderNo(): string
-    {
-        $base = 'POS-' . now()->format('ymd') . '-';
-        $seq  = OrderHeader::where('order_no', 'like', $base . '%')->count() + 1;
-
-        do {
-            $candidate = $base . str_pad((string) $seq++, 4, '0', STR_PAD_LEFT);
-        } while     (OrderHeader::where('order_no', $candidate)->exists());
-
-        return $candidate;
     }
 
     private function refId(string $model, string $name): ?int

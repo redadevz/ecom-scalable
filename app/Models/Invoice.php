@@ -4,12 +4,40 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasGeneratedCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Invoice extends Model
 {
     use HasFactory;
+    use HasGeneratedCode;
+
+    /** @return array<string, callable> */
+    protected function generatedCodes(): array
+    {
+        return ['invoice_no' => fn (self $invoice) => static::generateInvoiceNo($invoice->order_id)];
+    }
+
+    /**
+     * INV-000005 — keyed to the order, so an invoice is traceable to its sale.
+     * Falls back to a -2, -3 … suffix if an order ever carries a second invoice.
+     */
+    public static function generateInvoiceNo(int|string|null $orderId): string
+    {
+        $base = 'INV-' . str_pad((string) $orderId, 6, '0', STR_PAD_LEFT);
+
+        if (! static::query()->where('invoice_no', $base)->exists()) {
+            return $base;
+        }
+
+        $n = 2;
+        while (static::query()->where('invoice_no', "{$base}-{$n}")->exists()) {
+            $n++;
+        }
+
+        return "{$base}-{$n}";
+    }
 
     /**
      * The table associated with the model.

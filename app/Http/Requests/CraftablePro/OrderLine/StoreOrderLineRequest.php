@@ -24,7 +24,7 @@ class StoreOrderLineRequest extends FormRequest
             'store_id' => ['required', 'integer', 'exists:stores,id'],
             'order_id' => ['required', 'integer', 'exists:order_headers,id'],
             'item_id' => ['required', 'integer', 'exists:items,id'],
-            'line_no' => ['required', 'string', 'max:50'],
+            'line_no' => ['nullable', 'string', 'max:50'],
             'description' => ['nullable', 'string', 'max:255'],
             'customer_notes' => ['nullable', 'string', 'max:255'],
             'quantity' => ['required', 'integer'],

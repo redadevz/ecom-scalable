@@ -12,7 +12,6 @@ use App\Models\PaymentTime;
 use App\Models\SaleChannel;
 use App\Models\Store;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use RuntimeException;
 
 
@@ -83,7 +82,7 @@ class StorefrontCheckoutService
         return Customer::create([
             'city_id'              => $store->city_id ?? City::orderBy('id')->value('id'),
             'created_at_store_id'  => $store->id,
-            'code'                 => $this->nextCustomerCode(),
+            'code'                 => Customer::generateCode('WEB-'),
             'first_name'           => $data['first_name'],
             'last_name'            => $data['last_name'],
             'phone'                => $data['phone'],
@@ -120,7 +119,7 @@ class StorefrontCheckoutService
             'store_id'             => $store->id,
             'customer_id'          => $customer->id,
             'customer_notes'       => $notes,
-            'order_no'             => $this->nextOrderNo(),
+            'order_no'             => OrderHeader::generateOrderNo('WEB-'),
             'latest_status'        => 'Draft',
             'latest_status_update' => now(),
             'is_submitted'         => false,
@@ -151,27 +150,6 @@ class StorefrontCheckoutService
                 'is_canceled' => false,
             ]));
         }
-    }
-
-    private function nextOrderNo(): string
-    {
-        $base = 'WEB-' . now()->format('ymd') . '-';
-        $seq  = OrderHeader::where('order_no', 'like', $base . '%')->count() + 1;
-
-        do {
-            $candidate = $base . str_pad((string) $seq++, 4, '0', STR_PAD_LEFT);
-        } while (OrderHeader::where('order_no', $candidate)->exists());
-
-        return $candidate;
-    }
-
-    private function nextCustomerCode(): string
-    {
-        do {
-            $code = 'WEB-' . strtoupper(Str::random(6));
-        } while (Customer::where('code', $code)->exists());
-
-        return $code;
     }
 
     private function refId(string $model, string $name): ?int

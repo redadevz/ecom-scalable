@@ -4,12 +4,29 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasGeneratedCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class OrderHeader extends Model
 {
     use HasFactory;
+    use HasGeneratedCode;
+
+    /** @return array<string, callable> */
+    protected function generatedCodes(): array
+    {
+        return ['order_no' => fn () => static::generateOrderNo()];
+    }
+
+    /**
+     * ORD-260716-0001 — channel prefix + date + daily sequence.
+     * POS passes 'POS-', the storefront passes 'WEB-'; the admin gets 'ORD-'.
+     */
+    public static function generateOrderNo(string $prefix = 'ORD-'): string
+    {
+        return static::sequentialCode('order_no', $prefix . now()->format('ymd') . '-', 4);
+    }
 
     /**
      * The table associated with the model.

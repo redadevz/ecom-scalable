@@ -13,7 +13,7 @@
                         </div>
                     </header>
                     <div class="grid grid-cols-1 gap-x-6 gap-y-5 p-6 sm:grid-cols-2">
-                        <TextInput v-model="form.code" name="code" label="Card Number" type="text" />
+                        <AutoCodeInput :model-value="form.code" label="Card Number" />
                     </div>
                 </section>
             </div>
@@ -83,10 +83,10 @@ import {
     LinkIcon,
 } from "@heroicons/vue/24/outline";
 import {
-    TextInput,
     PageContent,
     Multiselect,
 } from "craftable-pro/Components";
+import AutoCodeInput from "@/craftable-pro/Components/AutoCodeInput.vue";
 import { InertiaForm } from "craftable-pro/types";
 import type { LoyaltyCardForm } from "./types";
 

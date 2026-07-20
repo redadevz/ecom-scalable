@@ -24,7 +24,7 @@ class StoreSupplierRequest extends FormRequest
             'store_id' => ['required', 'integer', 'exists:stores,id'],
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
-            'code' => ['required', 'string', 'max:10', 'unique:suppliers,code'],
+            'code' => ['nullable', 'string', 'max:10', 'unique:suppliers,code'],
             'phone' => ['required', 'string', 'max:50'],
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],

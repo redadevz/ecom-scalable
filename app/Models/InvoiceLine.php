@@ -4,12 +4,20 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasGeneratedCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class InvoiceLine extends Model
 {
     use HasFactory;
+    use HasGeneratedCode;
+
+    /** @return array<string, callable> */
+    protected function generatedCodes(): array
+    {
+        return ['line_no' => fn (self $line) => static::nextLineNo('invoice_id', $line->invoice_id)];
+    }
 
     /**
      * The table associated with the model.

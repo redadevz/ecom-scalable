@@ -25,7 +25,7 @@ class StoreItemRequest extends FormRequest
             'item_category_id' => ['required', 'integer', 'exists:item_categories,id'],
             'supplier_id' => ['required', 'integer', 'exists:suppliers,id'],
             'measure_unit_id' => ['required', 'integer', 'exists:measure_units,id'],
-            'sku_code' => ['required', 'string', 'max:25', 'unique:items,sku_code'],
+            'sku_code' => ['nullable', 'string', 'max:25', 'unique:items,sku_code'],
             'name' => ['required', 'string', 'max:50'],
             'image' => ['nullable', 'string', 'max:255'],
             'images' => ['nullable', 'array'],

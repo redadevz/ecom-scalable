@@ -4,12 +4,21 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasGeneratedCode;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PaymentMethod extends Model
 {
     use HasFactory;
+    use HasGeneratedCode;
+
+    /** @return array<string, callable> */
+    protected function generatedCodes(): array
+    {
+        // `code` stays manual on purpose ("CASH", "CARD") — only the ordering is derived.
+        return ['sequence_no' => fn () => (int) static::query()->max('sequence_no') + 1];
+    }
 
     /**
      * The table associated with the model.

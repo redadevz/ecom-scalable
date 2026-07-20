@@ -13,12 +13,7 @@
                         </div>
                     </header>
                     <div class="grid grid-cols-1 gap-x-6 gap-y-5 p-6 sm:grid-cols-2">
-                        <TextInput
-                            v-model="form.invoice_no"
-                            name="invoice_no"
-                            label="Invoice No"
-                            type="text"
-                        />
+                        <AutoCodeInput :model-value="form.invoice_no" label="Invoice No" />
                         <DatePicker
                             v-model="form.payment_time"
                             name="payment_time"
@@ -101,6 +96,7 @@ import {
     Multiselect,
     DatePicker,
 } from "craftable-pro/Components";
+import AutoCodeInput from "@/craftable-pro/Components/AutoCodeInput.vue";
 import { InertiaForm } from "craftable-pro/types";
 import type { InvoiceForm } from "./types";
 

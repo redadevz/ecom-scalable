@@ -24,7 +24,7 @@ class StoreCustomerRequest extends FormRequest
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'created_at_store_id' => ['nullable', 'integer', 'exists:stores,id'],
             'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
-            'code' => ['required', 'string', 'max:25'],
+            'code' => ['nullable', 'string', 'max:25'],
             'phone' => ['required', 'string', 'max:50', 'unique:customers,phone'],
             'first_name' => ['required', 'string', 'max:50'],
             'last_name' => ['required', 'string', 'max:50'],

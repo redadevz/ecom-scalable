@@ -31,7 +31,7 @@ class StoreOrderHeaderRequest extends FormRequest
             'created_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
             'approved_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
             'managed_by' => ['nullable', 'integer', 'exists:craftable_pro_users,id'],
-            'order_no' => ['required', 'string', 'max:50', 'unique:order_headers,order_no'],
+            'order_no' => ['nullable', 'string', 'max:50', 'unique:order_headers,order_no'],
             'customer_notes' => ['nullable', 'string', 'max:255'],
             'price_before_tax' => ['required', 'numeric'],
             'total_tax_value' => ['required', 'numeric'],

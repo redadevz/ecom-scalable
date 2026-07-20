@@ -13,7 +13,7 @@
                         </div>
                     </header>
                     <div class="grid grid-cols-1 gap-x-6 gap-y-5 p-6 sm:grid-cols-2">
-                        <TextInput v-model="form.code" name="code" label="Code" type="text" />
+                        <AutoCodeInput :model-value="form.code" label="Code" />
                         <TextInput v-model="form.company_name" name="company_name" label="Company Name" type="text" />
                         <TextInput v-model="form.first_name" name="first_name" label="First Name" type="text" />
                         <TextInput v-model="form.last_name" name="last_name" label="Last Name" type="text" />
@@ -170,6 +170,7 @@ import {
     DatePicker,
     Multiselect,
 } from "craftable-pro/Components";
+import AutoCodeInput from "@/craftable-pro/Components/AutoCodeInput.vue";
 import { InertiaForm } from "craftable-pro/types";
 import type { CustomerForm } from "./types";
 

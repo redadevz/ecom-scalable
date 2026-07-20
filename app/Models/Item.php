@@ -4,6 +4,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasGeneratedCode;
 use Brackets\CraftablePro\Media\AutoProcessMediaTrait;
 use Brackets\CraftablePro\Media\HasMediaPreviewsTrait;
 use Brackets\CraftablePro\Media\InteractsWithMedia;
@@ -16,6 +17,13 @@ use Spatie\MediaLibrary\HasMedia;
 class Item extends Model implements HasMedia
 {
     use HasFactory;
+    use HasGeneratedCode;
+
+    /** @return array<string, callable> */
+    protected function generatedCodes(): array
+    {
+        return ['sku_code' => fn () => static::sequentialCode('sku_code', 'SKU-', 6)];
+    }
     use InteractsWithMedia;
     use ProcessMediaTrait;
     use AutoProcessMediaTrait;

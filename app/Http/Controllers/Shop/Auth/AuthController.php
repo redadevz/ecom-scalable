@@ -9,7 +9,6 @@ use App\Models\Store;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Str;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
@@ -46,7 +45,10 @@ class AuthController extends Controller
         }
 
         $request->session()->regenerate();
-        Auth::guard('customer')->user()->forceFill(['last_login_time' => now()])->saveQuietly();
+
+        /** @var Customer $customer */
+        $customer = Auth::guard('customer')->user();
+        $customer->forceFill(['last_login_time' => now()])->saveQuietly();
 
         return redirect()->intended('/account');
     }
@@ -76,7 +78,7 @@ class AuthController extends Controller
         $customer = Customer::create([
             'city_id'              => $store?->city_id ?? City::orderBy('id')->value('id'),
             'created_at_store_id'  => $store?->id,
-            'code'                 => $this->uniqueCode(),
+            'code'                 => Customer::generateCode('WEB-'),
             'first_name'           => $data['first_name'],
             'last_name'            => $data['last_name'],
             'email'                => $data['email'],
@@ -100,14 +102,5 @@ class AuthController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
-    }
-
-    private function uniqueCode(): string
-    {
-        do {
-            $code = 'WEB-' . strtoupper(Str::random(6));
-        } while (Customer::where('code', $code)->exists());
-
-        return $code;
     }
 }

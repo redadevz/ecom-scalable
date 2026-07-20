@@ -28,7 +28,7 @@ class InvoiceService{
 
             $invoice = Invoice::create([
                 'order_id' => $order->id,
-                'invoice_no' => $this->nextInvoiceNo($order),
+                'invoice_no' => Invoice::generateInvoiceNo($order->id),
                 'is_paid' => false,
             ]);
 
@@ -52,9 +52,6 @@ class InvoiceService{
     }
 
 
-    protected function nextInvoiceNo(OrderHeader $order){
-        return 'INV-' . str_pad((string)$order->id, 6, '0', STR_PAD_LEFT);
-    }
 }
 
 ?>

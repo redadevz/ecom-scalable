@@ -13,7 +13,7 @@
                         </div>
                     </header>
                     <div class="grid grid-cols-1 gap-x-6 gap-y-5 p-6 sm:grid-cols-2">
-                        <TextInput v-model="form.code" name="code" label="Code" type="text" />
+                        <AutoCodeInput :model-value="form.code" label="Code" />
                         <TextInput v-model="form.name" name="name" label="Name" type="text" />
                         <TextInput v-model="form.legal_entity_name" name="legal_entity_name" label="Legal Entity Name" type="text" />
                         <TextInput v-model="form.tax_code" name="tax_code" label="Tax Code" type="text" />
@@ -201,6 +201,7 @@ import {
     Checkbox,
     Multiselect,
 } from "craftable-pro/Components";
+import AutoCodeInput from "@/craftable-pro/Components/AutoCodeInput.vue";
 import { InertiaForm } from "craftable-pro/types";
 import type { StoreForm } from "./types";
 

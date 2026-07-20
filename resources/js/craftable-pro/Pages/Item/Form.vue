@@ -12,7 +12,7 @@
                         </div>
                         <div class="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
                             <TextInput v-model="form.name" name="name" label="Name" type="text" />
-                            <TextInput v-model="form.sku_code" name="sku_code" label="SKU Code" type="text" />
+                            <AutoCodeInput :model-value="form.sku_code" label="SKU Code" />
                             <div class="sm:col-span-2">
                                 <Dropzone v-model="form.images" name="images" label="Images" :max-file-size="5 * 1024 * 1024" />
                             </div>
@@ -97,6 +97,7 @@ import {
     Multiselect,
     Dropzone,
 } from "craftable-pro/Components";
+import AutoCodeInput from "@/craftable-pro/Components/AutoCodeInput.vue";
 import { InertiaForm } from "craftable-pro/types";
 import type { ItemForm } from "./types";
 

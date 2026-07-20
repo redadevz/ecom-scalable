@@ -23,7 +23,7 @@ class StoreLoyaltyCardRequest extends FormRequest
         return [
             'loyalty_card_type_id' => ['required', 'integer', 'exists:loyalty_card_types,id'],
             'customer_id' => ['nullable', 'integer', 'exists:customers,id'],
-            'code' => ['required', 'string', 'max:50', 'unique:loyalty_cards,code'],
+            'code' => ['nullable', 'string', 'max:50', 'unique:loyalty_cards,code'],
             'is_active' => ['required', 'boolean'],
             
         ];
