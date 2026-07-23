@@ -9,6 +9,11 @@ export default defineConfig({
         laravel({
             input: ['resources/css/app.css', 'resources/js/app.js'],
             buildDirectory: 'build-shop',
+            // Own hot file: Laravel defaults both apps to `public/hot`, so running
+            // the admin dev server used to hijack the storefront's assets (it would
+            // fetch them from the admin's Vite server, which doesn't serve them, and
+            // the store rendered unstyled). Separate files = the two never collide.
+            hotFile: 'public/hot-shop',
             refresh: true,
         }),
         vue({

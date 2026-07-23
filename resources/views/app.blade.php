@@ -10,6 +10,9 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600,700" rel="stylesheet">
 
+    {{-- Must match `hotFile` in vite.config.js, so the admin's dev server
+         (which writes the default `public/hot`) can't hijack these assets. --}}
+    @php(Vite::useHotFile(public_path('hot-shop')))
     @vite(['resources/css/app.css', 'resources/js/app.js'], 'build-shop')
     @inertiaHead
 </head>
