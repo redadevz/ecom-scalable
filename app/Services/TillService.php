@@ -12,7 +12,7 @@ use RuntimeException;
 
 class TillService
 {
-    /** The currently open session for the (default) store, if any. */
+
     public function current(?int $storeId = null): ?TillSession
     {
         $storeId ??= Store::orderBy('id')->value('id');
