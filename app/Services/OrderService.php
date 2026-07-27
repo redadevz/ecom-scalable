@@ -90,6 +90,32 @@ class OrderService{
         });
     }
 
+    /**
+     * Customer-facing fulfilment pipeline for pickup orders, in order.
+     * (The order engine also uses Draft/Submitted/Cancelled around these.)
+     */
+    public const FULFILMENT = ['Approved', 'Ready', 'Completed'];
+
+    /** Move a confirmed order forward to a fulfilment status (Ready, Completed…). */
+    public function advance(OrderHeader $order, string $statusName): OrderHeader
+    {
+        if (! in_array($statusName, self::FULFILMENT, true)) {
+            throw new \InvalidArgumentException("'{$statusName}' is not a fulfilment status.");
+        }
+        if ($order->is_canceled) {
+            throw new \RuntimeException('A cancelled order cannot change status.');
+        }
+        if (! $order->is_approved) {
+            throw new \RuntimeException('Only a confirmed order can be advanced.');
+        }
+
+        return DB::transaction(function () use ($order, $statusName) {
+            $this->recordStatus($order, $statusName);
+
+            return $order->refresh();
+        });
+    }
+
     protected function recordStatus(OrderHeader $order, string $statusName = 'Approved'): void
     {
         $status = OrderStatus::where('name', $statusName)->first()

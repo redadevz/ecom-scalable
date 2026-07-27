@@ -29,6 +29,17 @@
                             {{ order.latest_status }}
                         </span>
                     </div>
+
+                    <!-- Fulfilment controls: advance a confirmed order the customer can track -->
+                    <div v-if="canAdvance" v-can="'craftable-pro.order-headers.confirm'"
+                        class="flex flex-wrap items-center gap-2 border-t border-gray-100 px-5 py-3 dark:border-[#2a2d38]">
+                        <span class="mr-1 text-xs font-medium text-gray-400">Fulfilment:</span>
+                        <button v-for="step in nextSteps" :key="step"
+                            type="button" @click="setStatus(step)" :disabled="saving"
+                            class="inline-flex items-center gap-1.5 rounded-lg bg-primary-500 px-3 py-1.5 text-xs font-semibold text-white transition hover:bg-primary-600 disabled:opacity-50">
+                            <CheckIcon class="h-3.5 w-3.5" /> Mark {{ step }}
+                        </button>
+                    </div>
                 </section>
 
                 <!-- Line items -->
@@ -120,14 +131,28 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
-import { Link } from "@inertiajs/vue3";
-import { ArrowLeftIcon, PencilSquareIcon, ShoppingCartIcon, ClockIcon, BanknotesIcon, UserIcon, DocumentTextIcon } from "@heroicons/vue/24/outline";
+import { computed, ref } from "vue";
+import { Link, router } from "@inertiajs/vue3";
+import { ArrowLeftIcon, PencilSquareIcon, ShoppingCartIcon, ClockIcon, BanknotesIcon, UserIcon, DocumentTextIcon, CheckIcon } from "@heroicons/vue/24/outline";
 import { PageHeader, PageContent, Button } from "craftable-pro/Components";
 import dayjs from "dayjs";
 
 interface Props { order: any }
 const props = defineProps<Props>();
+
+// Customer-facing fulfilment pipeline; offer the steps after the current one.
+const FULFILMENT = ["Approved", "Ready", "Completed"];
+const saving = ref(false);
+const canAdvance = computed(() => props.order.is_approved && !props.order.is_canceled && props.order.latest_status !== "Completed");
+const nextSteps = computed(() => {
+    const i = FULFILMENT.indexOf(props.order.latest_status);
+    return FULFILMENT.slice(Math.max(1, i + 1)); // never offer "Approved" itself
+});
+function setStatus(status: string) {
+    saving.value = true;
+    router.post(route("craftable-pro.order-headers.status", props.order.id), { status },
+        { preserveScroll: true, onFinish: () => (saving.value = false) });
+}
 
 const cardCls = "rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-[#2c2f3d] dark:bg-[#1e2029]";
 const headerCls = "flex items-center gap-3 border-b border-gray-100 px-6 py-4 dark:border-[#2a2d38]";

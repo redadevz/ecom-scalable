@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Exceptions\InsufficientStockException;
 use App\Http\Controllers\Controller;
+use App\Mail\OrderConfirmationMail;
 use App\Models\DeliveryType;
 use App\Services\CartService;
 use App\Services\StorefrontCheckoutService;
@@ -11,6 +12,7 @@ use App\Settings\ShopSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -67,6 +69,11 @@ class CheckoutController extends Controller
         }
 
         $cart->clear();
+
+        // Queued confirmation email — only if we have somewhere to send it.
+        if (! empty($order['email'])) {
+            Mail::to($order['email'])->queue(new OrderConfirmationMail($order['id']));
+        }
 
         return redirect()->route('shop.checkout.success')->with('order', $order);
     }

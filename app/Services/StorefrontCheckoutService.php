@@ -55,6 +55,7 @@ class StorefrontCheckoutService
             $this->invoices->generate($order);
 
             return [
+                'id'       => $order->id,
                 'order_no' => $order->order_no,
                 'total'    => round((float) $order->price, 2),
                 'name'     => trim("{$customer->first_name} {$customer->last_name}"),

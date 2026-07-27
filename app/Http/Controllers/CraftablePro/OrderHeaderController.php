@@ -207,6 +207,20 @@ class OrderHeaderController extends Controller
         }
     }
 
+    public function status(Request $request, OrderHeader $orderHeader, OrderService $orders){
+        Gate::authorize('craftable-pro.order-headers.confirm');
+        $data = $request->validate([
+            'status' => ['required', 'string', 'in:' . implode(',', OrderService::FULFILMENT)],
+        ]);
+        try{
+            $orders->advance($orderHeader, $data['status']);
+
+            return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
+        }catch(\RuntimeException | \InvalidArgumentException $e){
+            return redirect()->back()->with(['error' => $e->getMessage()]);
+        }
+    }
+
     public function invoice(OrderHeader $orderHeader, InvoiceService $invoices){
         Gate::authorize('craftable-pro.order-headers.invoice');
         try{

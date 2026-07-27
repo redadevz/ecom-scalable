@@ -34,6 +34,7 @@ Route::middleware(\App\Http\Middleware\HandleInertiaRequests::class)->group(func
         Route::post('/account/logout', [App\Http\Controllers\Shop\Auth\AuthController::class, 'logout'])->name('shop.logout');
         Route::get('/account', [App\Http\Controllers\Shop\AccountController::class, 'index'])->name('shop.account');
         Route::patch('/account', [App\Http\Controllers\Shop\AccountController::class, 'updateProfile'])->name('shop.account.update');
+        Route::get('/account/orders/{orderHeader}', [App\Http\Controllers\Shop\AccountController::class, 'order'])->name('shop.account.order');
     });
 });
 
@@ -437,6 +438,7 @@ Route::middleware('craftable-pro-middlewares')->prefix('admin')->name('craftable
     Route::post('order-headers/{orderHeader}/confirm', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'confirm'])->name('order-headers.confirm');
     Route::post('order-headers/{orderHeader}/cancel', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'cancel'])->name('order-headers.cancel');
     Route::post('order-headers/{orderHeader}/invoice', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'invoice'])->name('order-headers.invoice');
+    Route::post('order-headers/{orderHeader}/status', [App\Http\Controllers\CraftablePro\OrderHeaderController::class, 'status'])->name('order-headers.status');
 
     
 });

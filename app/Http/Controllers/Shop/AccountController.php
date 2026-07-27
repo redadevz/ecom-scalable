@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Shop;
 
 use App\Http\Controllers\Controller;
 use App\Models\OrderHeader;
+use App\Services\OrderService;
 use App\Settings\ShopSettings;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -22,6 +23,7 @@ class AccountController extends Controller
             ->take(50)
             ->get()
             ->map(fn (OrderHeader $o) => [
+                'id'       => $o->id,
                 'order_no' => $o->order_no,
                 'date'     => $o->created_at?->format('d M Y'),
                 'total'    => (float) $o->price,
@@ -41,6 +43,66 @@ class AccountController extends Controller
             'orders'   => $orders,
             'currency' => $settings->currency_symbol,
         ]);
+    }
+
+    /** A single order with its fulfilment timeline — customer-facing tracking. */
+    public function order(OrderHeader $orderHeader, ShopSettings $settings): Response
+    {
+        $customer = Auth::guard('customer')->user();
+        abort_unless($orderHeader->customer_id === $customer->id, 404);
+
+        $orderHeader->load([
+            'orderLines.item',
+            'orderStatusHistories.orderStatus',
+        ]);
+
+        // completed timeline entries, oldest first
+        $history = $orderHeader->orderStatusHistories
+            ->sortBy('start_time')
+            ->map(fn ($h) => [
+                'status' => $h->orderStatus?->name,
+                'at'     => $h->start_time?->format('d M Y, H:i'),
+            ])
+            ->values();
+
+        $pipeline = OrderService::FULFILMENT; // Approved → Ready → Completed
+        $current  = $orderHeader->latest_status;
+        $reached  = $history->pluck('status')->all();
+
+        $steps = collect($pipeline)->map(fn ($name) => [
+            'name'    => $name,
+            'label'   => $this->stepLabel($name),
+            'done'    => in_array($name, $reached, true),
+            'current' => $name === $current,
+            'at'      => optional($history->firstWhere('status', $name))['at'],
+        ]);
+
+        return Inertia::render('Shop/Account/Order', [
+            'order' => [
+                'order_no'   => $orderHeader->order_no,
+                'date'       => $orderHeader->created_at?->format('d M Y'),
+                'total'      => (float) $orderHeader->price,
+                'is_paid'    => (bool) $orderHeader->is_paid,
+                'canceled'   => (bool) $orderHeader->is_canceled,
+                'status'     => $current,
+                'lines'      => $orderHeader->orderLines->map(fn ($l) => [
+                    'name'  => $l->item?->name ?? '—',
+                    'qty'   => (int) $l->quantity,
+                    'total' => (float) $l->price,
+                ])->values(),
+            ],
+            'steps'    => $steps,
+            'currency' => $settings->currency_symbol,
+        ]);
+    }
+
+    private function stepLabel(string $status): string
+    {
+        return [
+            'Approved'  => 'Order confirmed',
+            'Ready'     => 'Ready for pickup',
+            'Completed' => 'Completed',
+        ][$status] ?? $status;
     }
 
     public function updateProfile(Request $request): RedirectResponse

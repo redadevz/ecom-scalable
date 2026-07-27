@@ -42,7 +42,8 @@
                     </header>
 
                     <div v-if="orders.length" class="divide-y divide-gray-100">
-                        <div v-for="o in orders" :key="o.order_no" class="flex flex-wrap items-center justify-between gap-3 px-6 py-4">
+                        <Link v-for="o in orders" :key="o.order_no" :href="`/account/orders/${o.id}`"
+                            class="flex flex-wrap items-center justify-between gap-3 px-6 py-4 transition hover:bg-gray-50">
                             <div>
                                 <p class="font-semibold text-gray-900">{{ o.order_no }}</p>
                                 <p class="text-xs text-gray-400">{{ o.date }}</p>
@@ -53,8 +54,9 @@
                                     {{ o.is_paid ? 'Paid' : (o.status || 'Processing') }}
                                 </span>
                                 <span class="w-24 text-right font-bold text-gray-900">{{ money(o.total) }}</span>
+                                <ChevronRightIcon class="h-4 w-4 text-gray-300" />
                             </div>
-                        </div>
+                        </Link>
                     </div>
                     <div v-else class="px-6 py-16 text-center">
                         <ShoppingBagIcon class="mx-auto h-10 w-10 text-gray-200" />
@@ -69,7 +71,7 @@
 
 <script setup>
 import { Head, Link, router, useForm } from '@inertiajs/vue3';
-import { ArrowRightOnRectangleIcon, ShoppingBagIcon } from '@heroicons/vue/24/outline';
+import { ArrowRightOnRectangleIcon, ShoppingBagIcon, ChevronRightIcon } from '@heroicons/vue/24/outline';
 import Field from '@/Components/Field.vue';
 
 const props = defineProps({
