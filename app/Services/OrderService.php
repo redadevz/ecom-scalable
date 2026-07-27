@@ -90,10 +90,7 @@ class OrderService{
         });
     }
 
-    /**
-     * Customer-facing fulfilment pipeline for pickup orders, in order.
-     * (The order engine also uses Draft/Submitted/Cancelled around these.)
-     */
+
     public const Status = ['Approved', 'Ready', 'Completed'];
 
     /** Move a confirmed order forward to a fulfilment status (Ready, Completed…). */

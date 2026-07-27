@@ -70,12 +70,12 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='order_id'>{{ $t("craftable-pro", "Order / Customer") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='rating'>{{ $t("craftable-pro", "Rating") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='review'>{{ $t("craftable-pro", "Review") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='review_time'>{{ $t("craftable-pro", "Reviewed") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_compensated'>{{ $t("craftable-pro", "Compensated") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='order_id'>Order / Customer</ListingHeaderCell>
+                <ListingHeaderCell sortBy='rating'>Rating</ListingHeaderCell>
+                <ListingHeaderCell sortBy='review'>Review</ListingHeaderCell>
+                <ListingHeaderCell sortBy='review_time'>Reviewed</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_compensated'>Compensated</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

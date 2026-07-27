@@ -70,12 +70,12 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='comments'>{{ $t("craftable-pro", "Payment Term") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='sale_channel_id'>{{ $t("craftable-pro", "Channel & Delivery") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='payment_method_id'>{{ $t("craftable-pro", "Payment") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_allowed'>{{ $t("craftable-pro", "Allowed") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_active'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='comments'>Payment Term</ListingHeaderCell>
+                <ListingHeaderCell sortBy='sale_channel_id'>Channel & Delivery</ListingHeaderCell>
+                <ListingHeaderCell sortBy='payment_method_id'>Payment</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_allowed'>Allowed</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_active'>Status</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

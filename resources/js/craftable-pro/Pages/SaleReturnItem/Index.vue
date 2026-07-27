@@ -70,13 +70,13 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='item_id'>{{ $t("craftable-pro", "Item") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='sale_return_id'>{{ $t("craftable-pro", "Sale Return") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='line_no'>{{ $t("craftable-pro", "Line No") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='quantity'>{{ $t("craftable-pro", "Quantity") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='return_quantity'>{{ $t("craftable-pro", "Return Qty") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>{{ $t("craftable-pro", "Created") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='item_id'>Item</ListingHeaderCell>
+                <ListingHeaderCell sortBy='sale_return_id'>Sale Return</ListingHeaderCell>
+                <ListingHeaderCell sortBy='line_no'>Line No</ListingHeaderCell>
+                <ListingHeaderCell sortBy='quantity'>Quantity</ListingHeaderCell>
+                <ListingHeaderCell sortBy='return_quantity'>Return Qty</ListingHeaderCell>
+                <ListingHeaderCell sortBy='created_at'>Created</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

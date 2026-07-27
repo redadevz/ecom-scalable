@@ -70,13 +70,13 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='item_id'>{{ $t("craftable-pro", "Item") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='store_id'>{{ $t("craftable-pro", "Store") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_stock_entry'>{{ $t("craftable-pro", "Direction") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='quantity'>{{ $t("craftable-pro", "Quantity") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='current_stock_quantity'>{{ $t("craftable-pro", "Resulting Qty") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='created_at'>{{ $t("craftable-pro", "When") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='item_id'>Item</ListingHeaderCell>
+                <ListingHeaderCell sortBy='store_id'>Store</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_stock_entry'>Direction</ListingHeaderCell>
+                <ListingHeaderCell sortBy='quantity'>Quantity</ListingHeaderCell>
+                <ListingHeaderCell sortBy='current_stock_quantity'>Resulting Qty</ListingHeaderCell>
+                <ListingHeaderCell sortBy='created_at'>When</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

@@ -70,12 +70,12 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='item_id'>{{ $t("craftable-pro", "Item") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='inventory_count_id'>{{ $t("craftable-pro", "Inventory Count") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='quantity_expected'>{{ $t("craftable-pro", "Expected") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='quantity_counted'>{{ $t("craftable-pro", "Counted") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='quantity_change'>{{ $t("craftable-pro", "Change") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='item_id'>Item</ListingHeaderCell>
+                <ListingHeaderCell sortBy='inventory_count_id'>Inventory Count</ListingHeaderCell>
+                <ListingHeaderCell sortBy='quantity_expected'>Expected</ListingHeaderCell>
+                <ListingHeaderCell sortBy='quantity_counted'>Counted</ListingHeaderCell>
+                <ListingHeaderCell sortBy='quantity_change'>Change</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

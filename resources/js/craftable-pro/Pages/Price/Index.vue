@@ -70,13 +70,13 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='item_id'>{{ $t("craftable-pro", "Item") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='current_item_cost'>{{ $t("craftable-pro", "Cost") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='markup_percentage'>{{ $t("craftable-pro", "Markup") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='sale_price'>{{ $t("craftable-pro", "Sale Price") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='is_active'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='start_time'>{{ $t("craftable-pro", "Start") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='item_id'>Item</ListingHeaderCell>
+                <ListingHeaderCell sortBy='current_item_cost'>Cost</ListingHeaderCell>
+                <ListingHeaderCell sortBy='markup_percentage'>Markup</ListingHeaderCell>
+                <ListingHeaderCell sortBy='sale_price'>Sale Price</ListingHeaderCell>
+                <ListingHeaderCell sortBy='is_active'>Status</ListingHeaderCell>
+                <ListingHeaderCell sortBy='start_time'>Start</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

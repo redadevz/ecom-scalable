@@ -70,12 +70,12 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='item_id'>{{ $t("craftable-pro", "Item") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='purchase_id'>{{ $t("craftable-pro", "Purchase") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='quantity'>{{ $t("craftable-pro", "Qty") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='supplier_price_after_tax'>{{ $t("craftable-pro", "Unit Cost") }}</ListingHeaderCell>
-                <ListingHeaderCell>{{ $t("craftable-pro", "Line Total") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='item_id'>Item</ListingHeaderCell>
+                <ListingHeaderCell sortBy='purchase_id'>Purchase</ListingHeaderCell>
+                <ListingHeaderCell sortBy='quantity'>Qty</ListingHeaderCell>
+                <ListingHeaderCell sortBy='supplier_price_after_tax'>Unit Cost</ListingHeaderCell>
+                <ListingHeaderCell>Line Total</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

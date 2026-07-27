@@ -70,12 +70,12 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='refund_no'>{{ $t("craftable-pro", "Refund") }}</ListingHeaderCell>
-                <ListingHeaderCell>{{ $t("craftable-pro", "Related") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='amount'>{{ $t("craftable-pro", "Amount") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='refund_time'>{{ $t("craftable-pro", "Refund Time") }}</ListingHeaderCell>
-                <ListingHeaderCell>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='refund_no'>Refund</ListingHeaderCell>
+                <ListingHeaderCell>Related</ListingHeaderCell>
+                <ListingHeaderCell sortBy='amount'>Amount</ListingHeaderCell>
+                <ListingHeaderCell sortBy='refund_time'>Refund Time</ListingHeaderCell>
+                <ListingHeaderCell>Status</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

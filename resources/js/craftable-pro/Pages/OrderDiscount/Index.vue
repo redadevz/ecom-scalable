@@ -70,11 +70,11 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='discount_id'>{{ $t("craftable-pro", "Discount") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_id'>{{ $t("craftable-pro", "Order") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='value'>{{ $t("craftable-pro", "Value") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='comments'>{{ $t("craftable-pro", "Comments") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='discount_id'>Discount</ListingHeaderCell>
+                <ListingHeaderCell sortBy='order_id'>Order</ListingHeaderCell>
+                <ListingHeaderCell sortBy='value'>Value</ListingHeaderCell>
+                <ListingHeaderCell sortBy='comments'>Comments</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">

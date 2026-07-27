@@ -70,12 +70,12 @@
             </template>
 
             <template #tableHead>
-                <ListingHeaderCell sortBy='id'>{{ $t("craftable-pro", "Shipment") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='order_id'>{{ $t("craftable-pro", "Order") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='shipment_address'>{{ $t("craftable-pro", "Destination") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='picked_up_time'>{{ $t("craftable-pro", "Timeline") }}</ListingHeaderCell>
-                <ListingHeaderCell sortBy='shipped_time'>{{ $t("craftable-pro", "Status") }}</ListingHeaderCell>
-                <ListingHeaderCell><span class="sr-only">{{ $t("craftable-pro", "Actions") }}</span></ListingHeaderCell>
+                <ListingHeaderCell sortBy='id'>Shipment</ListingHeaderCell>
+                <ListingHeaderCell sortBy='order_id'>Order</ListingHeaderCell>
+                <ListingHeaderCell sortBy='shipment_address'>Destination</ListingHeaderCell>
+                <ListingHeaderCell sortBy='picked_up_time'>Timeline</ListingHeaderCell>
+                <ListingHeaderCell sortBy='shipped_time'>Status</ListingHeaderCell>
+                <ListingHeaderCell><span class="sr-only">Actions</span></ListingHeaderCell>
             </template>
 
             <template #tableRow="{ item, action }: any">
