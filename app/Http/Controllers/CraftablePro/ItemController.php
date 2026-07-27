@@ -66,20 +66,6 @@ class ItemController extends Controller
     }
 
     /**
-     * Upload an item image; returns its public URL. (need to work with media library)
-     */
-    public function uploadImage(Request $request): \Illuminate\Http\JsonResponse
-    {
-        $request->validate([
-            'file' => ['required', 'image', 'max:5120'], // 5 MB
-        ]);
-
-        $path = $request->file('file')->store('items', 'public');
-
-        return response()->json(['url' => \Illuminate\Support\Facades\Storage::url($path)]);
-    }
-
-    /**
      * Grid (card) view of items, with optional category filter.
      */
     public function grid(Request $request): Response
