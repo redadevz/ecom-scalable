@@ -19,7 +19,8 @@
                 </template>
             </div>
 
-            <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-[#2c2f3d] dark:bg-[#1e2029]">
+            <!-- No overflow-hidden: a clipped card would cut off Multiselect/DatePicker dropdowns -->
+            <div class="rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-[#2c2f3d] dark:bg-[#1e2029]">
                 <!-- All steps stay mounted (v-show) so field state never remounts -->
                 <div v-for="(s, i) in steps" :key="s.key" v-show="current === i">
                     <slot :name="s.key" :active="current === i" />

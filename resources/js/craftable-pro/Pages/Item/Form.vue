@@ -16,10 +16,7 @@
                 <div :class="rowCls">
                     <label :class="labelCls">SKU</label>
                     <div class="w-full">
-                        <div class="flex items-center gap-2 rounded-xl border border-dashed border-gray-300 px-4 py-2.5 dark:border-[#3a3e4d]">
-                            <SparklesIcon class="h-4 w-4 flex-shrink-0 text-primary-500" />
-                            <span class="text-sm text-gray-400">{{ form.sku_code || 'Generated automatically on save' }}</span>
-                        </div>
+                        <input :value="form.sku_code" readonly placeholder="Generated on save" :class="codeCls" />
                     </div>
                 </div>
 
@@ -116,7 +113,7 @@
 
 <script setup lang="ts">
 import { Checkbox, Multiselect, Dropzone } from "craftable-pro/Components";
-import { SparklesIcon, CubeIcon, WrenchScrewdriverIcon } from "@heroicons/vue/24/outline";
+import { CubeIcon, WrenchScrewdriverIcon } from "@heroicons/vue/24/outline";
 import Wizard from "@/craftable-pro/Components/Wizard.vue";
 import { InertiaForm } from "craftable-pro/types";
 import type { ItemForm } from "./types";
@@ -152,6 +149,7 @@ const rowCls = "flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4";
 const labelCls = "w-full text-sm font-medium text-gray-600 dark:text-gray-300 sm:w-32 sm:flex-shrink-0";
 const inputCls = "w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-[#2c2f3d] dark:bg-[#171923] dark:text-white";
 const errCls = "text-xs text-red-500 sm:ml-36";
+const codeCls = "w-full cursor-not-allowed select-all rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-medium text-gray-700 focus:outline-none dark:border-[#2c2f3d] dark:bg-[#1a1c27] dark:text-gray-200";
 
 const optCardCls = (active: boolean) =>
     "relative rounded-xl border p-4 text-left transition " +

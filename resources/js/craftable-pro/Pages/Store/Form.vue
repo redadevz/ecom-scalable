@@ -28,10 +28,7 @@
                 <div :class="rowCls">
                     <label :class="labelCls">Code</label>
                     <div class="w-full">
-                        <div class="flex items-center gap-2 rounded-xl border border-dashed border-gray-300 px-4 py-2.5 dark:border-[#3a3e4d]">
-                            <SparklesIcon class="h-4 w-4 flex-shrink-0 text-primary-500" />
-                            <span class="text-sm text-gray-400">{{ form.code || 'Generated automatically on save' }}</span>
-                        </div>
+                        <input :value="form.code" readonly placeholder="Generated on save" :class="codeCls" />
                     </div>
                 </div>
 
@@ -94,7 +91,7 @@
 <script setup lang="ts">
 import { computed, h, ref } from "vue";
 import axios from "axios";
-import { CameraIcon, ArrowPathIcon, SparklesIcon } from "@heroicons/vue/24/outline";
+import { CameraIcon, ArrowPathIcon } from "@heroicons/vue/24/outline";
 import { Multiselect } from "craftable-pro/Components";
 import Wizard from "@/craftable-pro/Components/Wizard.vue";
 import { InertiaForm } from "craftable-pro/types";
@@ -153,6 +150,7 @@ const uploadLogo = async (file: File) => {
 const rowCls = "flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-4";
 const labelCls = "w-full text-sm font-medium text-gray-600 dark:text-gray-300 sm:w-32 sm:flex-shrink-0";
 const inputCls = "w-full rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder-gray-400 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500/20 dark:border-[#2c2f3d] dark:bg-[#171923] dark:text-white";
+const codeCls = "w-full cursor-not-allowed select-all rounded-xl border border-gray-200 bg-gray-50 px-4 py-2.5 text-sm font-medium text-gray-700 focus:outline-none dark:border-[#2c2f3d] dark:bg-[#1a1c27] dark:text-gray-200";
 
 const Field = (p: any, { emit }: any) =>
     h("div", { class: rowCls }, [
