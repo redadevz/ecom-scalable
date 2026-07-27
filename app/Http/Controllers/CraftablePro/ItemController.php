@@ -7,6 +7,7 @@ use App\Http\Requests\CraftablePro\Item\BulkDestroyItemRequest;
 use App\Http\Requests\CraftablePro\Item\CreateItemRequest;
 use App\Http\Requests\CraftablePro\Item\DestroyItemRequest;
 use App\Http\Requests\CraftablePro\Item\EditItemRequest;
+use App\Http\Requests\CraftablePro\Item\GridItemRequest;
 use App\Http\Requests\CraftablePro\Item\IndexItemRequest;
 use App\Http\Requests\CraftablePro\Item\StoreItemRequest;
 use App\Http\Requests\CraftablePro\Item\UpdateItemRequest;
@@ -15,7 +16,6 @@ use App\Models\ItemCategory;
 use Brackets\CraftablePro\Queries\Filters\FuzzyFilter;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -68,15 +68,15 @@ class ItemController extends Controller
     /**
      * Grid (card) view of items, with optional category filter.
      */
-    public function grid(Request $request): Response
+    public function grid(GridItemRequest $request): Response
     {
         $categoryId = $request->integer('category') ?: null;
-        $search = trim((string) $request->get('search'));
+        $search = trim((string) $request->input('search'));
 
         $items = Item::query()
             ->with([
                 'itemCategory:id,name',
-                'prices' => fn ($q) => $q->where('is_active', true)->latest('id')->select('id', 'item_id', 'sale_price'),
+                'activePrice',
                 'media',
             ])
             ->when($categoryId, fn ($q) => $q->where('item_category_id', $categoryId))

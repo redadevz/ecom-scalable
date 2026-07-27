@@ -10,6 +10,7 @@ use App\Http\Requests\CraftablePro\OrderHeader\CreateOrderHeaderRequest;
 use App\Http\Requests\CraftablePro\OrderHeader\DestroyOrderHeaderRequest;
 use App\Http\Requests\CraftablePro\OrderHeader\EditOrderHeaderRequest;
 use App\Http\Requests\CraftablePro\OrderHeader\IndexOrderHeaderRequest;
+use App\Http\Requests\CraftablePro\OrderHeader\StatusOrderHeaderRequest;
 use App\Http\Requests\CraftablePro\OrderHeader\StoreOrderHeaderRequest;
 use App\Http\Requests\CraftablePro\OrderHeader\UpdateOrderHeaderRequest;
 use App\Models\OrderHeader;
@@ -207,13 +208,9 @@ class OrderHeaderController extends Controller
         }
     }
 
-    public function status(Request $request, OrderHeader $orderHeader, OrderService $orders){
-        Gate::authorize('craftable-pro.order-headers.confirm');
-        $data = $request->validate([
-            'status' => ['required', 'string', 'in:' . implode(',', OrderService::FULFILMENT)],
-        ]);
+    public function status(StatusOrderHeaderRequest $request, OrderHeader $orderHeader, OrderService $orders){
         try{
-            $orders->advance($orderHeader, $data['status']);
+            $orders->advance($orderHeader, $request->validated('status'));
 
             return redirect()->back()->with(['message' => ___('craftable-pro', 'Operation successful')]);
         }catch(\RuntimeException | \InvalidArgumentException $e){

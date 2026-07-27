@@ -124,7 +124,7 @@ const money = (v: number) =>
     Number(v ?? 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + " DH";
 
 const price = (item: any) => {
-    const p = item.prices?.[0]?.sale_price;
+    const p = item.active_price?.sale_price;
     return p != null ? money(p) : "—";
 };
 
