@@ -48,7 +48,7 @@ const { form, submit } = useForm<ItemForm>(
         min_stock_quantity: "",
         low_stock_warning: false,
         low_stock_quantity: "",
-        is_active: false,
+        is_active: true,
         comments: ""
     },
     route("craftable-pro.items.store"),
