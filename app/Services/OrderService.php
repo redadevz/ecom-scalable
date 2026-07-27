@@ -94,12 +94,12 @@ class OrderService{
      * Customer-facing fulfilment pipeline for pickup orders, in order.
      * (The order engine also uses Draft/Submitted/Cancelled around these.)
      */
-    public const FULFILMENT = ['Approved', 'Ready', 'Completed'];
+    public const Status = ['Approved', 'Ready', 'Completed'];
 
     /** Move a confirmed order forward to a fulfilment status (Ready, Completed…). */
     public function advance(OrderHeader $order, string $statusName): OrderHeader
     {
-        if (! in_array($statusName, self::FULFILMENT, true)) {
+        if (! in_array($statusName, self::Status, true)) {
             throw new \InvalidArgumentException("'{$statusName}' is not a fulfilment status.");
         }
         if ($order->is_canceled) {

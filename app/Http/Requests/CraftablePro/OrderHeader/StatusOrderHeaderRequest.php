@@ -23,7 +23,7 @@ class StatusOrderHeaderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['required', 'string', Rule::in(OrderService::FULFILMENT)],
+            'status' => ['required', 'string', Rule::in(OrderService::Status)],
         ];
     }
 }
