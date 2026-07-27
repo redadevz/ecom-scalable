@@ -66,7 +66,7 @@ class ItemController extends Controller
     }
 
     /**
-     * Upload an item image; returns its public URL.
+     * Upload an item image; returns its public URL. (need to work with media library)
      */
     public function uploadImage(Request $request): \Illuminate\Http\JsonResponse
     {
